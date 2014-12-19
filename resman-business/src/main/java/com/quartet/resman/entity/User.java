@@ -22,17 +22,12 @@ public class User {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", length = 60, nullable = false)
     private String name;
     @Enumerated(EnumType.ORDINAL)
     private Sex sex;
-
-    @Email
-    @Column(name = "email", length = 50)
-    private String email;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",locale ="zh",timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -42,7 +37,7 @@ public class User {
     @Column(name = "telNum", length = 13)
     private String telNum;
 
-    private Long sysUserId;//系统用户标识
+//    private Long sysUserId;//系统用户标识
 
     @Lob()
     @Basic(fetch = FetchType.LAZY)
@@ -72,14 +67,6 @@ public class User {
         this.sex = sex;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Date getBod() {
         return bod;
     }
@@ -104,13 +91,13 @@ public class User {
         this.telNum = telNum;
     }
 
-    public Long getSysUserId() {
-        return sysUserId;
-    }
-
-    public void setSysUserId(Long sysUserId) {
-        this.sysUserId = sysUserId;
-    }
+//    public Long getSysUserId() {
+//        return sysUserId;
+//    }
+//
+//    public void setSysUserId(Long sysUserId) {
+//        this.sysUserId = sysUserId;
+//    }
 
     public byte[] getImg() {
         return img;

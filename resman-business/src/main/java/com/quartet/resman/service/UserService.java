@@ -3,13 +3,10 @@ package com.quartet.resman.service;
 import static com.google.common.base.Preconditions.*;
 
 import com.google.common.collect.Lists;
+import com.quartet.resman.entity.*;
 import org.apache.commons.lang3.StringUtils;
 import com.quartet.resman.core.utils.Digests;
 import com.quartet.resman.core.utils.Encodes;
-import com.quartet.resman.entity.Func;
-import com.quartet.resman.entity.Role;
-import com.quartet.resman.entity.SysUser;
-import com.quartet.resman.entity.User;
 import com.quartet.resman.repository.RoleDao;
 import com.quartet.resman.repository.SysUserDao;
 import com.quartet.resman.repository.UserDao;
@@ -43,27 +40,15 @@ public class UserService {
         userDao.save(user);
     }
 
-    public void addSysUser(SysUser sysUser, Long userId) {
-        User user = userDao.findOne(userId);
-        addSysUser(sysUser, user);
-    }
-
     public void addSysUser(SysUser sysUser, User user) {
         checkNotNull(sysUser);
         encryptPassword(sysUser);
         sysUserDao.save(sysUser);
         Long sysUid = sysUser.getId();
         if (sysUid != null) {
-            user.setSysUserId(sysUid);
+            user.setId(sysUid);
             userDao.save(user);
         }
-    }
-
-    public void removeRoleForSysUser(Long sysUserId, Long roleId) {
-        SysUser user = sysUserDao.findOne(sysUserId);
-        Role role = roleDao.findOne(roleId);
-        user.getRoles().remove(role);
-        sysUserDao.save(user);
     }
 
     public Page<User> getUser(Pageable page) {
@@ -82,17 +67,12 @@ public class UserService {
         return sysUserDao.findOne(sysUid);
     }
 
-    public List<Long> getUserRoleByUser(Long uid) {
-        User user = userDao.getOne(uid);
-        Long sysUid = user.getSysUserId();
-        if (sysUid != null) {
-            return getUserRoleBySysUser(sysUid);
-        } else {
-            return Lists.newArrayList();
-        }
+    public SysUser getSysUser(String sysName) {
+        List<SysUser> users = sysUserDao.findBySysName(sysName);
+        return users.size() > 0 ? users.get(0) : null;
     }
 
-    public List<Long> getUserRoleBySysUser(Long sysUid) {
+    public List<Long> getUserRole(Long sysUid) {
         SysUser user = sysUserDao.findOne(sysUid);
         Set<Role> roles = user.getRoles();
         List<Long> result = new ArrayList<>(roles.size());
@@ -102,17 +82,52 @@ public class UserService {
         return result;
     }
 
-    public List<Func> getSysUserFunc(Long userId, Long roleId) {
-        if (roleId == null) {
-            SysUser u = sysUserDao.getOne(userId);
-            Set<Role> role = u.getRoles();
-            if (role.size()>0){
-                roleId = role.iterator().next().getId();
-            } else {
-                return null;
+    public List<String> getUserRoleStrs(Long sysUid) {
+        SysUser user = sysUserDao.findOne(sysUid);
+        Set<Role> roles = user.getRoles();
+        List<String> result = new ArrayList<>(roles.size());
+        for (Role role : roles) {
+            result.add(role.getRole());
+        }
+        return result;
+    }
+
+    public List<String> getUserPermStrs(Long sysUid) {
+        SysUser user = sysUserDao.findOne(sysUid);
+        Set<Role> roles = user.getRoles();
+        List<String> result = new ArrayList<>();
+        for (Role role : roles) {
+            Set<Permission> perms = role.getPermissions();
+            for (Permission perm : perms) {
+                result.add(perm.getPermission());
             }
         }
-        return sysUserDao.findUserRoleFunc(userId,roleId);
+        return result;
+    }
+
+    //public List<String> getUserRole
+
+//    public List<Func> getSysUserFunc(Long userId, Long roleId) {
+//        if (roleId == null) {
+//            SysUser u = sysUserDao.getOne(userId);
+//            Set<Role> role = u.getRoles();
+//            if (role.size() > 0) {
+//                roleId = role.iterator().next().getId();
+//            } else {
+//                return null;
+//            }
+//        }
+//        return sysUserDao.findUserRoleFunc(userId, roleId);
+//    }
+
+    /**
+     * 获得系统用户的功能列表
+     *
+     * @param userId
+     * @return
+     */
+    public List<Func> getSysUserFunc(Long userId) {
+        return sysUserDao.findUserRoleFunc(userId);
     }
 
     public void updateUserRole(Long sysUid, Long[] roleIds) {
@@ -125,12 +140,13 @@ public class UserService {
     }
 
     public void deleteUser(Long userId) {
-        User user = userDao.findOne(userId);
-        Long sysUserId = user.getSysUserId();
-        userDao.delete(user);
-        if (sysUserId != null) {
-            sysUserDao.delete(sysUserId);
-        }
+        //User user = userDao.findOne(userId);
+        //Long sysUserId = user.getSysUserId();
+        userDao.delete(userId);
+        sysUserDao.delete(userId);
+//        if (sysUserId != null) {
+//            sysUserDao.delete(sysUserId);
+//        }
     }
 
     public void deleteUser(List<Long> users) {
@@ -142,12 +158,12 @@ public class UserService {
     }
 
     public boolean sysUserNameExist(String name) {
-        List<SysUser> users = sysUserDao.findByName(name);
+        List<SysUser> users = sysUserDao.findBySysName(name);
         return users != null && users.size() > 0 ? true : false;
     }
 
     public boolean sysUserNameExist(Long sysUid, String name) {
-        List<SysUser> users = sysUserDao.findByIdNotAndName(sysUid, name);
+        List<SysUser> users = sysUserDao.findByIdNotAndSysName(sysUid, name);
         return users != null && users.size() > 0 ? true : false;
     }
 
@@ -155,10 +171,9 @@ public class UserService {
         if (StringUtils.isEmpty(user.getSalt())) {
             String hexSalt = Digests.generateHexSalt(SALT_SIZE);
             user.setSalt(hexSalt);
-
-            byte[] pwdBytes = Digests.sha1(user.getPassWd().getBytes(), hexSalt.getBytes());
-            user.setPassWd(Encodes.encodeHex(pwdBytes));
         }
+        byte[] pwdBytes = Digests.sha1(user.getPassWd().getBytes(), user.getSalt().getBytes());
+        user.setPassWd(Encodes.encodeHex(pwdBytes));
     }
 
 }

@@ -147,10 +147,10 @@
                 <th data-field="name" data-align="center">姓 名</th>
                 <th data-field="sex" data-formatter="sexFormatter" data-align="center">性 别</th>
                 <th data-field="bod" data-align="center">出生年月</th>
-                <th data-field="email" data-align="right">电子邮件</th>
+                <%--<th data-field="email" data-align="right">电子邮件</th>--%>
                 <th data-field="phoneNum" data-align="center">手机号</th>
                 <th data-field="telNum" data-align="center">电 话</th>
-                <th data-formatter="sysUserFormatter" data-align="center">系统用户</th>
+                <%--<th data-formatter="sysUserFormatter" data-align="center">系统用户</th>--%>
             </tr>
             </thead>
         </table>

@@ -10,11 +10,14 @@ public class ShiroUser {
     private Long id;
     private Long roleId;
     private String userName;
-    private String passwd;
 
-    public ShiroUser(Long id,String passwd, String userName,Long roleId) {
+    public ShiroUser(Long id,String userName) {
+        this.userName = userName;
         this.id = id;
-        this.passwd = passwd;
+    }
+
+    public ShiroUser(Long id,String userName,Long roleId) {
+        this.id = id;
         this.userName = userName;
         this.roleId = roleId;
     }
@@ -25,14 +28,6 @@ public class ShiroUser {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPasswd() {
-        return passwd;
-    }
-
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
     }
 
     public String getUserName() {
@@ -51,3 +46,4 @@ public class ShiroUser {
         this.roleId = roleId;
     }
 }
+

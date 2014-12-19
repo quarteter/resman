@@ -20,18 +20,22 @@
         function addValidator() {
             $("#userForm").validate({
                 rules: {
-                    "name": "required",
+                    "name": {
+                        required:true,
+                        minlength:2,
+                        maxlength:20
+                    },
                     "email": {
                         required: true,
                         email: true
                     },
-                    "sysUserName":{
-                        required:{depends:isSysUser},
+                    "sysName":{
+                        required:true,
                         minlength:6,
                         maxlength:32
                     },
-                    "sysUserPwd":{
-                        required:{depends:isSysUser},
+                    "passWd":{
+                        required:true,
                         minlength:6,
                         maxlength:32
                     }
@@ -43,7 +47,7 @@
             $("#btnSubmit").on("click", function () {
                 var isValid = $("#userForm").valid();
                 if (isValid) {
-                    var sysUserName = $("#sysUserName").val();
+                    var sysUserName = $("#sysName").val();
                     if (sysUserName != null && sysUserName.length > 0) {
                         $.post("${ctx}/sys/user/check", {
                             sysName: sysUserName
@@ -76,7 +80,7 @@
         }
         $(document).ready(function () {
             createDatePicker(".form_date", "date");
-            BindSysUserEvent();
+            //BindSysUserEvent();
             bindSubmit();
             addValidator();
         });
@@ -103,13 +107,7 @@
                     <input id="name" class="form-control" name="name"/>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="email">邮 件</label>
 
-                <div class="col-sm-4">
-                    <input id="email" class="form-control" name="email"/>
-                </div>
-            </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">性 别</label>
                 <div class="radio">
@@ -142,28 +140,36 @@
                 </div>
             </div>
 
+            <%--<div class="form-group">--%>
+            <%--<div class="col-sm-offset-2 col-sm-10">--%>
+            <%--<div class="checkbox">--%>
+            <%--<label>--%>
+            <%--<input id="isSysUser" type="checkbox"> 系统用户--%>
+            <%--</label>--%>
+            <%--</div>--%>
+            <%--</div>--%>
+            <%--</div>--%>
+            <div class="form-group" id="sysUserNameDiv">
+                <label class="col-sm-2 control-label" for="sysName">用户名</label>
+
+                <div class="col-sm-4">
+                    <input id="sysName" class="form-control" name="sysName"/>
+                </div>
+            </div>
+
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <input id="isSysUser" type="checkbox"> 系统用户
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group hide" id="sysUserNameDiv">
-                <label class="col-sm-2 control-label" for="sysUserName">用户名</label>
+                <label class="col-sm-2 control-label" for="email">邮 件</label>
 
                 <div class="col-sm-4">
-                    <input id="sysUserName" class="form-control" name="sysUserName"/>
+                    <input id="email" class="form-control" name="email"/>
                 </div>
             </div>
 
-            <div class="form-group hide" id="sysUserPwdDiv">
-                <label class="col-sm-2 control-label" for="sysUserPwd">密 码</label>
+            <div class="form-group" id="sysUserPwdDiv">
+                <label class="col-sm-2 control-label" for="passWd">密 码</label>
 
                 <div class="col-sm-4">
-                    <input id="sysUserPwd" class="form-control" name="sysUserPwd" type="password"/>
+                    <input id="passWd" class="form-control" name="passWd" type="password"/>
                 </div>
             </div>
             <div style="margin-top:30px;margin-left: 160px">

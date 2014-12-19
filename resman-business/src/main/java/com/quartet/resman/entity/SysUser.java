@@ -1,5 +1,6 @@
 package com.quartet.resman.entity;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -26,15 +27,21 @@ public class SysUser {
 
     @NotNull
     @Length(max = 32,min = 5)
-    @Column(name = "name", length = 32)
-    private String name;
+    @Column(name = "sysName", length = 32)
+    private String sysName;
 
     @NotNull
-    @Length(max = 32,min = 6)
-    @Column(name = "passwd", length = 32)
+    @Email
+    @Length(max = 100)
+    @Column(name = "email",length = 50)
+    private String email;
+
+    @NotNull
+    @Length(max = 50,min = 6)
+    @Column(name = "passwd", length = 50)
     private String passWd;
 
-    @Column(name = "salt")
+    @Column(name = "salt",length = 32)
     private String salt;
 
     @Enumerated
@@ -42,19 +49,19 @@ public class SysUser {
 
     @ManyToMany
     @JoinTable(name = "s_user_role",joinColumns = @JoinColumn(name = "sysUserId"),
-    inverseJoinColumns = @JoinColumn(name = "roleId"))
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles = new HashSet<>();
 
     public SysUser() {}
 
     public SysUser(String sysName,String passWd){
-        this.name = sysName;
+        this.sysName = sysName;
         this.passWd = passWd;
         this.state = State.New;
     }
 
     public SysUser(String sysName, String passWd, String salt) {
-        this.name = sysName;
+        this.sysName = sysName;
         this.passWd = passWd;
         this.salt = salt;
         this.state = State.New;
@@ -68,12 +75,12 @@ public class SysUser {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSysName() {
+        return sysName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSysName(String name) {
+        this.sysName = name;
     }
 
     public String getPassWd() {
@@ -98,6 +105,14 @@ public class SysUser {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<Role> getRoles() {

@@ -1,4 +1,3 @@
-<%@ page import="org.arcie.ctsm.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -28,13 +27,13 @@
                         required: true,
                         email: true
                     },
-                    "sysUserName":{
-                        required:{depends:isSysUser},
+                    "sysName":{
+                        required:true,
                         minlength:6,
                         maxlength:32
                     },
-                    "sysUserPwd":{
-                        required:{depends:isSysUser},
+                    "passWd":{
+                        required:true,
                         minlength:6,
                         maxlength:32
                     }
@@ -77,7 +76,7 @@
         }
         $(document).ready(function () {
             createDatePicker(".form_date", "date");
-            BindSysUserEvent();
+            //BindSysUserEvent();
             bindSubmit();
             addValidator();
         });
@@ -108,7 +107,7 @@
                 <label class="col-sm-2 control-label" for="email">邮 件</label>
 
                 <div class="col-sm-4">
-                    <input id="email" class="form-control" name="email" value="${user.email}"/>
+                    <input id="email" class="form-control" name="email" value="${sysUser.email}"/>
                 </div>
             </div>
             <div class="form-group">
@@ -144,56 +143,25 @@
                 <div class="col-sm-4">
                     <input id="phoneNum" class="form-control" name="phoneNum" value="${user.phoneNum}"/>
                 </div>
-                <input type="hidden" id="sysUserId" name="sysUserId" value="${user.sysUserId}"/>
+                <%--<input type="hidden" id="sysUserId" name="sysUserId" value="${user.sysUserId}"/>--%>
                 <input type="hidden" id="id" name="id" value="${user.id}"/>
             </div>
-            <c:choose>
-                <c:when test="${sysUser==null}">
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <div class="checkbox">
-                                <label>
-                                    <input id="isSysUser" type="checkbox"> 系统用户
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+            <div class="form-group" id="sysUserNameDiv">
+                <label class="col-sm-2 control-label" for="sysName">用户名</label>
 
-                    <div class="form-group hide" id="sysUserNameDiv">
-                        <label class="col-sm-2 control-label" for="sysUserName">用户名</label>
+                <div class="col-sm-4">
+                    <input id="sysName" class="form-control" name="sysName" value="${sysUser.sysName}"/>
+                </div>
+            </div>
 
-                        <div class="col-sm-4">
-                            <input id="sysUserName" class="form-control" name="sysUserName"/>
-                        </div>
-                    </div>
+            <div class="form-group" id="sysUserPwdDiv">
+                <label class="col-sm-2 control-label" for="passWd">密 码</label>
 
-                    <div class="form-group hide" id="sysUserPwdDiv">
-                        <label class="col-sm-2 control-label" for="sysUserPwd">密 码</label>
-
-                        <div class="col-sm-4">
-                            <input id="sysUserPwd" class="form-control" name="sysUserPwd" type="password"/>
-                        </div>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <div class="form-group" id="sysUserNameDiv">
-                        <label class="col-sm-2 control-label" for="sysUserName">用户名</label>
-
-                        <div class="col-sm-4">
-                            <input id="sysUserName" class="form-control" name="sysUserName" value="${sysUser.name}"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group" id="sysUserPwdDiv">
-                        <label class="col-sm-2 control-label" for="sysUserPwd">密 码</label>
-
-                        <div class="col-sm-4">
-                            <input id="sysUserPwd" class="form-control" name="sysUserPwd" type="password"
-                                   value="${sysUser.passWd}"/>
-                        </div>
-                    </div>
-                </c:otherwise>
-            </c:choose>
+                <div class="col-sm-4">
+                    <input id="passWd" class="form-control" name="passWd" type="password"
+                           value="${sysUser.passWd}"/>
+                </div>
+            </div>
 
             <div style="margin-top:30px;margin-left: 160px">
                 <button id="btnSubmit" type="button" class="btn btn-success btn-flat"><span class="fa fa-save"></span>

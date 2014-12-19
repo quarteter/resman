@@ -1,14 +1,14 @@
 package com.quartet.resman.web.controller.system;
 
+import com.quartet.resman.core.persistence.DynamicSpecifications;
+import com.quartet.resman.core.persistence.SearchFilter;
+import com.quartet.resman.entity.Result;
+import com.quartet.resman.entity.Role;
+import com.quartet.resman.entity.SysUser;
+import com.quartet.resman.entity.User;
+import com.quartet.resman.service.RoleService;
+import com.quartet.resman.service.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.arcie.core.persistence.DynamicSpecifications;
-import org.arcie.core.persistence.SearchFilter;
-import org.arcie.ctsm.entity.Result;
-import org.arcie.ctsm.entity.Role;
-import org.arcie.ctsm.entity.SysUser;
-import org.arcie.ctsm.entity.User;
-import org.arcie.ctsm.service.RoleService;
-import org.arcie.ctsm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -75,15 +75,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addUser(User user, String sysUserName, String sysUserPwd) {
-        if (StringUtils.isNotEmpty(sysUserName) && StringUtils.isNotEmpty(sysUserPwd)) {
-            SysUser sysUser = new SysUser(sysUserName, sysUserPwd);
-            if (user.getSysUserId() != null) {
-                sysUser.setId(user.getSysUserId());
-            }
+    public String addUser(User user, SysUser sysUser) {
+        if (sysUser != null) {
             userService.addSysUser(sysUser, user);
-        } else {
-            userService.addUser(user);
         }
         return "redirect:/sys/user/list";
     }
@@ -143,11 +137,9 @@ public class UserController {
     public ModelAndView editUser(Long uid) {
         ModelAndView mv = new ModelAndView("system/user-edit");
         User user = userService.getUser(uid);
+        SysUser sysUser = userService.getSysUser(uid);
         mv.addObject("user", user);
-        if (user.getSysUserId() != null) {
-            SysUser sysUser = userService.getSysUser(user.getSysUserId());
-            mv.addObject("sysUser", sysUser);
-        }
+        mv.addObject("sysUser", sysUser);
         return mv;
     }
 
@@ -156,7 +148,7 @@ public class UserController {
     public Map<String, Object> userRole(Long uid) {
         Map<String, Object> result = new HashMap<>(2);
         List<Role> all = roleService.getRoles();
-        List<Long> selected = userService.getUserRoleBySysUser(uid);
+        List<Long> selected = userService.getUserRole(uid);
         result.put("all", all);
         result.put("selected", selected);
         return result;

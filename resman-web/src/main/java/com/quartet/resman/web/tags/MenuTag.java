@@ -1,9 +1,6 @@
 package com.quartet.resman.web.tags;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import com.quartet.resman.entity.Func;
-import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.service.UserService;
 import com.quartet.resman.utils.SysUtils;
 
@@ -28,13 +25,13 @@ public class MenuTag extends SimpleTagSupport {
 //        Subject subject = SecurityUtils.getSubject();
 //        ShiroUser shiroUser = (ShiroUser) subject.getPrincipal();
 //        List<Func> funcs = SysUtils.getBean("userService", UserService.class)
-//                .getSysUserFunc(shiroUser.getId(), shiroUser.getRoleId());
+//                .getSysUserFunc(shiroUser.getId());
         List<Func> funcs = SysUtils.getBean("userService", UserService.class)
-                .getSysUserFunc(5L, 4L);
+                .getSysUserFunc(5L);
         List<FuncVo> vos = denormalize(funcs);
         StringBuilder sb = new StringBuilder();
         sb.append("<ul class='sidebar-menu'>");
-        generateMenu(sb, vos);
+        generateMenu(sb,vos);
         sb.append("</ul>");
         getJspContext().getOut().write(sb.toString());
     }
@@ -42,29 +39,29 @@ public class MenuTag extends SimpleTagSupport {
     private void generateMenu(StringBuilder sb, List<FuncVo> vos) {
         for (FuncVo vo : vos) {
             int childSize = vo.getChildren().size();
-            if (childSize > 0) {
+            if (childSize>0){
                 sb.append("<li class='treeview'>");
-            } else {
+            }else{
                 sb.append("<li>");
             }
             sb.append("<a href='");
-            if (vo.getUrl() != null) {
+            if (vo.getUrl()!=null){
                 sb.append(vo.getUrl() + "'>");
-            } else {
+            }else{
                 sb.append("#'>");
             }
-            String iconCls = vo.getIconCls() != null ? vo.getIconCls() : "fa fa-angle-double-right";
-            sb.append("<i class='" + iconCls + "'></i> ");
-            if (!vo.isLeaf()) {
-                sb.append("<span>" + vo.getName() + "</span>");
-                if (childSize > 0) {
+            String iconCls = vo.getIconCls()!=null ? vo.getIconCls() : "fa fa-angle-double-right";
+            sb.append("<i class='"+iconCls+"'></i> ");
+            if (!vo.isLeaf()){
+                sb.append("<span>"+vo.getName()+"</span>");
+                if (childSize>0){
                     sb.append("<i class=\"fa fa-angle-left pull-right\"></i>");
                 }
-            } else {
+            }else{
                 sb.append(vo.getName());
             }
             sb.append("</a>");
-            if (childSize > 0) {
+            if (childSize>0) {
                 sb.append("<ul class='treeview-menu'>");
                 generateMenu(sb, vo.getChildren());
                 sb.append("</ul>");

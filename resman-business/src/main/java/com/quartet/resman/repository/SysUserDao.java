@@ -14,11 +14,15 @@ import java.util.List;
  */
 public interface SysUserDao extends JpaRepository<SysUser,Long> {
 
-    public List<SysUser> findByName(String name);
+    public List<SysUser> findBySysName(String name);
 
-    public List<SysUser> findByIdNotAndName(Long uid, String name);
+    public List<SysUser> findByIdNotAndSysName(Long uid, String name);
 
     @Query(value = "select f from SysUser u join u.roles r join r.funcs f where u.id =?1 and r.id = ?2 " +
             "order by f.level,f.seqNo")
-    public List<Func> findUserRoleFunc(Long uid, Long roleId);
+    public List<Func> findUserRoleFunc(Long uid,Long roleId);
+
+    @Query(value = "select f from SysUser u join u.roles r join r.funcs f where u.id =?1 " +
+            "order by f.level,f.seqNo")
+    public List<Func> findUserRoleFunc(Long uid);
 }
