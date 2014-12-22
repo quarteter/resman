@@ -2,6 +2,7 @@ package com.quartet.resman.repository;
 
 import com.quartet.resman.entity.Func;
 import com.quartet.resman.entity.SysUser;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -25,4 +26,8 @@ public interface SysUserDao extends JpaRepository<SysUser,Long> {
     @Query(value = "select f from SysUser u join u.roles r join r.funcs f where u.id =?1 " +
             "order by f.level,f.seqNo")
     public List<Func> findUserRoleFunc(Long uid);
+
+    @Query(value = "select f from SysUser u join u.roles r join r.funcs f where u.id =?1 and f.url !=null and f.url !='' " +
+            "order by f.level,f.seqNo")
+    public List<Func> findUserFuncWithUrl(Long uid,Pageable page);
 }

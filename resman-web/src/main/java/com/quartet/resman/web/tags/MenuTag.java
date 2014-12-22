@@ -1,8 +1,11 @@
 package com.quartet.resman.web.tags;
 
 import com.quartet.resman.entity.Func;
+import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.service.UserService;
 import com.quartet.resman.utils.SysUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -22,12 +25,12 @@ public class MenuTag extends SimpleTagSupport {
     @Override
     public void doTag() throws JspException, IOException {
         super.doTag();
-//        Subject subject = SecurityUtils.getSubject();
-//        ShiroUser shiroUser = (ShiroUser) subject.getPrincipal();
-//        List<Func> funcs = SysUtils.getBean("userService", UserService.class)
-//                .getSysUserFunc(shiroUser.getId());
+        Subject subject = SecurityUtils.getSubject();
+        ShiroUser shiroUser = (ShiroUser) subject.getPrincipal();
         List<Func> funcs = SysUtils.getBean("userService", UserService.class)
-                .getSysUserFunc(5L);
+                .getSysUserFunc(shiroUser.getId());
+//        List<Func> funcs = SysUtils.getBean("userService", UserService.class)
+//                .getSysUserFunc(5L);
         List<FuncVo> vos = denormalize(funcs);
         StringBuilder sb = new StringBuilder();
         sb.append("<ul class='sidebar-menu'>");

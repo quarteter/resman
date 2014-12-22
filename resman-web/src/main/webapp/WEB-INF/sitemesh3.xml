@@ -3,6 +3,7 @@
     <mime-type>text/html</mime-type>
     <mime-type>application/xhtml+xml</mime-type>
     <mapping path="/asset/*" exclue="true"/>
+    <mapping path="/login" exclue="true"/>
 
 
     <mapping path="/*" decorator="/WEB-INF/layout/main.jsp"/>

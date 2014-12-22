@@ -2,16 +2,16 @@ package com.quartet.resman.service;
 
 import static com.google.common.base.Preconditions.*;
 
-import com.google.common.collect.Lists;
-import com.quartet.resman.entity.*;
-import org.apache.commons.lang3.StringUtils;
 import com.quartet.resman.core.utils.Digests;
 import com.quartet.resman.core.utils.Encodes;
+import com.quartet.resman.entity.*;
 import com.quartet.resman.repository.RoleDao;
 import com.quartet.resman.repository.SysUserDao;
 import com.quartet.resman.repository.UserDao;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -35,10 +35,6 @@ public class UserService {
     private SysUserDao sysUserDao;
     @Autowired
     private RoleDao roleDao;
-
-    public void addUser(User user) {
-        userDao.save(user);
-    }
 
     public void addSysUser(SysUser sysUser, User user) {
         checkNotNull(sysUser);
@@ -105,21 +101,6 @@ public class UserService {
         return result;
     }
 
-    //public List<String> getUserRole
-
-//    public List<Func> getSysUserFunc(Long userId, Long roleId) {
-//        if (roleId == null) {
-//            SysUser u = sysUserDao.getOne(userId);
-//            Set<Role> role = u.getRoles();
-//            if (role.size() > 0) {
-//                roleId = role.iterator().next().getId();
-//            } else {
-//                return null;
-//            }
-//        }
-//        return sysUserDao.findUserRoleFunc(userId, roleId);
-//    }
-
     /**
      * 获得系统用户的功能列表
      *
@@ -128,6 +109,15 @@ public class UserService {
      */
     public List<Func> getSysUserFunc(Long userId) {
         return sysUserDao.findUserRoleFunc(userId);
+    }
+
+    public Func getSysUserFirstFunc(Long userId) {
+        PageRequest page = new PageRequest(0, 1);
+        List<Func> funcs = sysUserDao.findUserFuncWithUrl(userId, page);
+        if (funcs != null && funcs.size() > 0) {
+            return funcs.get(0);
+        }
+        return null;
     }
 
     public void updateUserRole(Long sysUid, Long[] roleIds) {
@@ -140,13 +130,8 @@ public class UserService {
     }
 
     public void deleteUser(Long userId) {
-        //User user = userDao.findOne(userId);
-        //Long sysUserId = user.getSysUserId();
         userDao.delete(userId);
         sysUserDao.delete(userId);
-//        if (sysUserId != null) {
-//            sysUserDao.delete(sysUserId);
-//        }
     }
 
     public void deleteUser(List<Long> users) {

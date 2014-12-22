@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="menu" uri="http://org.arcie.ctsm"%>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
@@ -13,7 +14,7 @@
                 <img src="${ctx}/asset/img/avatar3.png" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>你好, 王 刚</p>
+                <p>你好, <shiro:principal property="userName"/></p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
             </div>
