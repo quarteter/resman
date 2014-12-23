@@ -84,8 +84,14 @@
         function beforeDrop(treeId, treeNodes, targetNode, moveType) {
             var result = false,
                     srclen = treeNodes.length,
-                    curLevel = -1;
+                    curLevel = -1,
+                    targetParent = targetNode.getParentNode(),
+                    srcParent = null;
             for (var i = 0; i < srclen; i++) {
+                srcParent = treeNodes[i].getParentNode();
+                if(srcParent !== targetParent){
+                   return false;
+                }
                 if (i == 0) {
                     curLevel = treeNodes[i].level;
                 } else {
@@ -100,15 +106,15 @@
                 var srcId = treeNodes[0].id,
                         targetId =targetNode.id,
                         treeObj = $.fn.zTree.getZTreeObj("funcTree");
-                <%--$.post("${ctx}/sys/func/adjustSeqNo",{--%>
-                    <%--srcId : srcId,--%>
-                    <%--targetId : targetId,--%>
-                    <%--type:moveType--%>
-                <%--},function(data){--%>
-                   <%--if(!data.success){--%>
-                       <%--treeObj.reAsyncChildNodes(targetNode.getParentNode(),"refresh", true);--%>
-                   <%--}--%>
-                <%--});--%>
+                $.post("${ctx}/sys/func/adjustSeqNo",{
+                    srcId : srcId,
+                    targetId : targetId,
+                    type:moveType
+                },function(data){
+                   if(!data.success){
+                       treeObj.reAsyncChildNodes(targetNode.getParentNode(),"refresh", true);
+                   }
+                });
             }
         }
         /*

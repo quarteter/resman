@@ -90,4 +90,29 @@
             <version>${version.shiro}</version>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>init-db</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <configuration>
+                            <target>
+                                <property file="src/main/resources/application.development.properties" />
+                                <property file="src/main/resources/application.properties" />
+                                <sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}"
+                                     onerror="continue" encoding="${project.build.sourceEncoding}">
+                                    <classpath refid="maven.test.classpath" />
+                                    <transaction src="src/main/resources/sql/mysql.sql" />
+                                </sql>
+                            </target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

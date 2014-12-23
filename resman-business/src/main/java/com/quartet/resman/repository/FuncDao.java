@@ -28,11 +28,19 @@ public interface FuncDao extends JpaRepository<Func,Long> {
 
     public List<Func> findByLevelOrderBySeqNoAsc(int level);
 
-    @Query(value = "update Func f set f.seqNo = f.seqNo+5 where f.level =?1 and f.seqNo>= ?2 and f.seqNo <?3")
+    @Query(value = "update Func f set f.seqNo = f.seqNo+5 where f.parent = ?1 and f.seqNo>= ?2 and f.seqNo <?3")
     @Modifying
-    public void updateSeqNoPre(Integer level,Integer targetSeqNo,Integer srcSeqNo);
+    public void updateSeqNoPre(Long parent,Integer targetSeqNo,Integer srcSeqNo);
 
-    @Query(value = "update Func f set f.seqNo = f.seqNo+5 where f.level =?1 and f.seqNo> ?2 and f.seqNo <?3")
+    @Query(value = "update Func f set f.seqNo = f.seqNo+5 where f.parent = ?1 and f.seqNo>= ?2")
     @Modifying
-    public void updateSeqNoNext(Integer level,Integer targetSeqNo,Integer srcSeqNo);
+    public void updateSeqNoPre(Long parent,Integer targetSeqNo);
+
+    @Query(value = "update Func f set f.seqNo = f.seqNo+5 where f.parent = ?1 and f.seqNo> ?2 and f.seqNo <?3")
+    @Modifying
+    public void updateSeqNoNext(Long parent,Integer targetSeqNo,Integer srcSeqNo);
+
+    @Query(value = "update Func f set f.seqNo = f.seqNo+5 where f.parent = ?1 and f.seqNo> ?2")
+    @Modifying
+    public void updateSeqNoNext(Long parent,Integer targetSeqNo);
 }

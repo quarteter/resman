@@ -44,6 +44,7 @@ public class FuncService {
     public void adjustFuncSeqNo(Long srcId, Long targetId, String type) {
         Func src = funcDao.getOne(srcId);
         Func target = funcDao.getOne(targetId);
+        Long parent = target.getParent();
         Integer srcSeqNo = src.getSeqNo();
         Integer targetSeqNo = target.getSeqNo();
         Integer srcLevel = src.getLevel();
@@ -51,14 +52,23 @@ public class FuncService {
         if (srcLevel != targetLevel) {
             return;
         }
-        if (type.equals("pre")) {
+        if (type.equals("prev")) {
+            if (srcSeqNo > targetSeqNo) {
+                funcDao.updateSeqNoPre(parent, targetSeqNo, srcSeqNo);
+            } else {
+                funcDao.updateSeqNoPre(parent, targetSeqNo);
+            }
             src.setSeqNo(targetSeqNo);
             funcDao.save(src);
-            funcDao.updateSeqNoPre(srcLevel, targetSeqNo, srcSeqNo);
         } else if (type.equals("next")) {
-            src.setSeqNo(targetSeqNo+5);
+            if (srcSeqNo > targetSeqNo) {
+                funcDao.updateSeqNoNext(parent, targetSeqNo, srcSeqNo);
+            } else {
+                funcDao.updateSeqNoNext(parent, targetSeqNo);
+            }
+            src.setSeqNo(targetSeqNo + 5);
             funcDao.save(src);
-            funcDao.updateSeqNoNext(srcLevel,targetSeqNo,srcSeqNo);
+
         }
     }
 
