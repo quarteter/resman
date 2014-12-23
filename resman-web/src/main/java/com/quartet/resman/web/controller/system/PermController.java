@@ -1,9 +1,9 @@
 package com.quartet.resman.web.controller.system;
 
+import com.quartet.resman.entity.Permission;
+import com.quartet.resman.entity.Result;
+import com.quartet.resman.service.PermissionService;
 import org.apache.commons.lang3.StringUtils;
-import org.arcie.ctsm.entity.Permission;
-import org.arcie.ctsm.entity.Result;
-import org.arcie.ctsm.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -33,12 +33,33 @@ public class FuncService {
         return funcDao.findByParentOrderByLevelAscSeqNoAsc(pid);
     }
 
-    public Page<Func> getFuncByParentAndLeaf(Long pid,Pageable page){
-        return funcDao.findByParentAndLeafTrueOrderBySeqNoAsc(pid,page);
+    public Page<Func> getFuncByParentAndLeaf(Long pid, Pageable page) {
+        return funcDao.findByParentAndLeafTrueOrderBySeqNoAsc(pid, page);
     }
 
     public void addFunc(Func func) {
         funcDao.save(func);
+    }
+
+    public void adjustFuncSeqNo(Long srcId, Long targetId, String type) {
+        Func src = funcDao.getOne(srcId);
+        Func target = funcDao.getOne(targetId);
+        Integer srcSeqNo = src.getSeqNo();
+        Integer targetSeqNo = target.getSeqNo();
+        Integer srcLevel = src.getLevel();
+        Integer targetLevel = target.getLevel();
+        if (srcLevel != targetLevel) {
+            return;
+        }
+        if (type.equals("pre")) {
+            src.setSeqNo(targetSeqNo);
+            funcDao.save(src);
+            funcDao.updateSeqNoPre(srcLevel, targetSeqNo, srcSeqNo);
+        } else if (type.equals("next")) {
+            src.setSeqNo(targetSeqNo+5);
+            funcDao.save(src);
+            funcDao.updateSeqNoNext(srcLevel,targetSeqNo,srcSeqNo);
+        }
     }
 
     public void delFunc(Long uid) {

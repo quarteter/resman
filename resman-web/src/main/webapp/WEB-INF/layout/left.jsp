@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@ taglib prefix="menu" uri="http://org.arcie.ctsm"%>
+<%@ taglib prefix="menu" uri="http://com.quartet.web/tags"%>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <aside class="left-side sidebar-offcanvas">

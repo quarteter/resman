@@ -7,11 +7,11 @@
 
     <tlib-version>1.2</tlib-version>
     <short-name>customer-tag</short-name>
-    <uri>http://org.arcie.ctsm</uri>
+    <uri>http://com.quartet.web/tags</uri>
 
     <tag>
         <name>menu</name>
-        <tag-class>org.arcie.ctsm.tags.MenuTag</tag-class>
+        <tag-class>com.quartet.resman.web.tags.MenuTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 

@@ -1,8 +1,8 @@
 package com.quartet.resman.web.controller.system;
 
-import org.arcie.ctsm.entity.Func;
-import org.arcie.ctsm.entity.Result;
-import org.arcie.ctsm.service.FuncService;
+import com.quartet.resman.entity.Func;
+import com.quartet.resman.entity.Result;
+import com.quartet.resman.service.FuncService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -75,6 +75,20 @@ public class FuncController {
             result = new Result(true,"");
         }catch (Throwable t){
             result = new Result(false,"");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/adjustSeqNo",method = RequestMethod.POST)
+    @ResponseBody
+    public Result adjustSeqNo(Long srcId,Long targetId,String type){
+        Result result = null;
+        try{
+            funcService.adjustFuncSeqNo(srcId,targetId,type);
+            result = new Result(true,"");
+        }catch (Throwable t){
+            t.printStackTrace();
+            return new Result(false,"");
         }
         return result;
     }

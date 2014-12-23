@@ -4,6 +4,8 @@ import com.quartet.resman.entity.Func;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -25,4 +27,12 @@ public interface FuncDao extends JpaRepository<Func,Long> {
     public Page<Func> findByParentAndLeafTrueOrderBySeqNoAsc(Long pid, Pageable page);
 
     public List<Func> findByLevelOrderBySeqNoAsc(int level);
+
+    @Query(value = "update Func f set f.seqNo = f.seqNo+5 where f.level =?1 and f.seqNo>= ?2 and f.seqNo <?3")
+    @Modifying
+    public void updateSeqNoPre(Integer level,Integer targetSeqNo,Integer srcSeqNo);
+
+    @Query(value = "update Func f set f.seqNo = f.seqNo+5 where f.level =?1 and f.seqNo> ?2 and f.seqNo <?3")
+    @Modifying
+    public void updateSeqNoNext(Integer level,Integer targetSeqNo,Integer srcSeqNo);
 }

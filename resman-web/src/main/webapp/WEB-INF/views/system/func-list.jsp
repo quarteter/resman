@@ -59,12 +59,58 @@
     </script>
     <script type="text/javascript">
         var setting = {
+            edit: {
+                enable: true,
+                showRemoveBtn: false,
+                showRenameBtn: false,
+                drag: {
+                    inner: false,
+                    isCopy: false
+                }
+            },
             async: {
                 enable: true,
                 url: "${ctx}/sys/func/treeList",
                 autoParam: ["id=pid", "name=n", "level=lv"]
+            },
+            callback: {
+                beforeDrop: beforeDrop,
+                onDrop:onDrop
+            },
+            view:{
+                selectedMulti:false
             }
         };
+        function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+            var result = false,
+                    srclen = treeNodes.length,
+                    curLevel = -1;
+            for (var i = 0; i < srclen; i++) {
+                if (i == 0) {
+                    curLevel = treeNodes[i].level;
+                } else {
+                    return curLevel == treeNodes[i].level;
+                }
+            }
+
+            return targetNode ? targetNode.level == curLevel : false;
+        }
+        function onDrop(event,treeId,treeNodes,targetNode,moveType){
+            if(treeNodes && treeNodes.length>0){
+                var srcId = treeNodes[0].id,
+                        targetId =targetNode.id,
+                        treeObj = $.fn.zTree.getZTreeObj("funcTree");
+                <%--$.post("${ctx}/sys/func/adjustSeqNo",{--%>
+                    <%--srcId : srcId,--%>
+                    <%--targetId : targetId,--%>
+                    <%--type:moveType--%>
+                <%--},function(data){--%>
+                   <%--if(!data.success){--%>
+                       <%--treeObj.reAsyncChildNodes(targetNode.getParentNode(),"refresh", true);--%>
+                   <%--}--%>
+                <%--});--%>
+            }
+        }
         /*
          * 创建功能树
          */
@@ -84,7 +130,7 @@
                     label: '确定',
                     cssClass: 'btn-primary btn-flat',
                     action: function (dialog) {
-                        addFuncAction(dialog,leaf);
+                        addFuncAction(dialog, leaf);
                     }
                 }, {
                     label: '取消',
@@ -95,7 +141,7 @@
             });
         }
 
-        function addFuncAction(dialogRef,leaf) {
+        function addFuncAction(dialogRef, leaf) {
             var name = $("#name").val(),
                     url = $("#url").val(),
                     seqNo = $("#seqNo").val(),
@@ -110,7 +156,7 @@
                 data.level = 0;
             }
             data.leaf = leaf;
-            if(iconCls!=null && iconCls!=""){
+            if (iconCls != null && iconCls != "") {
                 data.iconCls = iconCls;
             }
 
@@ -146,25 +192,25 @@
                 });
             }
         }
-        function refreshModuleTreeAction(){
+        function refreshModuleTreeAction() {
             var tree = $.fn.zTree.getZTreeObj("funcTree");
-            tree.reAsyncChildNodes(null,"refresh",true);
+            tree.reAsyncChildNodes(null, "refresh", true);
         }
-        function queryParamFunc(params){
+        function queryParamFunc(params) {
             var page = params.pageNumber,
                     size = params.pageSize,
                     tree = $.fn.zTree.getZTreeObj("funcTree"),
                     nodes = tree.getSelectedNodes();
             delete params.pageNumber;
             delete params.pageSize;
-            params.page=(page - 1);
+            params.page = (page - 1);
             params.size = size;
-            if(nodes.length>0){
+            if (nodes.length > 0) {
                 var id = nodes[0].id;
                 params.pid = id;
-            }else{
+            } else {
                 var roots = tree.getNodes();
-                if(roots.length>0){
+                if (roots.length > 0) {
                     var id = roots[0].id;
                     params.pid = id;
                 }
@@ -182,22 +228,22 @@
             $("#funcDelBtn").on("click", function () {
                 delFuncAction();
             });
-            $("#funcRefreshBtn").on("click",function(){
+            $("#funcRefreshBtn").on("click", function () {
                 refreshModuleTreeAction();
             });
         }
-        function bindFuncEvent(){
-             $("#btnAdd").on("click",function(){
-                 BootstrapDialog
-             });
+        function bindFuncEvent() {
+            $("#btnAdd").on("click", function () {
+                BootstrapDialog
+            });
         }
         $(document).ready(function () {
             createFuncTree();
             <%--createBootstrapTable("#funcList","${ctx}/func/query",true,queryParamFunc);--%>
             <%--$("#funcList").createBootstrapTable({--%>
-                <%--url:"${ctx}/func/query",--%>
-                <%--cudBtn: true,--%>
-                <%--queryParams:queryParamFunc--%>
+            <%--url:"${ctx}/func/query",--%>
+            <%--cudBtn: true,--%>
+            <%--queryParams:queryParamFunc--%>
             <%--});--%>
             bindFuncModuleEvent();
         });
@@ -237,17 +283,17 @@
             <ul id="funcTree" class="ztree"></ul>
         </div>
         <%--<div class="col-sm-10 pull-left">--%>
-            <%--<table id="funcList">--%>
-                <%--<thead>--%>
-                <%--<tr>--%>
-                    <%--<th data-checkbox="true"></th>--%>
-                    <%--<th data-field="name" data-align="center">功能名称</th>--%>
-                    <%--<th data-field="url" data-align="center">URL</th>--%>
-                    <%--<th data-field="seqNo" data-align="center">顺序号</th>--%>
-                    <%--<th data-field="notes" data-align="center">备 注</th>--%>
-                <%--</tr>--%>
-                <%--</thead>--%>
-            <%--</table>--%>
+        <%--<table id="funcList">--%>
+        <%--<thead>--%>
+        <%--<tr>--%>
+        <%--<th data-checkbox="true"></th>--%>
+        <%--<th data-field="name" data-align="center">功能名称</th>--%>
+        <%--<th data-field="url" data-align="center">URL</th>--%>
+        <%--<th data-field="seqNo" data-align="center">顺序号</th>--%>
+        <%--<th data-field="notes" data-align="center">备 注</th>--%>
+        <%--</tr>--%>
+        <%--</thead>--%>
+        <%--</table>--%>
         <%--</div>--%>
     </section>
 </aside>
