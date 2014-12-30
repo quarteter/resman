@@ -14,7 +14,7 @@ import java.io.*;
  * @version 1.0
  *          ${tags}
  */
-@ContextConfiguration(locations = "/spring-config.xml")
+@ContextConfiguration(locations = "/spring-config-jcr-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class JcrAccessorTest {
     @Autowired
@@ -84,6 +84,38 @@ public class JcrAccessorTest {
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
 
+    @Test
+    public void testGetChildren(){
+        accessor.deleteNode("精品课");
+        String p1 = accessor.addFolder("精品课");
+        String p2 = accessor.addFolder("精品课","高等数学");
+        p2 = accessor.addFolder("精品课","代数");
+        p2 = accessor.addFolder("精品课","大学化学");
+        p2 = accessor.addFolder("精品课","理论力学");
+        try(InputStream is = new FileInputStream(new File("D:/cluster.log"))){
+            String path = accessor.addFile("精品课",is,"cluster.log","");
+            System.out.println(path);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        accessor.getChildren("精品课");
+    }
+
+    @Test
+    public void testQueryFile(){
+        accessor.deleteNode("精品课");
+        String p1 = accessor.addFolder("精品课");
+        String p2 = accessor.addFolder("精品课","高等数学");
+        p2 = accessor.addFolder("精品课","代数");
+        p2 = accessor.addFolder("精品课","大学化学");
+        p2 = accessor.addFolder("精品课","理论力学");
+        try(InputStream is = new FileInputStream(new File("D:/cluster.log"))){
+            accessor.addFile("精品课/代数", is, "cluster.log", "");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        accessor.queryFile("cluster");
     }
 }
