@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.extensions.jcr.JcrCallback;
 import org.springframework.extensions.jcr.JcrTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.jcr.*;
 import javax.jcr.query.*;
@@ -23,7 +23,7 @@ import java.util.List;
  * @version 1.0
  *          ${tags}
  */
-@Component
+@Service
 public class JcrAccessor {
 
     private static Logger log = LoggerFactory.getLogger(JcrAccessor.class);
@@ -122,6 +122,10 @@ public class JcrAccessor {
     }
 
     public List<NodeVo> getChildren(final String parentPath) {
+        String[] ns = jcrTemplate.getNamespacePrefixes();
+        for (String n:ns){
+            System.out.println(n);
+        }
 
         return jcrTemplate.execute(new JcrCallback<List<NodeVo>>() {
             @Override
@@ -135,6 +139,11 @@ public class JcrAccessor {
                         Object obj = iterator.next();
                         if (obj instanceof Node) {
                             Node next = (Node) obj;
+                            for (PropertyIterator pi = next.getProperties(); pi.hasNext();){
+                                Property p = pi.nextProperty();
+                                Value v = p.getValue();
+                                System.out.println(p.getName()+":"+v.getString());
+                            }
                             String name = next.getName();
                             String type = next.getPrimaryNodeType().getName();
                             String path = next.getPath();

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nodeTypes xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+           xmlns:jcr="http://www.jcp.org/jcr/1.0"
+           xmlns:sv="http://www.jcp.org/jcr/sv/1.0"
+           xmlns:mix="http://www.jcp.org/jcr/mix/1.0"
+        xmlns:rm="http://www.quarteter.com/resman">
+
+    <nodeType name="rm:folder" isMixin="false">
+        <supertypes>
+            <supertype>nt:folder</supertype>
+        </supertypes>
+        <propertyDefinition name="rm:status" requiredType="String" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false" />
+        <propertyDefinition name="rm:visibility" requiredType="String" autoCreated="false"  onParentVersion="COPY" protected="false" multiple="false" />
+        <!--<propertyDefinition name="rm:createBy" requiredType="String" autoCreated="false" onParentVersion="COPY" protected="false" multiple="false" />-->
+    </nodeType>
+
+</nodeTypes>
