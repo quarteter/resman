@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author lcheng
@@ -28,6 +27,10 @@ public class FolderService {
     public void addFolder(Folder folder) {
         mappingTemplate.insert(folder);
         mappingTemplate.save();
+    }
+
+    public Folder getFolder(String path){
+        return (Folder)mappingTemplate.getObject(path);
     }
 
     public void deleteFolder(String path){

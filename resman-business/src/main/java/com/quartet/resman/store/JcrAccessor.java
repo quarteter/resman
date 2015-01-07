@@ -122,11 +122,6 @@ public class JcrAccessor {
     }
 
     public List<NodeVo> getChildren(final String parentPath) {
-        String[] ns = jcrTemplate.getNamespacePrefixes();
-        for (String n:ns){
-            System.out.println(n);
-        }
-
         return jcrTemplate.execute(new JcrCallback<List<NodeVo>>() {
             @Override
             public List<NodeVo> doInJcr(Session session) throws IOException, RepositoryException {
