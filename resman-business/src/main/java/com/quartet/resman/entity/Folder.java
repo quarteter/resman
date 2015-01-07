@@ -1,14 +1,18 @@
 package com.quartet.resman.entity;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @author lcheng
  * @version 1.0
  *          ${tags}
  */
-public class Folder extends BaseFolder {
+public class Folder extends Entry {
 
     private String status;
     private String visibility;
+    private List<Entry> entries;
 
     public Folder() {
     }
@@ -36,6 +40,14 @@ public class Folder extends BaseFolder {
 
     public void setVisibility(String visibility) {
         this.visibility = visibility;
+    }
+
+    public List<Entry> getEntries() {
+        return entries;
+    }
+
+    public void setEntries(List<Entry> entries) {
+        this.entries = entries;
     }
 
     @Override

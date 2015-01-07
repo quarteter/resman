@@ -7,7 +7,7 @@ import java.util.Date;
  * @version 1.0
  *          ${tags}
  */
-public class BaseFolder {
+public class Entry {
 
     protected String name;
     protected String path;
@@ -31,7 +31,17 @@ public class BaseFolder {
     }
 
     public String getName() {
-        return name;
+        if (name!=null){
+            return name;
+        }else if (path!=null){
+            int idx = path.lastIndexOf("/");
+            if (idx>=0){
+                return path.substring(idx+1);
+            }else{
+                return path;
+            }
+        }
+        return null;
     }
 
     public void setName(String name) {
@@ -50,7 +60,7 @@ public class BaseFolder {
     public String toString() {
         return "BaseFolder{" +
                 "created=" + created +
-                ", name='" + name + '\'' +
+                ", name='" + getName() + '\'' +
                 ", path='" + path + '\'' +
                 ", createBy='" + createBy + '\'' +
                 '}';
