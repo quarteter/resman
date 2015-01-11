@@ -1,5 +1,8 @@
 package com.quartet.resman.entity;
 
+import com.quartet.resman.utils.Types;
+
+import java.lang.reflect.Type;
 import java.util.Date;
 
 /**
@@ -13,6 +16,22 @@ public class Entry {
     protected String path;
     protected Date created;
     protected String createBy;
+
+    private String status;
+    private String visibility;
+
+    public Entry(){}
+
+    public Entry(String path,String createBy, String status, String visibility) {
+        this.path = path;
+        this.createBy = createBy;
+        this.status = status;
+        this.visibility = visibility;
+    }
+
+    public Entry(String path,String createBy){
+        this(path,createBy, Types.Status.UnReviewed.getValue(), Types.Visibility.All.getValue());
+    }
 
     public Date getCreated() {
         return created;
@@ -56,13 +75,31 @@ public class Entry {
         this.path = path;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(String visibility) {
+        this.visibility = visibility;
+    }
+
     @Override
     public String toString() {
-        return "BaseFolder{" +
-                "created=" + created +
-                ", name='" + getName() + '\'' +
+        return "Entry{" +
+                "name='" + getName() + '\'' +
                 ", path='" + path + '\'' +
+                ", created=" + created +
                 ", createBy='" + createBy + '\'' +
+                ", status='" + status + '\'' +
+                ", visibility='" + visibility + '\'' +
                 '}';
     }
 }

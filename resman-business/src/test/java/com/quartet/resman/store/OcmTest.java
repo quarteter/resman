@@ -4,23 +4,16 @@ import com.quartet.resman.entity.Entry;
 import com.quartet.resman.entity.File;
 import com.quartet.resman.entity.FileStream;
 import com.quartet.resman.entity.Folder;
-import com.quartet.resman.vo.NodeVo;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import com.quartet.resman.utils.Types;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.jcr.RepositoryException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,53 +33,73 @@ public class OcmTest {
     private JcrAccessor jcrAccessor;
 
     private static String FILE_PATH = "D:/cluster.log";
+    private String type = Types.Folders.ClassicCourse.getValue();
 
     @Before
-    public void deleteAll() {
-        jcrAccessor.deleteNode("jpk");
-        jcrAccessor.addFolder("jpk");
-    }
+    public void init() {
+        folderService.deleteFolder("/jpk");
+        folderService.addFolder(new Folder("/jpk", "lcheng", "0", "all", Types.Folders.ClassicCourse.getValue()));
+        Folder folder = new Folder("/jpk/kc1", "lcheng", "0", "all", type);
+        Folder folder1 = new Folder("/jpk/kc1/gs1", "lcheng", "0", "all", type);
+        Folder folder2 = new Folder("/jpk/kc1/gs2", "lcheng", "0", "all", type);
+        Folder folder3 = new Folder("/jpk/kc1/gs3", "lcheng", "0", "all", type);
 
-    @Test
-    public void testAddFolder() {
+        Folder folder31 = new Folder("/jpk/kc1/gs3/g1", "lcheng", "0", "all", type);
+        Folder folder32 = new Folder("/jpk/kc1/gs3/g2", "lcheng", "0", "all", type);
+        Folder folder33 = new Folder("/jpk/kc1/gs3/g3", "lcheng", "0", "all", type);
 
-        Folder folder = new Folder("/jpk/kc1", "kc1", "lcheng", "0", "all");
-        Folder folder1 = new Folder("/jpk/kc1/gs1", "gs1", "lcheng", "0", "all");
-        Folder folder2 = new Folder("/jpk/kc1/gs2", "gs2", "lcheng", "0", "all");
-        Folder folder3 = new Folder("/jpk/kc1/gs3", "gs3", "lcheng", "0", "all");
         folderService.addFolder(folder);
         folderService.addFolder(folder1);
         folderService.addFolder(folder2);
         folderService.addFolder(folder3);
 
+        folderService.addFolder(folder31);
+        folderService.addFolder(folder32);
+        folderService.addFolder(folder33);
+
         java.io.File f = new java.io.File(FILE_PATH);
-        try(InputStream is = new FileInputStream(f)){
-//            File file = new File("/jpk/kc1/cluster.log","lcheng",is,f.length());
-            File file = new File("/jpk/kc1/cluster.log","lcheng",new FileStream(is),f.length());
+        try (InputStream is = new FileInputStream(f)) {
+            File file = new File("/jpk/kc1/cluster.log", "lcheng", new FileStream(is), f.length());
             fileService.addFile(file);
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        Folder fd = folderService.getFolder("/jpk/kc1");
-        List<Entry> entries = fd.getEntries();
+    @After
+    public void clear() {
+        folderService.deleteFolder("/jpk");
+    }
+
+    @Test
+    public void testAddFolder() {
+        Folder folder = new Folder("/jpk/kc1/gs1/g1", "lcheng", type);
+        folderService.addFolder(folder);
+
+        List<Entry> entries = folderService.getChildren("/jpk/kc1");
         Assert.assertNotNull(entries);
-        Assert.assertEquals(4,entries.size());
+        Assert.assertEquals(4, entries.size());
 
-        for (Entry entry : entries){
-            if (entry instanceof File){
-//                InputStream is = ((File) entry).getContent();
-                FileStream fs = ((File) entry).getFileStream();
-                if (fs!=null){
-                    InputStream is = fs.getContent();
-                    if (is!=null){
-                        System.out.println("is not null...");
-                    }
-                }else{
-                    System.out.println("fs is null...");
-                }
-            }
-            System.out.println(entry);
-        }
+        Folder get = folderService.getFolder("/jpk/kc1/gs1/g1");
+        Assert.assertNotNull(get);
+        Assert.assertEquals("/jpk/kc1/gs1/g1", get.getPath());
+        Assert.assertEquals("lcheng", get.getCreateBy());
+        Assert.assertEquals(Types.Status.UnReviewed.getValue(), get.getStatus());
+        Assert.assertEquals(Types.Folders.ClassicCourse.getValue(), get.getType());
+    }
+
+    @Test
+    public void testRename() {
+        folderService.rename("/jpk/kc1", "kc1-change");
+        Folder folder = folderService.getFolder("/jpk/kc1-change");
+        Assert.assertNotNull(folder);
+        Assert.assertEquals("/jpk/kc1-change", folder.getPath());
+    }
+
+    @Test
+    public void testGetChildren() {
+        List<Entry> data = folderService.getChildren("/jpk/kc1",Types.Status.UnReviewed.getValue(), Types.Visibility.All.getValue());
+        Assert.assertNotNull(data);
+        Assert.assertEquals(3,data.size());
     }
 }

@@ -10,6 +10,8 @@
              <supertype>mix:created</supertype>
          </supertypes>
         <propertyDefinition name="rm:createBy" requiredType="String" autoCreated="false" onParentVersion="COPY" protected="false" multiple="false" />
+        <propertyDefinition name="rm:status" requiredType="String" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false" />
+        <propertyDefinition name="rm:visibility" requiredType="String" autoCreated="false"  onParentVersion="COPY" protected="false" multiple="false" />
     </nodeType>
 
     <nodeType name="rm:folder" isMixin="false">
@@ -17,8 +19,9 @@
             <supertype>rm:entry</supertype>
             <supertype>nt:folder</supertype>
         </supertypes>
-        <propertyDefinition name="rm:status" requiredType="String" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false" />
-        <propertyDefinition name="rm:visibility" requiredType="String" autoCreated="false"  onParentVersion="COPY" protected="false" multiple="false" />
+        <!--<propertyDefinition name="rm:status" requiredType="String" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false" />-->
+        <!--<propertyDefinition name="rm:visibility" requiredType="String" autoCreated="false"  onParentVersion="COPY" protected="false" multiple="false" />-->
+        <propertyDefinition name="rm:type" requiredType="String" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false" />
 
         <childNodeDefinition name="*" defaultPrimaryType="rm:entry" autoCreated="false" mandatory="false" onParentVersion="VERSION" protected="false" sameNameSiblings="false">
             <requiredPrimaryTypes>
