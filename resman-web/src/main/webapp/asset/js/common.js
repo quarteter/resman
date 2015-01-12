@@ -140,6 +140,8 @@ function goBack() {
             }
         }
     }
+
+
 })(window.jQuery);
 
 function createDualSelect(sid,cssCls){
@@ -178,5 +180,38 @@ function createDualSelect(sid,cssCls){
             this.qs1.cache();
             this.qs2.cache();
         }
+    });
+}
+
+(function($){
+    $.fn.serializeJson=function(){
+        var serializeObj={};
+        $(this.serializeArray()).each(function(){
+            serializeObj[this.name]=this.value;
+        });
+        return serializeObj;
+    };
+})(jQuery);
+
+function tipSuccess(msg){
+    jSuccess(msg,{
+        ShowOverlay: false,
+        MinWidth: 70
+    });
+}
+
+function tipError(msg){
+    jError(msg,{
+        ShowOverlay: false,
+        MinWidth: 70,
+        TimeShown : 4000
+    });
+}
+
+function tipNotify(msg){
+    jNotify(msg,{
+        ShowOverlay: false,
+        MinWidth: 70,
+        TimeShown : 2500
     });
 }

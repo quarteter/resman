@@ -11,6 +11,7 @@ import com.quartet.resman.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
@@ -51,8 +52,9 @@ public class UserController {
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> loadUsers(String searchText, @PageableDefault Pageable page) {
+    public Map<String, Object> loadUsers(String searchText, int pageSize, int pageNumber) {
         Page<User> users = null;
+        Pageable page = new PageRequest(pageSize, pageNumber);
         if (StringUtils.isNotEmpty(searchText)) {
             SearchFilter filter = new SearchFilter("name", SearchFilter.Operator.LIKE, searchText);
             List<SearchFilter> filters = new ArrayList<>(1);
