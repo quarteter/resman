@@ -5,6 +5,7 @@ import com.quartet.resman.entity.Folder;
 import org.apache.jackrabbit.ocm.query.Filter;
 import org.apache.jackrabbit.ocm.query.Query;
 import org.apache.jackrabbit.ocm.query.QueryManager;
+import org.apache.jackrabbit.ocm.query.impl.FilterImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.extensions.jcr.JcrCallback;
 import org.springframework.extensions.jcr.JcrTemplate;
@@ -105,6 +106,13 @@ public class FolderService {
         });
     }
 
+    /**
+     * 按status 和 visibility 过滤查询子节点
+     * @param path
+     * @param status
+     * @param visibility
+     * @return
+     */
     public List<Entry> getChildren(String path, String status, String visibility) {
         if (path != null && !path.endsWith("/")) {
             path = path + "/";
@@ -113,9 +121,8 @@ public class FolderService {
         Filter filter = qm.createFilter(Entry.class);
         filter.setScope(path);
 
-        //TODO
-//        filter.addEqualTo("rm:status", status);
-//        filter.addEqualTo("rm:visibility", visibility);
+        filter.addEqualTo("status", status);
+        filter.addEqualTo("visibility", visibility);
         Query q = qm.createQuery(filter);
         return (List<Entry>) mappingTemplate.getObjects(q);
     }

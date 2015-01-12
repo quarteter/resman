@@ -38,15 +38,15 @@ public class OcmTest {
     @Before
     public void init() {
         folderService.deleteFolder("/jpk");
-        folderService.addFolder(new Folder("/jpk", "lcheng", "0", "all", Types.Folders.ClassicCourse.getValue()));
-        Folder folder = new Folder("/jpk/kc1", "lcheng", "0", "all", type);
-        Folder folder1 = new Folder("/jpk/kc1/gs1", "lcheng", "0", "all", type);
-        Folder folder2 = new Folder("/jpk/kc1/gs2", "lcheng", "0", "all", type);
-        Folder folder3 = new Folder("/jpk/kc1/gs3", "lcheng", "0", "all", type);
+        folderService.addFolder(new Folder("/jpk", "lcheng", "0", "", Types.Folders.ClassicCourse.getValue()));
+        Folder folder = new Folder("/jpk/kc1", "lcheng", "0", "a", type);
+        Folder folder1 = new Folder("/jpk/kc1/gs1", "lcheng", "0", "a", type);
+        Folder folder2 = new Folder("/jpk/kc1/gs2", "lcheng", "0", "a", type);
+        Folder folder3 = new Folder("/jpk/kc1/gs3", "lcheng", "0", "a", type);
 
-        Folder folder31 = new Folder("/jpk/kc1/gs3/g1", "lcheng", "0", "all", type);
-        Folder folder32 = new Folder("/jpk/kc1/gs3/g2", "lcheng", "0", "all", type);
-        Folder folder33 = new Folder("/jpk/kc1/gs3/g3", "lcheng", "0", "all", type);
+        Folder folder31 = new Folder("/jpk/kc1/gs3/g1", "lcheng", "0", "a", type);
+        Folder folder32 = new Folder("/jpk/kc1/gs3/g2", "lcheng", "0", "a", type);
+        Folder folder33 = new Folder("/jpk/kc1/gs3/g3", "lcheng", "0", "a", type);
 
         folderService.addFolder(folder);
         folderService.addFolder(folder1);
@@ -100,6 +100,6 @@ public class OcmTest {
     public void testGetChildren() {
         List<Entry> data = folderService.getChildren("/jpk/kc1",Types.Status.UnReviewed.getValue(), Types.Visibility.All.getValue());
         Assert.assertNotNull(data);
-        Assert.assertEquals(3,data.size());
+        Assert.assertEquals(4,data.size());
     }
 }

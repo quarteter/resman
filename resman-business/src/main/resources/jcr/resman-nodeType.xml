@@ -23,11 +23,11 @@
         <!--<propertyDefinition name="rm:visibility" requiredType="String" autoCreated="false"  onParentVersion="COPY" protected="false" multiple="false" />-->
         <propertyDefinition name="rm:type" requiredType="String" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false" />
 
-        <childNodeDefinition name="*" defaultPrimaryType="rm:entry" autoCreated="false" mandatory="false" onParentVersion="VERSION" protected="false" sameNameSiblings="false">
-            <requiredPrimaryTypes>
-                <requiredPrimaryType>rm:entry</requiredPrimaryType>
-            </requiredPrimaryTypes>
-        </childNodeDefinition>
+        <!--<childNodeDefinition name="*" defaultPrimaryType="rm:entry" autoCreated="false" mandatory="false" onParentVersion="VERSION" protected="false" sameNameSiblings="false">-->
+            <!--<requiredPrimaryTypes>-->
+                <!--<requiredPrimaryType>rm:entry</requiredPrimaryType>-->
+            <!--</requiredPrimaryTypes>-->
+        <!--</childNodeDefinition>-->
     </nodeType>
 
     <nodeType name="rm:fileStream" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
@@ -45,7 +45,6 @@
             <supertype>nt:hierarchyNode</supertype>
         </supertypes>
         <propertyDefinition name="rm:size" requiredType="Long" autoCreated="false" onParentVersion="COPY" protected="false" multiple="false"/>
-        <!--<propertyDefinition name="rm:content" requiredType="Binary" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false"/>-->
         <childNodeDefinition name="*" defaultPrimaryType="rm:fileStream" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" sameNameSiblings="false">
             <requiredPrimaryTypes>
                 <requiredPrimaryType>rm:fileStream</requiredPrimaryType>
