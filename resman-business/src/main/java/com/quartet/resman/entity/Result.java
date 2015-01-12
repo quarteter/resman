@@ -9,9 +9,12 @@ import java.util.Map;
  *          ${tags}
  */
 public class Result {
-    private boolean success;
+    private boolean success = true;
     private String msg;
     private Map<String, Object> data = new HashMap<>();
+
+    public Result() {
+    }
 
     public Result(boolean success, String msg) {
         this.success = success;
