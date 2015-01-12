@@ -11,7 +11,7 @@ import java.util.Date;
  *          ${tags}
  */
 public class Entry {
-
+    protected String uuid;
     protected String name;
     protected String path;
     protected Date created;
@@ -31,6 +31,14 @@ public class Entry {
 
     public Entry(String path,String createBy){
         this(path,createBy, Types.Status.UnReviewed.getValue(), Types.Visibility.All.getValue());
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public Date getCreated() {
@@ -94,6 +102,7 @@ public class Entry {
     @Override
     public String toString() {
         return "Entry{" +
+                "uuid='" + getName() + '\'' +
                 "name='" + getName() + '\'' +
                 ", path='" + path + '\'' +
                 ", created=" + created +

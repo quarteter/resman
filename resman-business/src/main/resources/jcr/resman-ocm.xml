@@ -3,6 +3,7 @@
 <jackrabbit-ocm>
     <class-descriptor className="com.quartet.resman.entity.Entry" jcrType="rm:entry" jcrSuperTypes="nt:hierarchyNode" discriminator="false">
         <field-descriptor fieldName="path" path="true" jcrName="path"/>
+        <field-descriptor fieldName="uuid" uuid="true" jcrName="uuid"/>
         <field-descriptor fieldName="created" jcrName="jcr:created" jcrType="Date"/>
         <field-descriptor fieldName="createBy" jcrName="rm:createBy" jcrType="String"/>
         <field-descriptor fieldName="status" jcrName="rm:status" jcrType="String"/>
@@ -11,6 +12,7 @@
 
     <class-descriptor className="com.quartet.resman.entity.Folder" jcrType="rm:folder" jcrSuperTypes="nt:folder" discriminator="false">
         <field-descriptor fieldName="path" path="true" jcrName="path"/>
+        <field-descriptor fieldName="uuid" uuid="true" jcrName="uuid"/>
         <field-descriptor fieldName="created" jcrName="jcr:created" jcrType="Date"/>
         <field-descriptor fieldName="createBy" jcrName="rm:createBy" jcrType="String"/>
         <field-descriptor fieldName="status" jcrName="rm:status" jcrType="String"/>
@@ -22,6 +24,7 @@
 
     <class-descriptor className="com.quartet.resman.entity.File" jcrType="rm:file" jcrSuperTypes="nt:hierarchyNode" discriminator="false">
         <field-descriptor fieldName="path" path="true" jcrName="path"/>
+        <field-descriptor fieldName="uuid" uuid="true" jcrName="uuid"/>
         <field-descriptor fieldName="created" jcrName="jcr:created" jcrType="Date"/>
         <field-descriptor fieldName="createBy" jcrName="rm:createBy" jcrType="String"/>
         <field-descriptor fieldName="status" jcrName="rm:status" jcrType="String"/>
@@ -29,7 +32,6 @@
         <field-descriptor fieldName="mimeType" jcrName="jcr:mimeType" jcrType="String"/>
         <field-descriptor fieldName="encoding" jcrName="jcr:encoding" jcrType="String"/>
         <field-descriptor fieldName="size" jcrName="rm:size" jcrType="Long"/>
-        <!--<field-descriptor fieldName="content" jcrName="jcr:data" jcrType="Binary" jcrAutoCreated="false"/>-->
         <bean-descriptor fieldName="fileStream" jcrName="rm:fileSteam" autoUpdate="false" autoInsert="false" autoRetrieve="false"/>
     </class-descriptor>
 

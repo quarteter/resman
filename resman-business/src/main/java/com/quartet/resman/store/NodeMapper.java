@@ -30,6 +30,7 @@ public class NodeMapper {
                 BeanUtils.setProperty(t, name, getValue(p));
             }
             BeanUtils.setProperty(t,"path",node.getPath());
+            BeanUtils.setProperty(t,"uuid",node.getIdentifier());
             return t;
         } catch (InstantiationException e) {
             e.printStackTrace();
