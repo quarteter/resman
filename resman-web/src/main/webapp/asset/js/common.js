@@ -87,7 +87,8 @@ function goBack() {
                 showRefresh: f.optWithDefaults("showRefresh", options),
                 showColumns: f.optWithDefaults("showColumns", options),
                 toolbar: f.optWithDefaults("toolbar", options),
-                clickToSelect: f.optWithDefaults("clickToSelect", options)
+                clickToSelect: f.optWithDefaults("clickToSelect", options),
+                queryParams : f.optWithDefaults("queryParams",options)
             }
         },
         createToolBar: function (options, table) {
