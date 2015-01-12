@@ -1,5 +1,7 @@
 package com.quartet.resman.entity;
 
+import com.quartet.resman.utils.Types;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -10,36 +12,21 @@ import java.util.List;
  */
 public class Folder extends Entry {
 
-    private String status;
-    private String visibility;
+
+    private String type;
     private List<Entry> entries;
 
     public Folder() {
     }
 
-    public Folder(String path, String name,String createBy,
-                  String status, String visibility) {
-        this.path = path;
-        this.name = name;
-        this.createBy = createBy;
-        this.status = status;
-        this.visibility = visibility;
+    public Folder(String path,String createBy,
+                  String status, String visibility,String type) {
+        super(path,createBy,status,visibility);
+        this.type = type;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(String visibility) {
-        this.visibility = visibility;
+    public Folder(String path,String createBy,String type){
+        this(path,createBy, Types.Status.UnReviewed.getValue(),Types.Visibility.All.getValue(),type);
     }
 
     public List<Entry> getEntries() {
@@ -50,11 +37,18 @@ public class Folder extends Entry {
         this.entries = entries;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Folder{" +
-                "status='" + status + '\'' +
-                ", visibility='" + visibility + '\'' +
+                "type='" + type + '\'' +
                 "} " + super.toString();
     }
 }

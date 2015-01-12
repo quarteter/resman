@@ -23,4 +23,6 @@ public class FileService {
         mappingTemplate.insert(file);
         mappingTemplate.save();
     }
+
+    //public
 }

@@ -19,8 +19,7 @@ public class File extends Entry{
     public File(){}
 
     public File(String path,String createBy,FileStream fileStream, Long size) {
-        this.path = path;
-        this.createBy = createBy;
+        super(path,createBy);
         this.fileStream = fileStream;
         this.size = size;
     }

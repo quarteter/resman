@@ -5,6 +5,8 @@
         <field-descriptor fieldName="path" path="true" jcrName="path"/>
         <field-descriptor fieldName="created" jcrName="jcr:created" jcrType="Date"/>
         <field-descriptor fieldName="createBy" jcrName="rm:createBy" jcrType="String"/>
+        <field-descriptor fieldName="status" jcrName="rm:status" jcrType="String"/>
+        <field-descriptor fieldName="visibility" jcrName="rm:visibility" jcrType="String"/>
     </class-descriptor>
 
     <class-descriptor className="com.quartet.resman.entity.Folder" jcrType="rm:folder" jcrSuperTypes="nt:folder" discriminator="false">
@@ -13,14 +15,17 @@
         <field-descriptor fieldName="createBy" jcrName="rm:createBy" jcrType="String"/>
         <field-descriptor fieldName="status" jcrName="rm:status" jcrType="String"/>
         <field-descriptor fieldName="visibility" jcrName="rm:visibility" jcrType="String"/>
-        <collection-descriptor fieldName="entries" jcrElementName="entry" elementClassName="com.quartet.resman.entity.Entry"  proxy="false"
-                               collectionConverter="org.apache.jackrabbit.ocm.manager.collectionconverter.impl.NTCollectionConverterImpl"/>
+        <field-descriptor fieldName="type" jcrName="rm:type" jcrType="String"/>
+        <!--<collection-descriptor fieldName="entries" jcrElementName="entry" elementClassName="com.quartet.resman.entity.Entry"  proxy="true"-->
+                               <!--collectionConverter="org.apache.jackrabbit.ocm.manager.collectionconverter.impl.NTCollectionConverterImpl"/>-->
     </class-descriptor>
 
-    <class-descriptor className="com.quartet.resman.entity.File" jcrType="rm:file" jcrSuperTypes="nt:resource" discriminator="false">
+    <class-descriptor className="com.quartet.resman.entity.File" jcrType="rm:file" jcrSuperTypes="nt:hierarchyNode" discriminator="false">
         <field-descriptor fieldName="path" path="true" jcrName="path"/>
         <field-descriptor fieldName="created" jcrName="jcr:created" jcrType="Date"/>
         <field-descriptor fieldName="createBy" jcrName="rm:createBy" jcrType="String"/>
+        <field-descriptor fieldName="status" jcrName="rm:status" jcrType="String"/>
+        <field-descriptor fieldName="visibility" jcrName="rm:visibility" jcrType="String"/>
         <field-descriptor fieldName="mimeType" jcrName="jcr:mimeType" jcrType="String"/>
         <field-descriptor fieldName="encoding" jcrName="jcr:encoding" jcrType="String"/>
         <field-descriptor fieldName="size" jcrName="rm:size" jcrType="Long"/>
