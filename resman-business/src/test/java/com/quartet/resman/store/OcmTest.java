@@ -98,8 +98,16 @@ public class OcmTest {
 
     @Test
     public void testGetChildren() {
-        List<Entry> data = folderService.getChildren("/jpk/kc1",Types.Status.UnReviewed.getValue(), Types.Visibility.All.getValue());
+        List<Entry> data = folderService.getChildren("/jpk/kc1", Types.Status.UnReviewed.getValue(), Types.Visibility.All.getValue());
         Assert.assertNotNull(data);
-        Assert.assertEquals(4,data.size());
+        Assert.assertEquals(4, data.size());
+    }
+
+    @Test
+    public void testQueryFile() {
+        List<File> result = fileService.queryFile("/jpk//", "cluster",
+                Types.Status.Reviewed.getValue(), Types.Visibility.All.getValue());
+        Assert.assertNotNull(result);
+        Assert.assertEquals(1,result.size());
     }
 }

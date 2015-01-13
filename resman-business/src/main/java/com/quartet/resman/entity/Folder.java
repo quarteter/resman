@@ -14,7 +14,7 @@ public class Folder extends Entry {
 
 
     private String type;
-    private List<Entry> entries;
+//    private List<Entry> entries;
 
     public Folder() {
     }
@@ -29,13 +29,13 @@ public class Folder extends Entry {
         this(path,createBy, Types.Status.UnReviewed.getValue(),Types.Visibility.All.getValue(),type);
     }
 
-    public List<Entry> getEntries() {
-        return entries;
-    }
-
-    public void setEntries(List<Entry> entries) {
-        this.entries = entries;
-    }
+//    public List<Entry> getEntries() {
+//        return entries;
+//    }
+//
+//    public void setEntries(List<Entry> entries) {
+//        this.entries = entries;
+//    }
 
     public String getType() {
         return type;

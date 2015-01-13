@@ -126,4 +126,6 @@ public class FolderService {
         Query q = qm.createQuery(filter);
         return (List<Entry>) mappingTemplate.getObjects(q);
     }
+
+
 }
