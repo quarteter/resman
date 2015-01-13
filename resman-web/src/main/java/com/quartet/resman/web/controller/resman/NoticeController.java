@@ -4,7 +4,9 @@ import com.quartet.resman.core.persistence.DynamicSpecifications;
 import com.quartet.resman.core.persistence.SearchFilter;
 import com.quartet.resman.entity.Notice;
 import com.quartet.resman.entity.Result;
+import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.repository.NoticeDao;
+import com.quartet.resman.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,9 @@ public class NoticeController {
 
     @Resource
     private NoticeDao noticeDao;
+
+    @Resource
+    private UserService userService;
 
     @RequestMapping("list")
     public String list() {
@@ -78,7 +83,8 @@ public class NoticeController {
             notice = new Notice();
             notice.setState("0");
             notice.setCrtdate(new Date());
-            notice.setCrtuser("lcheng");
+            ShiroUser user = userService.getCurrentUser();
+            notice.setCrtuser(user.getUserName());
         } else {
             notice = noticeDao.getOne(id);
         }
