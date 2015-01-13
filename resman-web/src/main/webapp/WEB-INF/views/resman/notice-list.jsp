@@ -5,7 +5,7 @@
 <head>
     <title>公告管理</title>
     <link href="${ctx}/asset/js/plugins/boottable/bootstrap-table.min.css" rel="stylesheet">
-    <link href="${ctx}/asset/css/jNotify.jquery.css" rel="stylesheet"/>
+
     <link href="${ctx}/asset/js/plugins/multiselect/css/multi-select.css" rel="stylesheet">
     <link href="${ctx}/asset/js/plugins/bsdialog/bootstrap-dialog.min.css" rel="stylesheet">
     <script src="${ctx}/asset/js/plugins/boottable/bootstrap-table.min.js"></script>
