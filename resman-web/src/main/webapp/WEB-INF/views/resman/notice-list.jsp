@@ -5,7 +5,7 @@
 <head>
     <title>公告管理</title>
     <link href="${ctx}/asset/js/plugins/boottable/bootstrap-table.min.css" rel="stylesheet">
-    <link href="${ctx}/asset/css/jNotify.jquery.css" rel="stylesheet"/>
+
     <link href="${ctx}/asset/js/plugins/multiselect/css/multi-select.css" rel="stylesheet">
     <link href="${ctx}/asset/js/plugins/bsdialog/bootstrap-dialog.min.css" rel="stylesheet">
     <script src="${ctx}/asset/js/plugins/boottable/bootstrap-table.min.js"></script>
@@ -34,19 +34,25 @@
             $("#btnDel").on("click", function (e) {
                 var sel = $("#noticeList").bootstrapTable('getSelections');
                 if (sel.length > 0) {
-                    var ids = "";
-                    for (var i = 0; i < sel.length; i++) {
-                        ids = ids + sel[i].id + ",";
-                    }
-                    $.post("${ctx}/res/notice/delete", {
-                        ids: ids
-                    }, function (data) {
-                        if (data.success) {
-                            window.location.href = "${ctx}/res/notice/list"
+                    BootstrapDialog.confirm('确认要删除吗?', function (result) {
+                        if (result) {
+                            var ids = "";
+                            for (var i = 0; i < sel.length; i++) {
+                                ids = ids + sel[i].id + ",";
+                            }
+                            $.post("${ctx}/res/notice/delete", {
+                                ids: ids
+                            }, function (data) {
+                                if (data.success) {
+                                    window.location.href = "${ctx}/res/notice/list"
+                                } else {
+                                    tipError("删除数据失败！");
+                                }
+                            });
                         } else {
-                            tipError("删除数据失败！");
                         }
                     });
+
                 }
             });
             $("#btnEdit").on("click", function (e) {
@@ -56,14 +62,14 @@
                     window.location.href = "${ctx}/res/notice/edit/" + uid;
                 }
             });
-            $("#btnAudit").on("click", function(e){
+            $("#btnAudit").on("click", function (e) {
                 var sel = $("#noticeList").bootstrapTable('getSelections');
                 if (sel.length > 0) {
                     var uid = sel[0].id;
-                    $.post("${ctx}/res/notice/audit/" + uid,null,function(data){
-                        if(data.success){
+                    $.post("${ctx}/res/notice/audit/" + uid, null, function (data) {
+                        if (data.success) {
                             window.location.href = "${ctx}/res/notice/list"
-                        }else{
+                        } else {
                             tipError(data.msg);
                         }
                     });
@@ -75,7 +81,9 @@
             $("#noticeList").createBootstrapTable({
                 url: "${ctx}/res/notice/query",
                 cudBtn: true,
-                btns: [{id: "btnAudit", name: "发布", iconCls: "fa fa-user", rowSelectAware: true}]
+                btns: [
+                    {id: "btnAudit", name: "发布", iconCls: "fa fa-user", rowSelectAware: true}
+                ]
             });
             bindToolBtnEvent();
         });

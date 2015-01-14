@@ -5,10 +5,13 @@ import static com.google.common.base.Preconditions.*;
 import com.quartet.resman.core.utils.Digests;
 import com.quartet.resman.core.utils.Encodes;
 import com.quartet.resman.entity.*;
+import com.quartet.resman.rbac.ShiroDbRealm;
+import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.repository.RoleDao;
 import com.quartet.resman.repository.SysUserDao;
 import com.quartet.resman.repository.UserDao;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -159,6 +162,20 @@ public class UserService {
         }
         byte[] pwdBytes = Digests.sha1(user.getPassWd().getBytes(), user.getSalt().getBytes());
         user.setPassWd(Encodes.encodeHex(pwdBytes));
+    }
+
+    /**
+     * 当前登录用户
+     *
+     * @return
+     */
+    public ShiroUser getCurrentUser() {
+        Object principal = SecurityUtils.getSubject().getPrincipal();
+        if (principal != null && principal instanceof ShiroUser) {
+            return (ShiroUser) principal;
+        }
+        return null;
+
     }
 
 }
