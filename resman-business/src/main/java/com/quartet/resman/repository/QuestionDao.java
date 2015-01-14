@@ -1,7 +1,6 @@
 package com.quartet.resman.repository;
 
-import com.quartet.resman.entity.Notice;
-import com.quartet.resman.entity.Ques;
+import com.quartet.resman.entity.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -9,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * User: qfxu
  * Date: 15-1-12
  */
-public interface QuesDao extends JpaRepository<Ques, Long>, JpaSpecificationExecutor<Ques> {
+public interface QuestionDao extends JpaRepository<Question, Long>, JpaSpecificationExecutor<Question> {
 }

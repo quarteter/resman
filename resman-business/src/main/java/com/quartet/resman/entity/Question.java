@@ -1,18 +1,21 @@
 package com.quartet.resman.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * User: qfxu
- * Date: 15-1-8
+ * Date: 15-1-12
  */
 @Entity
-@Table(name = "r_anwser")
-public class Anwser {
+@Table(name = "r_ques")
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,14 +26,18 @@ public class Anwser {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date crtdate;
 
+    private String title;
+
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name="quesId")
-    private Ques ques;
+    private String state;
 
-    public Anwser() {
+    @OneToMany(mappedBy = "ques", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Answer> answers = new ArrayList<Answer>();
 
+    public Question() {
+        setState("0");
     }
 
     public Long getId() {
@@ -40,7 +47,6 @@ public class Anwser {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public String getCrtuser() {
         return crtuser;
@@ -58,6 +64,13 @@ public class Anwser {
         this.crtdate = crtdate;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getContent() {
         return content;
@@ -67,4 +80,24 @@ public class Anwser {
         this.content = content;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public void addAnswer( Answer answer )
+    {
+
+    }
 }
