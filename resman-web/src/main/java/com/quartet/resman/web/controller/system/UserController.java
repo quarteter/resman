@@ -52,9 +52,8 @@ public class UserController {
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> loadUsers(String searchText, int pageSize, int pageNumber) {
+    public Map<String, Object> loadUsers(String searchText, @PageableDefault Pageable page) {
         Page<User> users = null;
-        Pageable page = new PageRequest(pageSize, pageNumber);
         if (StringUtils.isNotEmpty(searchText)) {
             SearchFilter filter = new SearchFilter("name", SearchFilter.Operator.LIKE, searchText);
             List<SearchFilter> filters = new ArrayList<>(1);

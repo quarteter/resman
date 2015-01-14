@@ -50,6 +50,19 @@ public class FolderService {
         }
     }
 
+    public void deleteFolderByUuid(String uuid){
+        final Node node = mappingTemplate.getNodeByIdentifier(uuid);
+        if (node!=null){
+            mappingTemplate.execute(new JcrCallback<Object>() {
+                @Override
+                public Object doInJcr(Session session) throws IOException, RepositoryException {
+                    node.remove();
+                    return null;
+                }
+            });
+        }
+    }
+
     public void rename(String path, String newName) {
         try {
             if (path.startsWith("/")) {

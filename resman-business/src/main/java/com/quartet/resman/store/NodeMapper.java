@@ -22,7 +22,6 @@ public class NodeMapper {
                 Property p = iterator.nextProperty();
                 String name = p.getName();
                 int idx = name.lastIndexOf(":");
-                System.out.println(name);
                 if (idx >= 0) {
                     name = name.substring(idx + 1);
                 }

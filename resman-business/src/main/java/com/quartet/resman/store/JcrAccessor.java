@@ -137,7 +137,6 @@ public class JcrAccessor {
                             for (PropertyIterator pi = next.getProperties(); pi.hasNext();){
                                 Property p = pi.nextProperty();
                                 Value v = p.getValue();
-                                System.out.println(p.getName()+":"+v.getString());
                             }
                             String name = next.getName();
                             String type = next.getPrimaryNodeType().getName();

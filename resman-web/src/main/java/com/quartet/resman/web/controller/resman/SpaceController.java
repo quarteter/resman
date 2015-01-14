@@ -138,7 +138,7 @@ public class SpaceController {
             result.setSuccess(false);
             result.setMsg("文件上传失败");
         }
-        return new Result();
+        return result;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
