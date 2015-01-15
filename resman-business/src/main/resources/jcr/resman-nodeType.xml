@@ -45,7 +45,7 @@
             <supertype>nt:hierarchyNode</supertype>
         </supertypes>
         <propertyDefinition name="rm:size" requiredType="Long" autoCreated="false" onParentVersion="COPY" protected="false" multiple="false"/>
-        <childNodeDefinition name="*" defaultPrimaryType="rm:fileStream" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" sameNameSiblings="false">
+        <childNodeDefinition name="*" defaultPrimaryType="rm:fileStream" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" sameNameSiblings="false">
             <requiredPrimaryTypes>
                 <requiredPrimaryType>rm:fileStream</requiredPrimaryType>
             </requiredPrimaryTypes>
