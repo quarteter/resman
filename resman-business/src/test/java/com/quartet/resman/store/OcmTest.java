@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -109,5 +110,20 @@ public class OcmTest {
                 Types.Status.UnReviewed.getValue(), Types.Visibility.All.getValue());
         Assert.assertNotNull(result);
         Assert.assertEquals(1,result.size());
+    }
+
+    @Test
+    public void testReadFile(){
+        InputStream is = fileService.readFile("/jpk/kc1/cluster.log");
+        Assert.assertNotNull(is);
+        try(FileOutputStream fos = new FileOutputStream(new java.io.File("D:/cluster-download.log"))){
+            int read = -1;
+            byte[] buf = new byte[1024*10];
+            while((read=is.read(buf))>0){
+                fos.write(buf,0,read);
+            }
+        }catch (IOException e){
+
+        }
     }
 }

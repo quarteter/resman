@@ -2,15 +2,19 @@ package com.quartet.resman.store;
 
 import com.quartet.resman.entity.Entry;
 import com.quartet.resman.entity.File;
+import com.quartet.resman.entity.FileStream;
 import com.quartet.resman.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.JcrConstants;
 import org.apache.jackrabbit.commons.JcrUtils;
+import org.apache.jackrabbit.ocm.exception.JcrMappingException;
+import org.apache.jackrabbit.ocm.manager.ObjectContentManager;
 import org.apache.jackrabbit.ocm.query.Filter;
 import org.apache.jackrabbit.ocm.query.Query;
 import org.apache.jackrabbit.ocm.query.QueryManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.extensions.jcr.JcrCallback;
+import org.springframework.extensions.jcr.jackrabbit.ocm.JcrMappingCallback;
 import org.springframework.extensions.jcr.jackrabbit.ocm.JcrMappingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -92,15 +96,22 @@ public class FileService {
         return mappingTemplate.execute(new JcrCallback<InputStream>() {
             @Override
             public InputStream doInJcr(Session session) throws IOException, RepositoryException {
+                String path = filePath;
+                if (path.startsWith("/")){
+                    path = path.substring(1);
+                }
                 Node root = session.getRootNode();
-                Node node = root.getNode(filePath);
+                Node node = root.getNode(path);
                 String nodeType = node.getPrimaryNodeType().getName();
                 if (nodeType.equals(JcrConstants.NT_FILE) ||
                         nodeType.equals(JcrConstants.NT_RESOURCE)) {
                     return JcrUtils.readFile(node);
                 } else if (nodeType.equals(Constants.NT_FILE)) {
-                    Node contentNode = node.getNode("{" + Constants.NS_RESMAN + "}/fileStream");
-                    Property p = contentNode.getProperty("{" + Constants.NS_RESMAN + "}" + "/content");
+                    for(NodeIterator ni = node.getNodes();ni.hasNext();){
+                        System.out.println(ni.next());
+                    }
+                    Node contentNode = node.getNode("{" + Constants.NS_RESMAN + "}fileStream");
+                    Property p = contentNode.getProperty("{" + Constants.NS_RESMAN + "}" + "content");
                     final Binary binary = p.getBinary();
                     return new FilterInputStream(binary.getStream()) {
                         public void close() throws IOException {
@@ -116,7 +127,7 @@ public class FileService {
 
     public void readFile(String filePath, OutputStream os) {
         try (InputStream input = readFile(filePath)) {
-            byte[] buffer = new byte[16384];
+            byte[] buffer = new byte[1024*100];
 
             for (int n = input.read(buffer); n != -1; n = input.read(buffer)) {
                 os.write(buffer, 0, n);
