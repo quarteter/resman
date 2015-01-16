@@ -30,6 +30,10 @@
         }
     </style>
 
+    <script id="view-dlg" type="text/x-jsrender">
+        <iframe src="${ctx}/res/space/view?path={{:path}}&name={{:name}}" width="870px" height="560px" scrolling="auto"></iframe>
+    </script>
+
     <script id="folder-dlg" type="text/x-jsrender">
         <form class="form-horizontal" role="form" id="folderForm">
             <div class="form-group">
@@ -43,10 +47,18 @@
 
     </script>
 
+    <script id="tree-dlg" type="text/x-jsrender">
+        <ul id="folderTree" class="ztree"></ul>
+    </script>
+
     <script>
         $(function () {
             $('#spaceList').bootstrapTable({
                 url: '${ctx}/res/space/query',
+                queryParams:function(params){
+                   params.path = '${path}';
+                    return params;
+                },
                 search: true,
                 showRefresh: true,
                 showColumns: true,
@@ -68,17 +80,18 @@
                 showFolderDialog();
             });
 
-            $('#btnDelete').on('click', function(){
+            $('#btnDelete').on('click', function () {
                 var sel = $("#spaceList").bootstrapTable('getSelections');
                 if (sel.length > 0) {
                     BootstrapDialog.confirm('确认要删除吗?', function (result) {
                         if (result) {
-                            var ids = "";
+                            var names = "";
                             for (var i = 0; i < sel.length; i++) {
-                                ids = ids + sel[i].name + ",";
+                                names = names + sel[i].name + ",";
                             }
                             $.post("${ctx}/res/space/delete", {
-                                ids: ids
+                                names: names,
+                                path: '${path}'
                             }, function (data) {
                                 if (data.success) {
                                     $('#spaceList').bootstrapTable('refresh');
@@ -96,27 +109,55 @@
             $('#btnUpload').uploadify({
                 height: 34,
                 width: 100,
-                buttonClass: 'btn btn-primary' ,
+                buttonClass: 'btn btn-primary',
                 removeTimeout: 0,
                 swf: '${ctx}/asset/js/plugins/uploadify/uploadify.swf',
                 uploader: '${ctx}/res/space/upload',
                 fileObjName: 'fileData',
                 buttonText: '<span class="fa fa-upload"></span>&nbsp;上传文件',
                 queueID: 'fileQueue',
-                formData: {'path': '1'},
+                formData: {path: '${path}'},
                 onQueueComplete: function (queueData) {
                     $('#spaceList').bootstrapTable('refresh');
                 }
             });
 
+            $('#btnDownload').on('click', function () {
+                var sel = $("#spaceList").bootstrapTable('getSelections');
+                if (sel.length > 0) {
+                    var name = sel[0].name;
+                    var href = "${ctx}/res/space/download?name="+name + "&path=${path}";
+                    window.open(href, null, 'height=250, width=400, top=50,left=50, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+                } else {
+                    tipNotify("请先选择资源");
+                }
+            });
+
+            $.fn.zTree.init($("#folderTree"), setting);
         });
 
         function nameFormatter(value, row) {
             if (row.type == '0') {
-                return  '<i class="fa fa-folder"></i> ' + value;
+                var path = encodeURI('${path}/'+value);
+                path = encodeURI(path);
+                return  '<i class="fa fa-folder"></i> <a href="${ctx}/res/space/list?path='+path+'">' + value;
             } else {
-                return '<i class="fa fa-file-pdf-o"></i> ' + value;
+                <c:if test="${path==''}">
+                    return '<i class="fa fa-file-pdf-o"></i> <a href="javascript:void(0)" onclick="viewFile(\''+value+'\');">' + value;
+                </c:if>
+                return '<i class="fa fa-file-pdf-o"></i> <a href="javascript:void(0)" onclick="viewFile(\''+value+'\',\'${path}\');">' + value;
             }
+        }
+
+        function viewFile(name, path){
+            BootstrapDialog.show({
+                size: BootstrapDialog.SIZE_WIDE,
+                title: name,
+                message: function () {
+                    var tpl = $.templates("#view-dlg");
+                    return tpl.render({name:name,path:path});
+                }
+            });
         }
 
         function showFolderDialog() {
@@ -132,7 +173,7 @@
                         label: '确定',
                         cssClass: 'btn-primary btn-flat',
                         action: function (dialog) {
-                           saveFolder(dialog);
+                            saveFolder(dialog);
                         }
                     },
                     {
@@ -145,19 +186,129 @@
             });
         }
 
-       function saveFolder(dialog){
-           if ($("#folderForm").valid()) {
-               var val = $('#name').val();
-               $.post('${ctx}/res/space/saveFolder',{path:'personal/zs',name:val},function(data){
-                    if(data.success){
+        function saveFolder(dialog) {
+            if ($("#folderForm").valid()) {
+                var val = $('#name').val();
+                $.post('${ctx}/res/space/saveFolder', {path: '${path}', name: val}, function (data) {
+                    if (data.success) {
                         dialog.close();
                         $('#spaceList').bootstrapTable('refresh');
-                    }else{
+                    } else {
                         tipError(data.msg);
                     }
-               });
-           }
-       }
+                });
+            }
+        }
+
+        function rename(){
+            var sel = $("#spaceList").bootstrapTable('getSelections');
+            if (sel.length <= 0)
+                tipNotify('请先选择资源');
+            var oldName = sel[0].name;
+
+            BootstrapDialog.show({
+                title: "重命名",
+                nl2br: false,
+                message: function () {
+                    var tpl = $.templates("#folder-dlg");
+                    return tpl.render({});
+                },
+                buttons: [
+                    {
+                        label: '确定',
+                        cssClass: 'btn-primary btn-flat',
+                        action: function (dialog) {
+                            var val = $('#name').val();
+                            $.post('${ctx}/res/space/rename', {path: '${path}', oldName:oldName, name: val}, function (data) {
+                                if (data.success) {
+                                    dialog.close();
+                                    $('#spaceList').bootstrapTable('refresh');
+                                } else {
+                                    tipError(data.msg);
+                                }
+                            });
+                        }
+                    },
+                    {
+                        label: '取消',
+                        action: function (dialogItself) {
+                            dialogItself.close();
+                        }
+                    }
+                ]
+            });
+            $('#name').val(oldName);
+        }
+
+        var setting = {
+            edit: {
+                enable: true,
+                showRemoveBtn: false,
+                showRenameBtn: false,
+                drag: {
+                    inner: false,
+                    isCopy: false
+                }
+            },
+            async: {
+                enable: true,
+                url: "${ctx}/sys/func/treeList",
+                autoParam: ["id=pid", "name=n", "level=lv"]
+            },
+            callback: {
+                beforeDrop: beforeDrop,
+                onDrop:onDrop
+            },
+            view:{
+                selectedMulti:false
+            }
+        };
+
+        function move(){
+            var sel = $("#spaceList").bootstrapTable('getSelections');
+            if (sel.length <= 0)
+                tipNotify('请先选择资源');
+            var oldName = sel[0].name;
+
+            BootstrapDialog.show({
+                title: "重命名",
+                nl2br: false,
+                message: function () {
+                    var tpl = $.templates("#tree-dlg");
+                    return tpl.render({});
+                },
+                buttons: [
+                    {
+                        label: '确定',
+                        cssClass: 'btn-primary btn-flat',
+                        action: function (dialog) {
+                            var val = $('#name').val();
+                            $.post('${ctx}/res/space/rename', {path: 'personal/zs', oldName:oldName, name: val}, function (data) {
+                                if (data.success) {
+                                    dialog.close();
+                                    $('#spaceList').bootstrapTable('refresh');
+                                } else {
+                                    tipError(data.msg);
+                                }
+                            });
+                        }
+                    },
+                    {
+                        label: '取消',
+                        action: function (dialogItself) {
+                            dialogItself.close();
+                        }
+                    }
+                ]
+            });
+            $('#name').val(oldName);
+        }
+
+        function clickHref(path){
+            path = encodeURI(path);
+            path = encodeURI(path);
+            window.location.href = "${ctx}/res/space/list?path="+path;
+        }
     </script>
 </head>
 <body>
@@ -167,8 +318,9 @@
             我的空间
         </h1>
         <ol class="breadcrumb">
-            <li><a href="${ctx}/main"><i class="fa fa-dashboard"></i> 首页</a></li>
-            <li class="active">我的空间</li>
+            <c:forEach items="${items}" var="item">
+                <li><a href="javascript:void(0)" onclick="clickHref('${item.path}')"></i>${item.title}</a></li>
+            </c:forEach>
         </ol>
     </section>
     <section class="content">
@@ -198,9 +350,9 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">移动到</a></li>
-                <li><a href="#">复制到</a></li>
-                <li><a href="#">重命名</a></li>
+                <li><a href="javascript:void(0)" onclick="move()">移动到</a></li>
+                <li><a href="javascript:void(0)" onclick="copy()">复制到</a></li>
+                <li><a href="javascript:void(0)" onclick="rename()">重命名</a></li>
             </ul>
         </div>
     </div>

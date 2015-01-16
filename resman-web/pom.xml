@@ -25,6 +25,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_3.0_spec</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>${version.jstl}</version>
@@ -44,8 +50,7 @@
     </dependencies>
 
     <build>
-        <finalName>evaluation-web</finalName>
-
+        <finalName>resman</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -54,6 +59,7 @@
                     <version>2.2</version>
                     <configuration>
                         <port>8080</port>
+                        <uriEncoding>UTF-8</uriEncoding>
                         <path>/</path>
                     </configuration>
                 </plugin>
