@@ -26,7 +26,7 @@ public class SysUser {
     private Long id;
 
     @NotNull
-    @Length(max = 32,min = 5)
+    @Length(max = 32,min = 2)
     @Column(name = "sysName", length = 32)
     private String sysName;
 
@@ -37,7 +37,7 @@ public class SysUser {
     private String email;
 
     @NotNull
-    @Length(max = 50,min = 6)
+    @Length(max = 50,min = 2)
     @Column(name = "passwd", length = 50)
     private String passWd;
 

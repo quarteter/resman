@@ -31,12 +31,12 @@
                     },
                     "sysName":{
                         required:true,
-                        minlength:6,
+                        minlength:2,
                         maxlength:32
                     },
                     "passWd":{
                         required:true,
-                        minlength:6,
+                        minlength:2,
                         maxlength:32
                     }
                 }
