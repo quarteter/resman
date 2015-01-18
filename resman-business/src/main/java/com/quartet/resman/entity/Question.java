@@ -32,7 +32,7 @@ public class Question {
 
     private String state;
 
-    @OneToMany(mappedBy = "ques", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Answer> answers = new ArrayList<Answer>();
 

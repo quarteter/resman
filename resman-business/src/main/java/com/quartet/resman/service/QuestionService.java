@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by XWANG on 2015/1/14.
  */
+@Service
 public class QuestionService {
     @Autowired
     QuestionDao questionDao;
