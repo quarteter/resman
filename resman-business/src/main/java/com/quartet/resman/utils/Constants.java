@@ -5,6 +5,7 @@ package com.quartet.resman.utils;
  */
 public class Constants {
 
+    public static final String FORMAT_DATE = "yyyy-MM-dd HH:mm:ss";
     public static final String NS_RESMAN ="http://www.quarteter.com/resman";
 
     public static final String NT_ENTRY = "rm:entry";

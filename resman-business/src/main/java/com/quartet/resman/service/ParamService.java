@@ -19,11 +19,18 @@ public class ParamService {
     @Value("${preview.path}")
     private String previewPath;
 
+    @Value("${folder.classicCourse}")
+    private String folderClassicCourse;
+
     public String getFolderPersonal() {
         return folderPersonal;
     }
 
     public String getPreviewPath() {
         return previewPath;
+    }
+
+    public String getFolderClassicCourse() {
+        return folderClassicCourse;
     }
 }
