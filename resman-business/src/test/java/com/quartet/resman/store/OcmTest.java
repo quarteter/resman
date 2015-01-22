@@ -126,4 +126,16 @@ public class OcmTest {
 
         }
     }
+    @Test
+    public void testGetFileByUUID(){
+        List<File> result = fileService.queryFile("/jpk//", "cluster",
+                Types.Status.UnReviewed.getValue(), Types.Visibility.All.getValue());
+        Assert.assertNotNull(result);
+        Assert.assertEquals(1,result.size());
+        File file = result.get(0);
+        String uuid = file.getUuid();
+        File another = fileService.getFileInfoByUUID(uuid);
+        Assert.assertNotNull(another);
+        Assert.assertEquals(uuid,another.getUuid());
+    }
 }

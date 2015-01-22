@@ -2,6 +2,8 @@ package com.quartet.resman.store;
 
 import com.quartet.resman.entity.Entry;
 import com.quartet.resman.entity.Folder;
+import org.apache.jackrabbit.ocm.exception.JcrMappingException;
+import org.apache.jackrabbit.ocm.manager.ObjectContentManager;
 import org.apache.jackrabbit.ocm.query.Filter;
 import org.apache.jackrabbit.ocm.query.Query;
 import org.apache.jackrabbit.ocm.query.QueryManager;
@@ -9,6 +11,7 @@ import org.apache.jackrabbit.ocm.query.impl.FilterImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.extensions.jcr.JcrCallback;
 import org.springframework.extensions.jcr.JcrTemplate;
+import org.springframework.extensions.jcr.jackrabbit.ocm.JcrMappingCallback;
 import org.springframework.extensions.jcr.jackrabbit.ocm.JcrMappingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,6 +24,8 @@ import javax.jcr.Session;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author lcheng
@@ -50,9 +55,9 @@ public class FolderService {
         }
     }
 
-    public void deleteFolderByUuid(String uuid){
+    public void deleteFolderByUuid(String uuid) {
         final Node node = mappingTemplate.getNodeByIdentifier(uuid);
-        if (node!=null){
+        if (node != null) {
             mappingTemplate.execute(new JcrCallback<Object>() {
                 @Override
                 public Object doInJcr(Session session) throws IOException, RepositoryException {
@@ -78,12 +83,25 @@ public class FolderService {
         }
     }
 
+    @Transactional(readOnly = true)
     public Folder getFolder(String path) {
+        checkNotNull(path);
         Object obj = mappingTemplate.getObject(path);
         if (obj != null) {
             return (Folder) obj;
         }
         return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Folder getFolderByUUID(final String uuid) {
+        checkNotNull(uuid);
+        return mappingTemplate.execute(new JcrMappingCallback<Folder>() {
+            @Override
+            public Folder doInJcrMapping(ObjectContentManager manager) throws JcrMappingException {
+                return (Folder) manager.getObjectByUuid(uuid);
+            }
+        });
     }
 
     /**
@@ -93,6 +111,7 @@ public class FolderService {
      * @param path
      * @return
      */
+    @Transactional(readOnly = true)
     public List<Entry> getChildren(final String path) {
 
         return mappingTemplate.execute(new JcrCallback<List<Entry>>() {
@@ -121,11 +140,13 @@ public class FolderService {
 
     /**
      * 按status 和 visibility 过滤查询子节点
+     *
      * @param path
      * @param status
      * @param visibility
      * @return
      */
+    @Transactional(readOnly = true)
     public List<Entry> getChildren(String path, String status, String visibility) {
         if (path != null && !path.endsWith("/")) {
             path = path + "/";
