@@ -1,8 +1,6 @@
 package com.quartet.resman.store;
 
-import com.quartet.resman.entity.Entry;
-import com.quartet.resman.entity.File;
-import com.quartet.resman.entity.FileStream;
+import com.quartet.resman.entity.Document;
 import com.quartet.resman.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.JcrConstants;
@@ -41,8 +39,8 @@ public class FileService {
     @Autowired
     private JcrMappingTemplate mappingTemplate;
 
-    public void addFile(File file) {
-        mappingTemplate.insert(file);
+    public void addFile(Document document) {
+        mappingTemplate.insert(document);
         mappingTemplate.save();
     }
 
@@ -57,10 +55,10 @@ public class FileService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<File> queryFile(String parentPath, String nodeNameLike, String status, String visibility) {
+    public List<Document> queryFile(String parentPath, String nodeNameLike, String status, String visibility) {
         QueryManager qm = mappingTemplate.createQueryManager();
         String expression = "jcr:like(fn:name(),'%" + nodeNameLike + "%')";
-        Filter filter = qm.createFilter(File.class);
+        Filter filter = qm.createFilter(Document.class);
         filter.setScope(parentPath);
         filter.addJCRExpression(expression);
         if (StringUtils.isNotEmpty(status)) {
@@ -71,7 +69,7 @@ public class FileService {
         }
         Query q = qm.createQuery(filter);
         q.addOrderByAscending("created");
-        return (List<File>) mappingTemplate.getObjects(q);
+        return (List<Document>) mappingTemplate.getObjects(q);
     }
 
     public void deleteFile(String filePath) {
@@ -142,12 +140,12 @@ public class FileService {
     }
 
     @Transactional(readOnly = true)
-    public File getFileInfoByUUID(final String uuid) {
+    public Document getFileInfoByUUID(final String uuid) {
         checkNotNull(uuid);
-        return mappingTemplate.execute(new JcrMappingCallback<File>() {
+        return mappingTemplate.execute(new JcrMappingCallback<Document>() {
             @Override
-            public File doInJcrMapping(ObjectContentManager manager) throws JcrMappingException {
-                return (File) manager.getObjectByUuid(uuid);
+            public Document doInJcrMapping(ObjectContentManager manager) throws JcrMappingException {
+                return (Document) manager.getObjectByUuid(uuid);
             }
         });
     }

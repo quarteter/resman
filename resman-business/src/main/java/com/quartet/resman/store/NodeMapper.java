@@ -1,11 +1,10 @@
 package com.quartet.resman.store;
 
 import com.quartet.resman.entity.Entry;
-import com.quartet.resman.entity.File;
+import com.quartet.resman.entity.Document;
 import com.quartet.resman.entity.Folder;
 import com.quartet.resman.utils.Constants;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Bean;
 
 import javax.jcr.*;
 import java.lang.reflect.InvocationTargetException;
@@ -49,7 +48,7 @@ public class NodeMapper {
             if (nt.equals(Constants.NT_FOLDER)) {
                 return mapNode(node, Folder.class);
             } else if (nt.equals(Constants.NT_FILE)) {
-                return mapNode(node, File.class);
+                return mapNode(node, Document.class);
             } else if (nt.equals(Constants.NT_ENTRY)) {
                 return mapNode(node, Entry.class);
             } else {

@@ -3,7 +3,7 @@ package com.quartet.resman.web.controller.resman;
 import com.quartet.resman.converter.PDFConverter;
 import com.quartet.resman.converter.SWFConverter;
 import com.quartet.resman.entity.*;
-import com.quartet.resman.entity.File;
+import com.quartet.resman.entity.Document;
 import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.service.ParamService;
 import com.quartet.resman.converter.PreviewTask;
@@ -141,8 +141,8 @@ public class SpaceController {
                 map.put("type", "0");
                 list.add(map);
             } else {
-                File file = (File) node;
-                String size = String.valueOf(file.getSize() / 1024) + "KB";
+                Document document = (Document) node;
+                String size = String.valueOf(document.getSize() / 1024) + "KB";
                 map.put("type", "1");
                 map.put("size", size);
                 fileList.add(map);
@@ -267,8 +267,8 @@ public class SpaceController {
         InputStream in = null;
         try {
             in = uploadFile.getInputStream();
-            File file = new File(filePath + fileName, user.getUserName(), new FileStream(in), uploadFile.getSize());
-            fileService.addFile(file);
+            Document document = new Document(filePath + fileName, user.getUserName(), new FileStream(in), uploadFile.getSize());
+            fileService.addFile(document);
             IOUtils.closeQuietly(in);
         } catch (Exception ex) {
             ex.printStackTrace();

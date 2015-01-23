@@ -73,8 +73,8 @@ public class ClassicCourseController {
                 map.put("type", "0");
                 list.add(map);
             } else {
-                File file = (File) node;
-                String size = String.valueOf(file.getSize() / 1024) + "KB";
+                Document document = (Document) node;
+                String size = String.valueOf(document.getSize() / 1024) + "KB";
                 map.put("type", "1");
                 map.put("size", size);
                 fileList.add(map);
@@ -107,8 +107,8 @@ public class ClassicCourseController {
         Result result = null;
         try (InputStream is = fileData.getInputStream()) {
             String fileName = fileData.getOriginalFilename();
-            File file = new File(path + "/" + fileName, user.getUserName(), new FileStream(is), fileData.getSize());
-            fileService.addFile(file);
+            Document document = new Document(path + "/" + fileName, user.getUserName(), new FileStream(is), fileData.getSize());
+            fileService.addFile(document);
             IOUtils.closeQuietly(is);
             result = new Result(true, "");
         } catch (IOException ex) {
