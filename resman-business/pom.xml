@@ -110,6 +110,23 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.jackrabbit</groupId>
+            <artifactId>jackrabbit-text-extractors</artifactId>
+            <version>1.6.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>pdfbox</groupId>
+                    <artifactId>pdfbox</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>se-jcr-jackrabbit-ocm</artifactId>
             <version>2.0.0.SNAPSHOT</version>
@@ -145,6 +162,32 @@
             <artifactId>jodconverter-core</artifactId>
             <version>3.0-beta-4</version>
         </dependency>
+        <dependency>
+            <groupId>org.owasp.encoder</groupId>
+            <artifactId>encoder</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.beanshell</groupId>
+            <artifactId>bsh</artifactId>
+            <version>2.0b5</version>
+        </dependency>
+        <!-- Syntax Highlighter -->
+  <!--      <dependency>
+            <groupId>net.sourceforge</groupId>
+            <artifactId>jashi</artifactId>
+            <version>2008.07.31</version>
+        </dependency>-->
 
     </dependencies>
 

@@ -2,7 +2,7 @@ package com.quartet.resman.web.controller.resman;
 
 import com.quartet.resman.entity.*;
 import com.quartet.resman.rbac.ShiroUser;
-import com.quartet.resman.service.ParamService;
+import com.quartet.resman.service.Config;
 import com.quartet.resman.service.UserService;
 import com.quartet.resman.store.FileService;
 import com.quartet.resman.store.FolderService;
@@ -44,7 +44,7 @@ public class ClassicCourseController {
     @Autowired
     private FolderService folderService;
     @Autowired
-    private ParamService paramService;
+    private Config paramService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list() {
