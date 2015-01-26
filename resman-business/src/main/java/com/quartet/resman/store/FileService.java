@@ -1,8 +1,6 @@
 package com.quartet.resman.store;
 
-import com.quartet.resman.entity.Entry;
-import com.quartet.resman.entity.File;
-import com.quartet.resman.entity.FileStream;
+import com.quartet.resman.entity.Document;
 import com.quartet.resman.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.JcrConstants;
@@ -27,6 +25,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * @author lcheng
  * @version 1.0
@@ -39,8 +39,8 @@ public class FileService {
     @Autowired
     private JcrMappingTemplate mappingTemplate;
 
-    public void addFile(File file) {
-        mappingTemplate.insert(file);
+    public void addFile(Document document) {
+        mappingTemplate.insert(document);
         mappingTemplate.save();
     }
 
@@ -55,10 +55,10 @@ public class FileService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<File> queryFile(String parentPath, String nodeNameLike, String status, String visibility) {
+    public List<Document> queryFile(String parentPath, String nodeNameLike, String status, String visibility) {
         QueryManager qm = mappingTemplate.createQueryManager();
         String expression = "jcr:like(fn:name(),'%" + nodeNameLike + "%')";
-        Filter filter = qm.createFilter(File.class);
+        Filter filter = qm.createFilter(Document.class);
         filter.setScope(parentPath);
         filter.addJCRExpression(expression);
         if (StringUtils.isNotEmpty(status)) {
@@ -69,7 +69,7 @@ public class FileService {
         }
         Query q = qm.createQuery(filter);
         q.addOrderByAscending("created");
-        return (List<File>) mappingTemplate.getObjects(q);
+        return (List<Document>) mappingTemplate.getObjects(q);
     }
 
     public void deleteFile(String filePath) {
@@ -92,12 +92,13 @@ public class FileService {
         }
     }
 
+    @Transactional(readOnly = true)
     public InputStream readFile(final String filePath) {
         return mappingTemplate.execute(new JcrCallback<InputStream>() {
             @Override
             public InputStream doInJcr(Session session) throws IOException, RepositoryException {
                 String path = filePath;
-                if (path.startsWith("/")){
+                if (path.startsWith("/")) {
                     path = path.substring(1);
                 }
                 Node root = session.getRootNode();
@@ -107,7 +108,7 @@ public class FileService {
                         nodeType.equals(JcrConstants.NT_RESOURCE)) {
                     return JcrUtils.readFile(node);
                 } else if (nodeType.equals(Constants.NT_FILE)) {
-                    for(NodeIterator ni = node.getNodes();ni.hasNext();){
+                    for (NodeIterator ni = node.getNodes(); ni.hasNext(); ) {
                         System.out.println(ni.next());
                     }
                     Node contentNode = node.getNode("{" + Constants.NS_RESMAN + "}fileStream");
@@ -125,15 +126,27 @@ public class FileService {
         });
     }
 
+    @Transactional(readOnly = true)
     public void readFile(String filePath, OutputStream os) {
         try (InputStream input = readFile(filePath)) {
-            byte[] buffer = new byte[1024*100];
+            byte[] buffer = new byte[1024 * 100];
 
             for (int n = input.read(buffer); n != -1; n = input.read(buffer)) {
                 os.write(buffer, 0, n);
             }
         } catch (IOException e) {
-             e.printStackTrace();
+            e.printStackTrace();
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Document getFileInfoByUUID(final String uuid) {
+        checkNotNull(uuid);
+        return mappingTemplate.execute(new JcrMappingCallback<Document>() {
+            @Override
+            public Document doInJcrMapping(ObjectContentManager manager) throws JcrMappingException {
+                return (Document) manager.getObjectByUuid(uuid);
+            }
+        });
     }
 }

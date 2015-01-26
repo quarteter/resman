@@ -1,11 +1,10 @@
 package com.quartet.resman.web.controller.resman;
 
-import com.quartet.resman.converter.PDFConverter;
-import com.quartet.resman.converter.SWFConverter;
+import com.quartet.resman.converter.ConverterService;
 import com.quartet.resman.entity.*;
-import com.quartet.resman.entity.File;
+import com.quartet.resman.entity.Document;
 import com.quartet.resman.rbac.ShiroUser;
-import com.quartet.resman.service.ParamService;
+import com.quartet.resman.service.Config;
 import com.quartet.resman.converter.PreviewTask;
 import com.quartet.resman.service.UserService;
 import com.quartet.resman.store.FileService;
@@ -20,10 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.text.*;
 import java.util.*;
 
@@ -46,16 +43,10 @@ public class SpaceController {
     private UserService userService;
 
     @Resource
-    private ParamService paramService;
+    private Config paramService;
 
     @Resource
-    private PDFConverter pdfConverter;
-
-    @Resource
-    private SWFConverter swfConverter;
-
-    @Resource
-    private PreviewTask previewTask;
+    private ConverterService converterService;
 
     /**
      * 个人空间列表页面
@@ -141,8 +132,8 @@ public class SpaceController {
                 map.put("type", "0");
                 list.add(map);
             } else {
-                File file = (File) node;
-                String size = String.valueOf(file.getSize() / 1024) + "KB";
+                Document document = (Document) node;
+                String size = String.valueOf(document.getSize() / 1024) + "KB";
                 map.put("type", "1");
                 map.put("size", size);
                 fileList.add(map);
@@ -261,61 +252,31 @@ public class SpaceController {
         Result result = new Result();
         String rootPath = initRoot();
         String fileName = uploadFile.getOriginalFilename();
+        String mimeType = FileUtils.getFileExtension(fileName).toLowerCase();
         String filePath = rootPath + path + "/";
         if (StringUtils.isEmpty(path))
             filePath = rootPath + "/";
         InputStream in = null;
+        Document doc = null;
         try {
             in = uploadFile.getInputStream();
-            File file = new File(filePath + fileName, user.getUserName(), new FileStream(in), uploadFile.getSize());
-            fileService.addFile(file);
+            doc = new Document(filePath + fileName, user.getUserName(), new FileStream(in), uploadFile.getSize());
+            doc.setMimeType(mimeType);
+            fileService.addFile(doc);
             IOUtils.closeQuietly(in);
+
+            PreviewTask task = new PreviewTask(doc.getUuid(), converterService);
+            task.start();
+
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setSuccess(false);
             result.setMsg("文件上传失败");
         }
 
-        previewTask.setPreviewPath(paramService.getPreviewPath());
-        previewTask.setFilePath(filePath);
-        previewTask.setFileName(fileName);
-        previewTask.start();
-
         return result;
     }
 
-    /**
-     * 下载文件
-     *
-     * @param name
-     * @param response
-     * @throws Exception
-     */
-    @RequestMapping("download")
-    public void download(String path, String name, HttpServletResponse response) throws Exception {
-        String rootPath = initRoot();
-        String filePath = rootPath + path + "/" + name;
-        if (StringUtils.isEmpty(path))
-            filePath = rootPath + "/" + name;
-        InputStream in = fileService.readFile(filePath);
-        if (in == null)
-            return;
-
-        response.reset();
-        response.setContentType("application/x-download");
-        response.setCharacterEncoding("UTF-8");
-        String fileDisplay = URLEncoder.encode(name, "UTF-8");
-        response.addHeader("Content-Disposition", "attachment;filename=" + fileDisplay);
-        // 输出资源内容到相应对象
-        byte[] b = new byte[1024];
-        int len;
-        OutputStream out = response.getOutputStream();
-        while ((len = in.read(b, 0, 1024)) != -1) {
-            out.write(b, 0, len);
-        }
-        IOUtils.closeQuietly(in);
-        IOUtils.closeQuietly(out);
-    }
 
     /**
      * 删除文件
@@ -349,36 +310,4 @@ public class SpaceController {
         return r;
     }
 
-
-    @RequestMapping("/view")
-    public String viewReport(String path, String name, Model model) {
-        String newPath = path + "/" + name;
-        model.addAttribute("path", newPath);
-        return "public/swfView";
-    }
-
-    @RequestMapping("/file")
-    public void file(String path, HttpServletResponse response) throws Exception {
-        String previewPath = paramService.getPreviewPath();
-        String rootPath = initRoot();
-        String fileName = FileUtils.getFilePrefix2(path);
-        String swfPath = previewPath + rootPath + fileName + SWF_EXT;
-
-        InputStream imageStream = null;
-        java.io.File file = new java.io.File(swfPath);
-        if (!file.exists()) {
-            imageStream = this.getClass().getResourceAsStream("/error.swf");
-        } else {
-            imageStream = new FileInputStream(file);
-        }
-        response.reset();
-        response.setCharacterEncoding("UTF-8");
-        // 输出资源内容到相应对象
-        byte[] b = new byte[1024];
-        int len;
-        while ((len = imageStream.read(b, 0, 1024)) != -1) {
-            response.getOutputStream().write(b, 0, len);
-        }
-        IOUtils.closeQuietly(imageStream);
-    }
 }

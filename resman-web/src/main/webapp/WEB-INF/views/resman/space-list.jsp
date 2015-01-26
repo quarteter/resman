@@ -31,7 +31,7 @@
     </style>
 
     <script id="view-dlg" type="text/x-jsrender">
-        <iframe src="${ctx}/res/space/view?path={{:path}}&name={{:name}}" width="870px" height="560px" scrolling="auto"></iframe>
+        <iframe src="${ctx}/res/document/view?uuid={{:uuid}}" width="870px" height="500px" scrolling="auto"></iframe>
     </script>
 
     <script id="folder-dlg" type="text/x-jsrender">
@@ -126,7 +126,7 @@
                 var sel = $("#spaceList").bootstrapTable('getSelections');
                 if (sel.length > 0) {
                     var name = sel[0].name;
-                    var href = "${ctx}/res/space/download?name="+name + "&path=${path}";
+                    var href = "${ctx}/res/document/download?uuid="+sel[0].uuid;
                     window.open(href, null, 'height=250, width=400, top=50,left=50, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
                 } else {
                     tipNotify("请先选择资源");
@@ -142,20 +142,18 @@
                 path = encodeURI(path);
                 return  '<i class="fa fa-folder"></i> <a href="${ctx}/res/space/list?path='+path+'">' + value;
             } else {
-                <c:if test="${path==''}">
-                    return '<i class="fa fa-file-pdf-o"></i> <a href="javascript:void(0)" onclick="viewFile(\''+value+'\');">' + value;
-                </c:if>
-                return '<i class="fa fa-file-pdf-o"></i> <a href="javascript:void(0)" onclick="viewFile(\''+value+'\',\'${path}\');">' + value;
+                return '<i class="fa fa-file-pdf-o"></i> <a href="javascript:void(0)" onclick="viewFile(\''+row.uuid+'\',\''+value+'\');">' + value;
+
             }
         }
 
-        function viewFile(name, path){
+        function viewFile(uuid, name){
             BootstrapDialog.show({
                 size: BootstrapDialog.SIZE_WIDE,
                 title: name,
                 message: function () {
                     var tpl = $.templates("#view-dlg");
-                    return tpl.render({name:name,path:path});
+                    return tpl.render({uuid:uuid});
                 }
             });
         }
@@ -240,68 +238,12 @@
             $('#name').val(oldName);
         }
 
-        var setting = {
-            edit: {
-                enable: true,
-                showRemoveBtn: false,
-                showRenameBtn: false,
-                drag: {
-                    inner: false,
-                    isCopy: false
-                }
-            },
-            async: {
-                enable: true,
-                url: "${ctx}/sys/func/treeList",
-                autoParam: ["id=pid", "name=n", "level=lv"]
-            },
-            callback: {
-                beforeDrop: beforeDrop,
-                onDrop:onDrop
-            },
-            view:{
-                selectedMulti:false
-            }
-        };
-
         function move(){
-            var sel = $("#spaceList").bootstrapTable('getSelections');
-            if (sel.length <= 0)
-                tipNotify('请先选择资源');
-            var oldName = sel[0].name;
+            alert("//TODO");
+        }
 
-            BootstrapDialog.show({
-                title: "重命名",
-                nl2br: false,
-                message: function () {
-                    var tpl = $.templates("#tree-dlg");
-                    return tpl.render({});
-                },
-                buttons: [
-                    {
-                        label: '确定',
-                        cssClass: 'btn-primary btn-flat',
-                        action: function (dialog) {
-                            var val = $('#name').val();
-                            $.post('${ctx}/res/space/rename', {path: 'personal/zs', oldName:oldName, name: val}, function (data) {
-                                if (data.success) {
-                                    dialog.close();
-                                    $('#spaceList').bootstrapTable('refresh');
-                                } else {
-                                    tipError(data.msg);
-                                }
-                            });
-                        }
-                    },
-                    {
-                        label: '取消',
-                        action: function (dialogItself) {
-                            dialogItself.close();
-                        }
-                    }
-                ]
-            });
-            $('#name').val(oldName);
+        function copy(){
+            alert('//TODO');
         }
 
         function clickHref(path){

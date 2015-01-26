@@ -1,7 +1,7 @@
 package com.quartet.resman.store;
 
 import com.quartet.resman.entity.Entry;
-import com.quartet.resman.entity.File;
+import com.quartet.resman.entity.Document;
 import com.quartet.resman.entity.FileStream;
 import com.quartet.resman.entity.Folder;
 import com.quartet.resman.utils.Types;
@@ -60,8 +60,8 @@ public class OcmTest {
 
         java.io.File f = new java.io.File(FILE_PATH);
         try (InputStream is = new FileInputStream(f)) {
-            File file = new File("/jpk/kc1/cluster.log", "lcheng", new FileStream(is), f.length());
-            fileService.addFile(file);
+            Document document = new Document("/jpk/kc1/cluster.log", "lcheng", new FileStream(is), f.length());
+            fileService.addFile(document);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -106,7 +106,7 @@ public class OcmTest {
 
     @Test
     public void testQueryFile() {
-        List<File> result = fileService.queryFile("/jpk//", "cluster",
+        List<Document> result = fileService.queryFile("/jpk//", "cluster",
                 Types.Status.UnReviewed.getValue(), Types.Visibility.All.getValue());
         Assert.assertNotNull(result);
         Assert.assertEquals(1,result.size());
@@ -125,5 +125,17 @@ public class OcmTest {
         }catch (IOException e){
 
         }
+    }
+    @Test
+    public void testGetFileByUUID(){
+        List<Document> result = fileService.queryFile("/jpk//", "cluster",
+                Types.Status.UnReviewed.getValue(), Types.Visibility.All.getValue());
+        Assert.assertNotNull(result);
+        Assert.assertEquals(1,result.size());
+        Document document = result.get(0);
+        String uuid = document.getUuid();
+        Document another = fileService.getFileInfoByUUID(uuid);
+        Assert.assertNotNull(another);
+        Assert.assertEquals(uuid,another.getUuid());
     }
 }

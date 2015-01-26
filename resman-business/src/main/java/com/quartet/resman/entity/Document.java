@@ -8,7 +8,7 @@ import java.util.Date;
  * @version 1.0
  *          ${tags}
  */
-public class File extends Entry{
+public class Document extends Entry{
 
     private Long size;
     private String mimeType;
@@ -16,9 +16,9 @@ public class File extends Entry{
 //    private InputStream content;
     private FileStream fileStream;
 
-    public File(){}
+    public Document(){}
 
-    public File(String path,String createBy,FileStream fileStream, Long size) {
+    public Document(String path, String createBy, FileStream fileStream, Long size) {
         super(path,createBy);
         this.fileStream = fileStream;
         this.size = size;

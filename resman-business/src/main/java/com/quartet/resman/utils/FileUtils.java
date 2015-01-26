@@ -1,199 +1,191 @@
 package com.quartet.resman.utils;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 文件操作工具类
- *
  * @author qfxu
  */
 public class FileUtils {
-    private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
+    private static Logger log = LoggerFactory.getLogger(FileUtils.class);
 
     /**
-     * 匹配根路径下的文件名成，返回所有文件列表
-     *
-     * @param rootDir
-     * @param subPattern
-     * @return
+     * Returns the name of the file without the extension.
      */
-    public static List<File> getFiles(File rootDir, String subPattern) {
-        File[] child = rootDir.listFiles();
-        List<File> rnt = new ArrayList<File>();
-        for (File file : child) {
-            logger.debug("根目录[" + rootDir.getName() + "].字文件名称["
-                    + file.getAbsolutePath() + "]");
-            if (file.isDirectory()) {
-                List<File> subFiles = getFiles(file, subPattern);
-                rnt.addAll(subFiles);
-            } else {
-                boolean isMath = ConvUtils.matchStrings(subPattern,
-                        file.getName());
-                if (isMath) {
-                    rnt.add(file);
+    public static String getFileName(String file) {
+        log.debug("getFileName({})", file);
+        int idx = file.lastIndexOf(".");
+        String ret = idx >= 0 ? file.substring(0, idx) : file;
+        log.debug("getFileName: {}", ret);
+        return ret;
+    }
+
+    /**
+     * Returns the filename extension.
+     */
+    public static String getFileExtension(String file) {
+        log.debug("getFileExtension({})", file);
+        int idx = file.lastIndexOf(".");
+        String ret = idx >= 0 ? file.substring(idx + 1) : "";
+        log.debug("getFileExtension: {}", ret);
+        return ret;
+    }
+
+    /**
+     * Creates a temporal and unique directory
+     *
+     * @throws IOException If something fails.
+     */
+    public static File createTempDir() throws IOException {
+        File tmpFile = File.createTempFile("resman", null);
+
+        if (!tmpFile.delete())
+            throw new IOException();
+        if (!tmpFile.mkdir())
+            throw new IOException();
+        return tmpFile;
+    }
+
+    /**
+     * Create temp file
+     */
+    public static File createTempFile() throws IOException {
+        return File.createTempFile("resman", ".tmp");
+    }
+
+    /**
+     * Create temp file with extension from mime
+     */
+    public static File createTempFileFromExt(String ext) throws IOException {
+        return File.createTempFile("resman", "." + ext);
+    }
+
+    /**
+     * Wrapper for FileUtils.deleteQuietly
+     *
+     * @param file File or directory to be deleted.
+     */
+    public static boolean deleteQuietly(File file) {
+        return org.apache.commons.io.FileUtils.deleteQuietly(file);
+    }
+
+    /**
+     * Wrapper for FileUtils.cleanDirectory
+     *
+     * @param directory File or directory to be deleted.
+     */
+    public static void cleanDirectory(File directory) throws IOException {
+        org.apache.commons.io.FileUtils.cleanDirectory(directory);
+    }
+
+    /**
+     * Wrapper for FileUtils.listFiles
+     */
+    @SuppressWarnings("unchecked")
+    public static Collection<File> listFiles(File directory, String[] extensions, boolean recursive) {
+        return org.apache.commons.io.FileUtils.listFiles(directory, extensions, recursive);
+    }
+
+    /**
+     * Wrapper for FileUtils.readFileToByteArray
+     *
+     * @param file File or directory to be deleted.
+     */
+    public static byte[] readFileToByteArray(File file) throws IOException {
+        return org.apache.commons.io.FileUtils.readFileToByteArray(file);
+    }
+
+    /**
+     * Delete directory if empty
+     */
+    public static void deleteEmpty(File file) {
+        if (file.isDirectory()) {
+            if (file.list().length == 0) {
+                file.delete();
+            }
+        }
+    }
+
+    /**
+     * Count files and directories from a selected directory.
+     */
+    public static int countFiles(File dir) {
+        File[] found = dir.listFiles();
+        int ret = 0;
+
+        if (found != null) {
+            for (int i = 0; i < found.length; i++) {
+                if (found[i].isDirectory()) {
+                    ret += countFiles(found[i]);
                 }
+
+                ret++;
             }
         }
-        return rnt;
+
+        return ret;
+    }
+
+
+    /**
+     * Copy InputStream to File.
+     */
+    public static void copy(InputStream input, File output) throws IOException {
+        FileOutputStream fos = new FileOutputStream(output);
+        IOUtils.copy(input, fos);
+        fos.flush();
+        fos.close();
     }
 
     /**
-     * 获取文件扩展名
-     *
-     * @param filename
-     * @return
+     * Copy Reader to File.
      */
-    public static String getExtend(String filename) {
-        return getExtend(filename, "");
+    public static void copy(Reader input, File output) throws IOException {
+        FileOutputStream fos = new FileOutputStream(output);
+        IOUtils.copy(input, fos);
+        fos.flush();
+        fos.close();
     }
 
     /**
-     * 获取文件扩展名
-     *
-     * @param filename
-     * @return
+     * Copy File to OutputStream
      */
-    public static String getExtend(String filename, String defExt) {
-        if ((filename != null) && (filename.length() > 0)) {
-            int i = filename.lastIndexOf('.');
-            if ((i > 0) && (i < (filename.length() - 1))) {
-                return (filename.substring(i + 1)).toLowerCase();
-            }
+    public static void copy(File input, OutputStream output) throws IOException {
+        FileInputStream fis = new FileInputStream(input);
+        IOUtils.copy(fis, output);
+        fis.close();
+    }
+
+    /**
+     * Copy File to File
+     */
+    public static void copy(File input, File output) throws IOException {
+        org.apache.commons.io.FileUtils.copyFile(input, output);
+    }
+
+    /**
+     * Create "year / month / day" directory structure.
+     */
+    public static File createDateDir(String parent) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy" + File.separator + "MM" + File.separator + "dd");
+        File dateDir = new File(parent, sdf.format(new Date()));
+
+        if (!dateDir.exists()) {
+            dateDir.mkdirs();
         }
-        return defExt.toLowerCase();
+
+        return dateDir;
     }
-
-    /**
-     * 获取文件名称[不含后缀名]
-     *
-     * @param
-     * @return String
-     */
-    public static String getFilePrefix(String fileName) {
-        int splitIndex = fileName.lastIndexOf(".");
-        return fileName.substring(0, splitIndex).replaceAll("\\s*", "");
-    }
-
-    /**
-     * 获取文件名称[不含后缀名]
-     * 不去掉文件目录的空格
-     *
-     * @param
-     * @return String
-     */
-    public static String getFilePrefix2(String fileName) {
-        int splitIndex = fileName.lastIndexOf(".");
-        return fileName.substring(0, splitIndex);
-    }
-
-    /**
-     * 文件复制
-     *
-     * @param
-     * @return void
-     */
-    public static void copyFile(String inputFile, String outputFile) throws FileNotFoundException {
-        File sFile = new File(inputFile);
-        File tFile = new File(outputFile);
-        FileInputStream fis = new FileInputStream(sFile);
-        FileOutputStream fos = new FileOutputStream(tFile);
-        int temp = 0;
-        byte[] buf = new byte[10240];
-        try {
-            while ((temp = fis.read(buf)) != -1) {
-                fos.write(buf, 0, temp);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fis.close();
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * 判断文件是否为图片<br>
-     * <br>
-     *
-     * @param filename 文件名<br>
-     *                 判断具体文件类型<br>
-     * @return 检查后的结果<br>
-     * @throws Exception
-     */
-    public static boolean isPicture(String filename) {
-        // 文件名称为空的场合
-        if (StringUtils.isEmpty(filename)) {
-            // 返回不和合法
-            return false;
-        }
-        // 获得文件后缀名
-        //String tmpName = getExtend(filename);
-        String tmpName = filename;
-        // 声明图片后缀名数组
-        String imgeArray[][] = {{"bmp", "0"}, {"dib", "1"},
-                {"gif", "2"}, {"jfif", "3"}, {"jpe", "4"},
-                {"jpeg", "5"}, {"jpg", "6"}, {"png", "7"},
-                {"tif", "8"}, {"tiff", "9"}, {"ico", "10"}};
-        // 遍历名称数组
-        for (int i = 0; i < imgeArray.length; i++) {
-            // 判断单个类型文件的场合
-            if (imgeArray[i][0].equals(tmpName.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 判断文件是否为DWG<br>
-     * <br>
-     *
-     * @param filename 文件名<br>
-     *                 判断具体文件类型<br>
-     * @return 检查后的结果<br>
-     * @throws Exception
-     */
-    public static boolean isDwg(String filename) {
-        // 文件名称为空的场合
-        if (StringUtils.isEmpty(filename)) {
-            // 返回不和合法
-            return false;
-        }
-        // 获得文件后缀名
-        String tmpName = getExtend(filename);
-        // 声明图片后缀名数组
-        if (tmpName.equals("dwg")) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 删除指定的文件
-     *
-     * @param strFileName 指定绝对路径的文件名
-     * @return 如果删除成功true否则false
-     */
-    public static boolean delete(String strFileName) {
-        File fileDelete = new File(strFileName);
-
-        if (!fileDelete.exists() || !fileDelete.isFile()) {
-            logger.info("删除文件发生错误: " + strFileName + "不存在!");
-            return false;
-        }
-        logger.info("成功删除文件：" + strFileName);
-        return fileDelete.delete();
-    }
-
-
 }

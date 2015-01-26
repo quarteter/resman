@@ -22,7 +22,7 @@
                                <!--collectionConverter="org.apache.jackrabbit.ocm.manager.collectionconverter.impl.NTCollectionConverterImpl"/>-->
     </class-descriptor>
 
-    <class-descriptor className="com.quartet.resman.entity.File" jcrType="rm:file" jcrSuperTypes="nt:hierarchyNode" discriminator="false">
+    <class-descriptor className="com.quartet.resman.entity.Document" jcrType="rm:file" jcrSuperTypes="nt:hierarchyNode" discriminator="false">
         <field-descriptor fieldName="path" path="true" jcrName="path"/>
         <field-descriptor fieldName="uuid" uuid="true" jcrName="uuid"/>
         <field-descriptor fieldName="created" jcrName="jcr:created" jcrType="Date"/>

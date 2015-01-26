@@ -17,7 +17,7 @@
 <script type="text/javascript">
     $('#documentViewer').FlexPaperViewer({
         config: {
-            SwfFile: '${ctx}/res/space/file?path=${path}',
+            SwfFile: '${ctx}/res/document/swfView?uuid=${uuid}',
             EncodeURI: true,
             Scale: 1,
             ZoomTransition: 'easeOut',
