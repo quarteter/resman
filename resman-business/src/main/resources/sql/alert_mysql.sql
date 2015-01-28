@@ -54,6 +54,9 @@ CREATE TABLE `r_category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程类别';
 
+INSERT INTO `r_category` VALUES ('0', '中学', null);
+INSERT INTO `r_category` VALUES ('1', '大学', null);
+
 -- ----------------------------
 -- Records of r_category
 -- ----------------------------
