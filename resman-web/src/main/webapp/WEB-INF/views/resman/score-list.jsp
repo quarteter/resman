@@ -54,7 +54,9 @@
                 showRefresh: true,
                 showColumns: true,
                 toolbar: '#tb-score',
-                clickToSelect: true
+                clickToSelect: true ,
+                pagination:true,
+                sidePagination:"server"
             });
 
             $("#scoreForm").validate({
@@ -123,8 +125,8 @@
             <thead>
             <tr>
                 <th data-checkbox="true"></th>
-                <th data-field="name1" data-align="left">名称</th>
-                <th data-field="score1" data-align="center">成绩</th>
+                <th data-field="name" data-align="left">名称</th>
+                <th data-field="score" data-align="center">成绩</th>
             </tr>
             </thead>
         </table>

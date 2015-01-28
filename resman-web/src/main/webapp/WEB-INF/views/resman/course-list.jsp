@@ -44,7 +44,10 @@
                 url: "${ctx}/res/course/query",
                 cudBtn: true,
                 queryParams:function(params){
-                    params.pid = '${pid}';
+                    var pid =  '${pid}';
+                    if(pid!='0'){
+                        params.pid = pid;
+                    }
                     return params;
                 },
                 btns: [

@@ -71,7 +71,7 @@ public class CourseController {
     @ResponseBody
     public Map<String, Object> query(String searchText, String pid, @PageableDefault Pageable page) {
         Page<Course> courses = null;
-        Long parent = 0L;
+        Long parent = null;
         if (!StringUtils.isEmpty(pid))
             parent = Long.valueOf(pid);
         if (StringUtils.isNotEmpty(searchText)) {
