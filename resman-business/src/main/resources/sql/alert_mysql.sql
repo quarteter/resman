@@ -54,6 +54,9 @@ CREATE TABLE `r_category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程类别';
 
+INSERT INTO `r_category` VALUES ('0', '中学', null);
+INSERT INTO `r_category` VALUES ('1', '大学', null);
+
 -- ----------------------------
 -- Records of r_category
 -- ----------------------------
@@ -63,20 +66,19 @@ CREATE TABLE `r_category` (
 -- ----------------------------
 DROP TABLE IF EXISTS `r_course`;
 CREATE TABLE `r_course` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL COMMENT '名称',
   `description` text COMMENT '描述',
   `start_time` datetime DEFAULT NULL COMMENT '开始时间',
   `end_time` datetime DEFAULT NULL COMMENT '结束时间',
-  `category_id` bigint(20) NOT NULL COMMENT '课程类别',
+  `category_id` bigint(20) DEFAULT NULL COMMENT '课程类别',
   `parentid` bigint(20) DEFAULT NULL COMMENT '父节点',
   `ntype` char(1) DEFAULT NULL COMMENT '0：课程，1：作业',
   PRIMARY KEY (`id`),
   KEY `fk_r_course_r_category1_idx` (`category_id`),
   KEY `fk_r_course_r_course1_idx` (`parentid`),
-  CONSTRAINT `fk_r_course_r_category1` FOREIGN KEY (`category_id`) REFERENCES `r_category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_r_course_r_course1` FOREIGN KEY (`parentid`) REFERENCES `r_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程/作业（通过ntype进行区分）';
+  CONSTRAINT `fk_r_course_r_category1` FOREIGN KEY (`category_id`) REFERENCES `r_category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='课程/作业（通过ntype进行区分）';
 
 -- ----------------------------
 -- Records of r_course
