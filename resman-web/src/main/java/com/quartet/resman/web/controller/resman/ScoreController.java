@@ -67,12 +67,7 @@ public class ScoreController {
     public Map<String, Object> query(String courseId, @PageableDefault Pageable page) {
         List<CourseStudent> list = courseStudentDao.findByCourse(Long.valueOf(courseId));
         Map<String, Object> map = new HashMap<>();
-        List<Map<String,Object>> data = new ArrayList<>();
-        Map<String,Object> row = new HashMap();
-        row.put("name","lcheng");
-        row.put("score",80);
-        data.add(row);
-        map.put("rows", data);
+        map.put("rows", list);
         map.put("total", list.size());
         return map;
     }
