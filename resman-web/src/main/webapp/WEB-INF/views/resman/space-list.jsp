@@ -47,10 +47,6 @@
 
     </script>
 
-    <script id="tree-dlg" type="text/x-jsrender">
-        <ul id="folderTree" class="ztree"></ul>
-    </script>
-
     <script>
         $(function () {
             $('#spaceList').bootstrapTable({
@@ -135,7 +131,6 @@
                 }
             });
 
-            $.fn.zTree.init($("#folderTree"), setting);
         });
 
         function nameFormatter(value, row) {

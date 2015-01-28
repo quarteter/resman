@@ -42,3 +42,59 @@ CREATE TABLE `r_anwser` (
   KEY `fk_r_anwser_r_ques1_idx` (`quesId`),
   CONSTRAINT `fk_r_anwser_r_ques1` FOREIGN KEY (`quesId`) REFERENCES `r_ques` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='答案';
+
+-- ----------------------------
+-- Table structure for `r_category`
+-- ----------------------------
+DROP TABLE IF EXISTS `r_category`;
+CREATE TABLE `r_category` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程类别';
+
+-- ----------------------------
+-- Records of r_category
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `r_course`
+-- ----------------------------
+DROP TABLE IF EXISTS `r_course`;
+CREATE TABLE `r_course` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(45) DEFAULT NULL COMMENT '名称',
+  `description` text COMMENT '描述',
+  `start_time` datetime DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+  `category_id` bigint(20) NOT NULL COMMENT '课程类别',
+  `parentid` bigint(20) DEFAULT NULL COMMENT '父节点',
+  `ntype` char(1) DEFAULT NULL COMMENT '0：课程，1：作业',
+  PRIMARY KEY (`id`),
+  KEY `fk_r_course_r_category1_idx` (`category_id`),
+  KEY `fk_r_course_r_course1_idx` (`parentid`),
+  CONSTRAINT `fk_r_course_r_category1` FOREIGN KEY (`category_id`) REFERENCES `r_category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_r_course_r_course1` FOREIGN KEY (`parentid`) REFERENCES `r_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程/作业（通过ntype进行区分）';
+
+-- ----------------------------
+-- Records of r_course
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `r_course_student`
+-- ----------------------------
+CREATE TABLE `r_course_student` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userid` bigint(20) NOT NULL COMMENT '用户',
+  `path` varchar(45) DEFAULT NULL COMMENT '作业路径',
+  `score` varchar(45) DEFAULT NULL COMMENT '成绩',
+  `course_id` bigint(20) NOT NULL,
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  PRIMARY KEY (`id`),
+  KEY `fk_r_student_job_r_course1_idx` (`course_id`),
+  KEY `FK_q2iu2s0cbg0fg1hgw0bs2xwur` (`userid`),
+  CONSTRAINT `FK_q2iu2s0cbg0fg1hgw0bs2xwur` FOREIGN KEY (`userid`) REFERENCES `s_users` (`id`),
+  CONSTRAINT `fk_r_student_job_r_course1` FOREIGN KEY (`course_id`) REFERENCES `r_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
