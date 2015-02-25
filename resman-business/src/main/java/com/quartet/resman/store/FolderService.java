@@ -7,7 +7,6 @@ import org.apache.jackrabbit.ocm.manager.ObjectContentManager;
 import org.apache.jackrabbit.ocm.query.Filter;
 import org.apache.jackrabbit.ocm.query.Query;
 import org.apache.jackrabbit.ocm.query.QueryManager;
-import org.apache.jackrabbit.ocm.query.impl.FilterImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.extensions.jcr.JcrCallback;
 import org.springframework.extensions.jcr.JcrTemplate;
@@ -21,6 +20,7 @@ import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.jcr.query.QueryResult;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +83,39 @@ public class FolderService {
         }
     }
 
+    /**
+     * 移动节点到某个节点
+     * @param srcPath
+     * @param destPath
+     */
+    public void moveTo(final String srcPath,final String destPath){
+        mappingTemplate.execute(new JcrCallback<Object>() {
+            @Override
+            public Object doInJcr(Session session) throws IOException, RepositoryException {
+                session.move(srcPath,destPath);
+                session.save();
+                return null;
+            }
+        });
+
+    }
+
+    /**
+     * Copy某个节点到目标节点下面
+     * @param srcPath
+     * @param destPath
+     */
+    public void copyTo(final String srcPath, final String destPath){
+        mappingTemplate.execute(new JcrCallback<Object>() {
+            @Override
+            public Object doInJcr(Session session) throws IOException, RepositoryException {
+                session.getWorkspace().copy(srcPath,destPath);
+                session.save();
+                return null;
+            }
+        });
+    }
+
     @Transactional(readOnly = true)
     public Folder getFolder(String path) {
         checkNotNull(path);
@@ -139,6 +172,39 @@ public class FolderService {
     }
 
     /**
+     *
+     * @param path
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public List<Entry> getChildrenFolders(final String path){
+
+        return mappingTemplate.execute(new JcrCallback<List<Entry>>() {
+            @Override
+            public List<Entry> doInJcr(Session session) throws IOException, RepositoryException {
+                String tempPath = path;
+                if(!path.startsWith("/")){
+                    tempPath = "/"+path;
+                }
+                List<Entry> result = new ArrayList();
+
+                javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
+                String sql = "SELECT * FROM [rm:folder] AS f where ISCHILDNODE(f,'"+tempPath+"')";
+                javax.jcr.query.Query query = qm.createQuery(sql, javax.jcr.query.Query.JCR_SQL2);
+                QueryResult nodeResult = query.execute();
+                for (NodeIterator it = nodeResult.getNodes(); it.hasNext(); ) {
+                    Node n = it.nextNode();
+                    Entry entry = NodeMapper.mapEntry(n);
+                    if (entry != null) {
+                        result.add(entry);
+                    }
+                }
+                return result;
+            }
+        });
+    }
+
+    /**
      * 按status 和 visibility 过滤查询子节点
      *
      * @param path
@@ -161,5 +227,10 @@ public class FolderService {
         return (List<Entry>) mappingTemplate.getObjects(q);
     }
 
-
+    public String processPath(String path){
+        if (path.startsWith("/")) {
+            return path.substring(1);
+        }
+        return path;
+    }
 }

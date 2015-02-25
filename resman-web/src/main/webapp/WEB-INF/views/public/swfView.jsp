@@ -12,7 +12,7 @@
     <script type="text/javascript" src="${ctx}/asset/js/plugins/FlexPaper/js/flexpaper_handlers.js"></script>
 </head>
 <body>
-<div id="documentViewer" class="flexpaper_viewer"></div>
+<div id="documentViewer" class="flexpaper_viewer" style="position:absolute;left:10px;top:10px;width:830px;height:470px"></div>
 
 <script type="text/javascript">
     $('#documentViewer').FlexPaperViewer({

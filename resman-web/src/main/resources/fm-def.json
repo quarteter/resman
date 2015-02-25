@@ -1,0 +1,147 @@
+{
+  "space": {
+    "name": "space",
+    "title": "我的空间",
+    "rootDir": "/personal",
+    "rootDirPersonal": true,
+    "menus": [
+      {
+        "id":"btnUpload",
+        "name": "上传文件",
+        "action": ""
+      },
+      {
+        "id":"btnCreateFolder",
+        "name": "新建文件夹",
+        "iconCls":"fa fa-folder-o",
+        "action": "createFolder"
+      },
+      {
+        "id":"btnDownload",
+        "name": "下载",
+        "iconCls": "fa fa-download",
+        "action": "downloadFile"
+      },
+      {
+        "id":"btnDelete",
+        "name": "删除",
+        "iconCls": "fa fa-trash",
+        "action": "deleteFile"
+      },
+      {
+        "id":"btnShare",
+        "name": "分享",
+        "iconCls": "fa fa-share-alt",
+        "action": "share"
+      }
+    ],
+    "moreMenus": [
+      {
+        "id":"btnMoveTo",
+        "name": "移动到",
+        "action": "moveTo"
+      },
+      {
+        "id":"btnCopyTo",
+        "name": "复制到",
+        "action": "copyTo"
+      },
+      {
+        "id":"btnRename",
+        "name": "重命名",
+        "action": "rename"
+      }
+    ]
+  },
+  "classic": {
+    "name": "classic",
+    "title": "精品课程",
+    "rootDir": "/jpk",
+    "rootDirPersonal": false,
+    "menus": [
+      {
+        "id":"btnUpload",
+        "name": "上传文件",
+        "action": ""
+      },
+      {
+        "id":"btnDownload",
+        "name": "下载",
+        "iconCls": "fa fa-download",
+        "action": "downloadFile"
+      },
+      {
+        "id":"btnDelete",
+        "name": "删除",
+        "iconCls": "fa fa-trash",
+        "action": "deleteFile"
+      },
+      {
+        "id":"btnShare",
+        "name": "分享",
+        "iconCls": "fa fa-share-alt",
+        "action": "share"
+      },
+      {
+        "id":"btnRename",
+        "name": "重命名",
+        "action": "rename",
+        "iconCls": "fa fa-pencil-square-o"
+      }
+    ]
+  },
+  "personal": {
+    "name": "personal",
+    "title": "教师空间",
+    "rootDir": "/personal",
+    "rootDirPersonal": false,
+    "menus": [
+      {
+        "id":"btnUpload",
+        "name": "上传文件",
+        "action": ""
+      },
+      {
+        "id":"btnCreateFolder",
+        "name": "新建文件夹",
+        "iconCls":"fa fa-folder-o",
+        "action": "createFolder"
+      },
+      {
+        "id":"btnDownload",
+        "name": "下载",
+        "iconCls": "fa fa-download",
+        "action": "downloadFile"
+      },
+      {
+        "id":"btnDelete",
+        "name": "删除",
+        "iconCls": "fa fa-trash",
+        "action": "deleteFile"
+      },
+      {
+        "id":"btnShare",
+        "name": "分享",
+        "iconCls": "fa fa-share-alt",
+        "action": "share"
+      }
+    ],
+    "moreMenus": [
+      {
+        "id":"btnMoveTo",
+        "name": "移动到",
+        "action": "moveTo"
+      },
+      {
+        "id":"btnCopyTo",
+        "name": "复制到",
+        "action": "copyTo"
+      },
+      {
+        "id":"btnRename",
+        "name": "重命名",
+        "action": "rename"
+      }
+    ]
+  }
+}

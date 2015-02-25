@@ -43,6 +43,9 @@
     </script>
 
     <script>
+        function nameFormatter(value,row){
+            return row.user.name;
+        }
         $(function () {
             $('#scoreList').bootstrapTable({
                 url: '${ctx}/res/score/query',
@@ -125,7 +128,7 @@
             <thead>
             <tr>
                 <th data-checkbox="true"></th>
-                <th data-field="name" data-align="left">名称</th>
+                <th data-field="user.nane" data-formatter="nameFormatter" data-align="left">名称</th>
                 <th data-field="score" data-align="center">成绩</th>
             </tr>
             </thead>

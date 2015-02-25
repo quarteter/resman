@@ -142,4 +142,10 @@ public class OcmTest {
         Assert.assertNotNull(another);
         Assert.assertEquals(uuid,another.getUuid());
     }
+
+    @Test
+    public void testGetChildrenFolder(){
+        List<Entry> folders = folderService.getChildrenFolders("/jpk");
+        Assert.assertTrue(folders.size()>0);
+    }
 }

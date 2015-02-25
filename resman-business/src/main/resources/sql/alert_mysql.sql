@@ -100,3 +100,16 @@ CREATE TABLE `r_course_student` (
   CONSTRAINT `FK_q2iu2s0cbg0fg1hgw0bs2xwur` FOREIGN KEY (`userid`) REFERENCES `s_users` (`id`),
   CONSTRAINT `fk_r_student_job_r_course1` FOREIGN KEY (`course_id`) REFERENCES `r_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- 2015/2/15 lcheng 添加超级管理员功能数据
+-- ----------------------------
+INSERT INTO `s_funcs` VALUES (2100, 0, '超级管理员', NULL, 10, '', '', 'fa fa-bar-chart-o');
+INSERT INTO `s_funcs` VALUES (2101, 1, '精品课', 2100, 5, '/res/common/classic/list', '', NULL);
+INSERT INTO `s_funcs` VALUES (2102, 1, '教师空间', 2100, 10, '/res/common/personal/list', '', NULL);
+INSERT INTO `s_funcs` VALUES (2103, 1, '公告管理', 2100, 15, '/res/notice/list', '', NULL);
+
+INSERT INTO `s_role_func` VALUES (4, 2100);
+INSERT INTO `s_role_func` VALUES (4, 2101);
+INSERT INTO `s_role_func` VALUES (4, 2102);
+INSERT INTO `s_role_func` VALUES (4, 2103);
