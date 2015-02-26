@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sun.net.www.MimeTable;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -60,6 +61,9 @@ public class OcmTest {
 
         java.io.File f = new java.io.File(FILE_PATH);
         try (InputStream is = new FileInputStream(f)) {
+            MimeTable mt = MimeTable.getDefaultTable();
+            String type = mt.getContentTypeFor("F:/mydoc.txt");
+            System.out.println(">>> type is :"+type);
             Document document = new Document("/jpk/kc1/cluster.log", "lcheng", new FileStream(is), f.length());
             fileService.addFile(document);
         } catch (IOException e) {
@@ -137,5 +141,11 @@ public class OcmTest {
         Document another = fileService.getFileInfoByUUID(uuid);
         Assert.assertNotNull(another);
         Assert.assertEquals(uuid,another.getUuid());
+    }
+
+    @Test
+    public void testGetChildrenFolder(){
+        List<Entry> folders = folderService.getChildrenFolders("/jpk");
+        Assert.assertTrue(folders.size()>0);
     }
 }

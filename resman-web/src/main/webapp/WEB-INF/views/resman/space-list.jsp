@@ -47,10 +47,6 @@
 
     </script>
 
-    <script id="tree-dlg" type="text/x-jsrender">
-        <ul id="folderTree" class="ztree"></ul>
-    </script>
-
     <script>
         $(function () {
             $('#spaceList').bootstrapTable({
@@ -106,21 +102,23 @@
                 }
             });
 
-            $('#btnUpload').uploadify({
-                height: 34,
-                width: 100,
-                buttonClass: 'btn btn-primary',
-                removeTimeout: 0,
-                swf: '${ctx}/asset/js/plugins/uploadify/uploadify.swf',
-                uploader: '${ctx}/res/space/upload',
-                fileObjName: 'fileData',
-                buttonText: '<span class="fa fa-upload"></span>&nbsp;上传文件',
-                queueID: 'fileQueue',
-                formData: {path: '${path}'},
-                onQueueComplete: function (queueData) {
-                    $('#spaceList').bootstrapTable('refresh');
-                }
-            });
+            setTimeout(function(){
+                $('#btnUpload').uploadify({
+                    height: 34,
+                    width: 100,
+                    buttonClass: 'btn btn-primary',
+                    removeTimeout: 0,
+                    swf: '${ctx}/asset/js/plugins/uploadify/uploadify.swf',
+                    uploader: '${ctx}/res/space/upload',
+                    fileObjName: 'fileData',
+                    buttonText: '<span class="fa fa-upload"></span>&nbsp;上传文件',
+                    queueID: 'fileQueue',
+                    formData: {path: '${path}'},
+                    onQueueComplete: function (queueData) {
+                        $('#spaceList').bootstrapTable('refresh');
+                    }
+                });
+            },10);
 
             $('#btnDownload').on('click', function () {
                 var sel = $("#spaceList").bootstrapTable('getSelections');
@@ -133,7 +131,6 @@
                 }
             });
 
-            $.fn.zTree.init($("#folderTree"), setting);
         });
 
         function nameFormatter(value, row) {
