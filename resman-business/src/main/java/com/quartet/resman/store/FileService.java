@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.jcr.*;
+import javax.jcr.query.QueryResult;
+import javax.jcr.query.RowIterator;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -146,6 +148,49 @@ public class FileService {
             @Override
             public Document doInJcrMapping(ObjectContentManager manager) throws JcrMappingException {
                 return (Document) manager.getObjectByUuid(uuid);
+            }
+        });
+    }
+
+    @Transactional(readOnly = true)
+    public Long countOfFile(final String folder){
+        return mappingTemplate.execute(new JcrCallback<Long>() {
+            @Override
+            public Long doInJcr(Session session) throws IOException, RepositoryException {
+                javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
+                String sql = "" ;
+                if (StringUtils.isNotEmpty(folder)){
+                    sql = "SELECT f.[rm:size] FROM [rm:file] AS f WHERE ISCHILDNODE(f,'"+folder+"')";
+                }else{
+                    sql = "SELECT f.[rm:size] FROM [rm:file] AS f";
+                }
+                javax.jcr.query.Query query = qm.createQuery(sql, javax.jcr.query.Query.JCR_SQL2);
+                QueryResult nodeResult = query.execute();
+                return nodeResult.getNodes().getSize();
+            }
+        });
+    }
+
+    @Transactional(readOnly = true)
+    public Long sizeOf(final String folder){
+        return mappingTemplate.execute(new JcrCallback<Long>() {
+            @Override
+            public Long doInJcr(Session session) throws IOException, RepositoryException {
+                javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
+                String sql = "" ;
+                if (StringUtils.isNotEmpty(folder)){
+                    sql = "SELECT f.[rm:size] FROM [rm:file] AS f WHERE ISCHILDNODE(f,'"+folder+"')";
+                }else{
+                    sql = "SELECT f.[rm:size] FROM [rm:file] AS f";
+                }
+                javax.jcr.query.Query query = qm.createQuery(sql, javax.jcr.query.Query.JCR_SQL2);
+                QueryResult nodeResult = query.execute();
+                Long allSize = 0L;
+                String[] columns = nodeResult.getColumnNames();
+                for (RowIterator it= nodeResult.getRows();it.hasNext();){
+                    allSize += ((it.nextRow().getValue(columns[0]).getLong()))/1024;
+                }
+                return allSize;
             }
         });
     }
