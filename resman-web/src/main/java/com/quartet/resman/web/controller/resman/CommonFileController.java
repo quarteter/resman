@@ -252,12 +252,45 @@ public class CommonFileController {
         Result result = null;
         try {
             folderService.moveTo(srcPath, destPath);
-            result = new Result(true,"");
+            result = new Result(true, "");
         } catch (Throwable e) {
             e.printStackTrace();
-            result = new Result(false,"");
+            result = new Result(false, "");
         }
         return result;
+    }
+
+    @RequestMapping(value = "/copyTo", method = RequestMethod.POST)
+    @ResponseBody
+    public Result copyTo(String srcPath, String destPath) {
+        Result result = null;
+        try {
+            folderService.copyTo(srcPath,destPath);
+            result = new Result(true, "");
+        } catch (Throwable e) {
+            e.printStackTrace();
+            result = new Result(false, "");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/folderList", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Map<String,Object>> childrenFolderList(String parent,String srcPath) {
+        //List<Map<String,Object>> result = new ArrayList<>();
+        String parentDir = srcPath;
+        if (StringUtils.isNotEmpty(srcPath)){
+            int idx = srcPath.lastIndexOf("/");
+            if (idx>0){
+                parentDir = srcPath.substring(0,idx);
+            }
+        }
+        if (StringUtils.isNotEmpty(parent) && !parent.equals("all")) {
+            List<Entry> children = folderService.getChildrenFolders(parent);
+            return convertEntries(children,parentDir);
+        }else  {
+            return getRootFolders(parentDir);
+        }
     }
 
     /**
@@ -339,6 +372,44 @@ public class CommonFileController {
             return "";
         Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
+    }
+
+    private List<Map<String,Object>> convertEntries(List<Entry> nodes,String parentPath){
+        List<Map<String,Object>> result = new ArrayList<>();
+        for (Entry entry : nodes){
+            Map<String,Object> map = new HashMap<>();
+            map.put("uid",entry.getUuid());
+            map.put("name",entry.getName());
+            map.put("folderPath",entry.getPath());
+            if (entry.getPath().equals(parentPath)){
+                map.put("chkDisabled",true);
+            }
+            map.put("isParent",true);
+            result.add(map);
+        }
+        return result;
+    }
+
+    private List<Map<String,Object>> getRootFolders(String parentPath){
+        List<Map<String,Object>> result = new ArrayList<>();
+        Map<String,Object> map =null;
+        Map<String,String> names = new HashMap<>();
+        names.put("/personal","个人空间");
+        names.put("/jpk","精品课程");
+
+        for (String key : names.keySet()){
+            Folder folder = folderService.getFolder(key);
+            map = new HashMap<>();
+            map.put("uid",folder.getUuid());
+            map.put("name",names.get(key));
+            map.put("folderPath",folder.getPath());
+            map.put("isParent",true);
+            if (key.equals(parentPath)){
+                map.put("chkDisabled",true);
+            }
+            result.add(map);
+        }
+        return result;
     }
 
 }

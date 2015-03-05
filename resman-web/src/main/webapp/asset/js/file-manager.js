@@ -124,18 +124,47 @@
             var sel = $("#fileList").bootstrapTable('getSelections');
             if (sel.length > 0) {
                 var srcPath = sel[0].path,
-                    srcIdx = srcPath.lastIndexOf("/"),
-                    destPath = "/personal/lcheng/高等数学/"+srcPath.substring(srcIdx+1), //需要提供选择目标文件夹的Dialog
-                    postUrl = window.ctxPath+"/res/common/"+window.func+"/moveTo";
-                $.post(postUrl, {srcPath: srcPath, destPath: destPath}, function (data) {
-                    if (data.success) {
-                        //dialog.close();
-                        $('#fileList').bootstrapTable('refresh');
-                    } else {
-                        tipError(data.msg);
-                    }
-                });
+                    srcIdx = srcPath.lastIndexOf("/");
+                $.fm.createFolderSelect("移动到",window.mcDir,srcPath, $.fm.doMoveTo);
+            }else{
+                //alert("请选择要移动的文件(夹)!");
+                tipNotify("请选择要移动的文件(夹)!");
             }
+        },
+        doMoveTo:function(srcPath,destPath,dialog){
+            var postUrl = window.ctxPath+"/res/common/"+window.func+"/moveTo",
+                params={srcPath:srcPath,destPath:destPath};
+            $.post(postUrl, params, function (data) {
+                if (data.success) {
+                    dialog.close();
+                    $('#fileList').bootstrapTable('refresh');
+                } else {
+                    tipError(data.msg);
+                }
+            });
+        },
+        copyTo :function(){
+            var sel = $("#fileList").bootstrapTable('getSelections');
+            if (sel.length > 0) {
+                var srcPath = sel[0].path,
+                    srcIdx = srcPath.lastIndexOf("/");
+                $.fm.createFolderSelect("复制到",window.mcDir,srcPath, $.fm.doCopyTo);
+            }else{
+                //alert("请选择要移动的文件(夹)!");
+                tipNotify("请选择要复制的文件(夹)!");
+            }
+        },
+        doCopyTo:function(srcPath,destPath,dialog){
+            var postUrl = window.ctxPath+"/res/common/"+window.func+"/copyTo",
+                params={srcPath:srcPath,destPath:destPath};
+            $.post(postUrl, params, function (data) {
+                if (data.success) {
+                    dialog.close();
+                    $('#fileList').bootstrapTable('refresh');
+                } else {
+                    tipError(data.msg);
+                }
+            });
         },
         viewFile:function(uuid, name){
             BootstrapDialog.show({
@@ -197,6 +226,56 @@
                 return '<i class="fa fa-file-pdf-o"></i> <a href="javascript:void(0)" onclick="$.fm.viewFile(\'' + row.uuid + '\',\'' + value + '\');">' + value;
 
             }
+        },
+        createFolderSelect:function(title,parent,srcPath,confirmFunc){
+            BootstrapDialog.show({
+                title: title,
+                nl2br: false,
+                message: "<ul id='folderTree' class='ztree'></ul>",
+                buttons: [
+                    {
+                        label: '确定',
+                        cssClass: 'btn-primary btn-flat',
+                        action: function (dialog) {
+                            var ztree = $.fn.zTree.getZTreeObj("folderTree"),
+                                nodes = ztree.getCheckedNodes(),
+                                srcIdx = srcPath.lastIndexOf("/");
+                            if(nodes.length>0){
+                                var destPath = nodes[0].folderPath+"/"+srcPath.substring(srcIdx+1);
+                                confirmFunc(srcPath,destPath,dialog);
+                            }
+                        }
+                    },
+                    {
+                        label: '取消',
+                        action: function (dialogItself) {
+                            dialogItself.close();
+                        }
+                    }
+                ],
+                onshown:function(){
+                    var setting = {
+                        async: {
+                            enable: true,
+                            url: window.ctxPath +"/res/common/"+ window.func+"/folderList",
+                            autoParam: ["folderPath=parent"],
+                            otherParam:['srcPath',srcPath]
+                        },
+                        check:{
+                            enable: true,
+                            chkStyle: "radio",
+                            radioType: "all"
+                        }
+                    };
+                    var ztree = $.fn.zTree.init($("#folderTree"), setting);
+                    //    srcIdx =srcPath.lastIndexOf("/") ,
+                    //    parentPath = srcPath.substr(0,srcIdx),
+                    //    node = ztree.getNodeByParam("folderPath",parentPath,null);
+                    //if(node!=null){
+                    //    ztree.setChkDisabled(node,true);
+                    //}
+                }
+            });
         }
     }
 

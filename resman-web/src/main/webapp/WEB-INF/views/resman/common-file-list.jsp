@@ -9,6 +9,7 @@
     <link href="${ctx}/asset/js/plugins/multiselect/css/multi-select.css" rel="stylesheet">
     <link href="${ctx}/asset/js/plugins/bsdialog/bootstrap-dialog.min.css" rel="stylesheet">
     <link href="${ctx}/asset/js/plugins/uploadify/uploadify.css" rel="stylesheet"/>
+    <link href="${ctx}/asset/js/plugins/zTree/css/zTreeStyle.css" rel="stylesheet"/>
 
     <script src="${ctx}/asset/js/plugins/boottable/bootstrap-table.min.js"></script>
     <script src="${ctx}/asset/js/plugins/boottable/bootstrap-table-zh-CN.min.js"></script>
@@ -19,6 +20,7 @@
     <script src="${ctx}/asset/js/jNotify.jquery.min.js"></script>
     <script src="${ctx}/asset/js/plugins/validate/jquery.validate.min.js"></script>
     <script src="${ctx}/asset/js/plugins/uploadify/jquery.uploadify.min.js"></script>
+    <script src="${ctx}/asset/js/plugins/zTree/jquery.ztree.all-3.5.min.js"></script>
     <script src="${ctx}/asset/js/common.js"></script>
     <script src="${ctx}/asset/js/file-manager.js"></script>
     <script id="view-dlg" type="text/x-jsrender">
@@ -39,7 +41,7 @@
     </script>
     <script>
         var ctxPath = "${ctx}", func = "${func}", tabId = "#fileList",
-                filePath = "${path}", fileMenuId = "#menu";
+                filePath = "${path}", fileMenuId = "#menu",mcDir="${funcDef.mcDir}";
         $(document).ready(function () {
             $.fm.createFileTable();
             $.fm.createUploadMenu();
