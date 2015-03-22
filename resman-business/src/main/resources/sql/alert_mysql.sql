@@ -105,9 +105,9 @@ CREATE TABLE `r_course_student` (
 -- 2015/2/15 lcheng 添加超级管理员功能数据
 -- ----------------------------
 INSERT INTO `s_funcs` VALUES (2100, 0, '超级管理员', NULL, 10, '', '', 'fa fa-bar-chart-o');
-INSERT INTO `s_funcs` VALUES (2101, 1, '精品课', 2100, 5, '/res/common/classic/list', '', NULL);
+INSERT INTO `s_funcs` VALUES (2101, 1, '精品课程', 2100, 5, '/res/common/classic/list', '', NULL);
 INSERT INTO `s_funcs` VALUES (2102, 1, '教师空间', 2100, 10, '/res/common/personal/list', '', NULL);
-INSERT INTO `s_funcs` VALUES (2103, 1, '公告管理', 2100, 15, '/res/notice/list', '', NULL);
+INSERT INTO `s_funcs` VALUES (2103, 1, '公告管理', 2100, 15, '/res/notice/pageList', '', NULL);
 
 INSERT INTO `s_role_func` VALUES (4, 2100);
 INSERT INTO `s_role_func` VALUES (4, 2101);

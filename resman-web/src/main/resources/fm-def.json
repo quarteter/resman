@@ -4,6 +4,7 @@
     "title": "我的空间",
     "rootDir": "/personal",
     "rootDirPersonal": true,
+    "mcDir":"/personal",
     "menus": [
       {
         "id":"btnUpload",
@@ -58,6 +59,7 @@
     "title": "精品课程",
     "rootDir": "/jpk",
     "rootDirPersonal": false,
+    "mcDir":"",
     "menus": [
       {
         "id":"btnUpload",
@@ -95,6 +97,7 @@
     "title": "教师空间",
     "rootDir": "/personal",
     "rootDirPersonal": false,
+    "mcDir":"all",
     "menus": [
       {
         "id":"btnUpload",

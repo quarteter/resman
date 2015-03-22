@@ -13,6 +13,7 @@ public class FileFuncDef {
     private String title;
     private String rootDir;
     private boolean rootDirPersonal;
+    private String mcDir;//移动或复制的起始目录
     private List<FileFuncMenu> menus;
     private List<FileFuncMenu> moreMenus;
 
@@ -62,5 +63,13 @@ public class FileFuncDef {
 
     public void setMoreMenus(List<FileFuncMenu> moreMenus) {
         this.moreMenus = moreMenus;
+    }
+
+    public String getMcDir() {
+        return mcDir;
+    }
+
+    public void setMcDir(String mcDir) {
+        this.mcDir = mcDir;
     }
 }

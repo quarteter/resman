@@ -148,4 +148,20 @@ public class OcmTest {
         List<Entry> folders = folderService.getChildrenFolders("/jpk");
         Assert.assertTrue(folders.size()>0);
     }
+
+    @Test
+    public void testCountOfFile(){
+
+        Long allFile = fileService.countOfFile("/jpk/kc1");
+        Assert.assertEquals(1,allFile.longValue());
+
+        allFile = fileService.countOfFile("/jpk");
+        Assert.assertEquals(0,allFile.longValue());
+    }
+
+    @Test
+    public void testSizeOf(){
+        Long fileSize = fileService.sizeOf("/jpk/kc1");
+        Assert.assertEquals(true,fileSize.longValue()<62);
+    }
 }

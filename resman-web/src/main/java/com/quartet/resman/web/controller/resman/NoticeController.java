@@ -9,6 +9,7 @@ import com.quartet.resman.repository.NoticeDao;
 import com.quartet.resman.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
@@ -32,7 +33,7 @@ import java.util.*;
 public class NoticeController {
 
     @Resource
-    private NoticeDao noticeDao;
+    private NoticeDao noticeDao;//改成NoticeService
 
     @Resource
     private UserService userService;
@@ -119,17 +120,55 @@ public class NoticeController {
 
     @RequestMapping(value = "/audit/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Result audit(@PathVariable("id")Long id) {
+    public Result audit(@PathVariable("id") Long id) {
         Result r = new Result();
         Notice notice = noticeDao.findOne(id);
         String state = notice.getState();
-        if(state.equals("1")){
+        if (state.equals("1")) {
             r.setSuccess(false);
             r.setMsg("该公告已经发布");
-        }else{
+        } else {
             notice.setState("1");
             noticeDao.save(notice);
         }
         return r;
+    }
+
+    @RequestMapping(value = "/audit", method = RequestMethod.POST)
+    @ResponseBody
+    public Result audit(Long id,String state) {
+        Result r = new Result();
+        Notice notice = noticeDao.findOne(id);
+        if (state.equals("1")||state.equals("0")){
+            try{
+                notice.setState(state);
+                noticeDao.save(notice);
+                r = new Result(true,"");
+            }catch (Throwable e){
+                r = new Result(false,"审核失败!");
+            }
+        }else{
+            r = new Result(false,"不合法的状态!");
+        }
+        return r;
+    }
+
+    /**
+     * 列表形式的公告
+     *
+     * @param page
+     * @return
+     */
+    @RequestMapping("/pageList")
+    public ModelAndView pageList(@PageableDefault Pageable page) {
+        ModelAndView mv = new ModelAndView("resman/notice-pageList");
+//        if (page == null)
+//            page = 0;
+//        PageRequest p = new PageRequest(page,10);
+        Page<Notice> pdata = noticeDao.findAll(page);
+        mv.addObject("content",pdata.getContent());
+        mv.addObject("totalPages",pdata.getTotalPages());
+        mv.addObject("currentPage",pdata.getNumber());
+        return mv;
     }
 }
