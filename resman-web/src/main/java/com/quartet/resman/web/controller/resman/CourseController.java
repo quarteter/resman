@@ -74,6 +74,8 @@ public class CourseController {
         Long parent = null;
         if (!StringUtils.isEmpty(pid))
             parent = Long.valueOf(pid);
+        else
+            parent = 0l;
         if (StringUtils.isNotEmpty(searchText)) {
             SearchFilter filter = new SearchFilter("name", SearchFilter.Operator.LIKE, searchText);
             List<SearchFilter> filters = new ArrayList<>(1);
