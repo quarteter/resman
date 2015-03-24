@@ -1,11 +1,13 @@
 package com.quartet.resman.rbac;
 
+import java.io.Serializable;
+
 /**
  * @author lcheng
  * @version 1.0
  *          ${tags}
  */
-public class ShiroUser {
+public class ShiroUser implements Serializable{
 
     private Long id;
     private Long roleId;

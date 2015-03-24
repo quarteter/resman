@@ -4,11 +4,15 @@ import com.quartet.resman.entity.Answer;
 import com.quartet.resman.entity.Question;
 import com.quartet.resman.repository.AnswerDao;
 import com.quartet.resman.repository.QuestionDao;
+import com.quartet.resman.repository.QuestionVoDao;
+import com.quartet.resman.vo.QuestionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * Created by XWANG on 2015/1/14.
@@ -19,14 +23,17 @@ public class QuestionService {
     QuestionDao questionDao;
 
     @Autowired
+    QuestionVoDao questionVoDao;
+
+    @Autowired
     AnswerDao  answerDao;
 
-    public Page<Question> getAllQuestion(Pageable page) {
-        return questionDao.findAll(page);
+    public Page<QuestionVo> getAllQuestionVo(Pageable page) {
+        return questionVoDao.findAll(page);
     }
 
-    public Page<Question> getAllQuestion(Specification spec, Pageable page) {
-        return questionDao.findAll(spec, page);
+    public Page<QuestionVo> getAllQuestionVo(Specification spec, Pageable page) {
+        return questionVoDao.findAll(spec, page);
     }
 
     public Question getQuestion(Long qid) {
@@ -52,9 +59,12 @@ public class QuestionService {
             return false;
         }
         question.addAnswer( answer );
-        questionDao.save( question );
+        answer.setQuestion(question);
+     //   questionDao.save( question );
         return true;
     }
+
+
 
     public void deleteAnswer( Long aid )
     {

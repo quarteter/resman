@@ -2,6 +2,8 @@ package com.quartet.resman.web.controller.resman;
 
 import com.quartet.resman.core.persistence.DynamicSpecifications;
 import com.quartet.resman.core.persistence.SearchFilter;
+import com.quartet.resman.entity.Category;
+import com.quartet.resman.entity.Course;
 import com.quartet.resman.entity.Notice;
 import com.quartet.resman.entity.Result;
 import com.quartet.resman.rbac.ShiroUser;
@@ -33,7 +35,7 @@ import java.util.*;
 public class NoticeController {
 
     @Resource
-    private NoticeDao noticeDao;//改成NoticeService
+    private NoticeDao noticeDao;
 
     @Resource
     private UserService userService;
@@ -120,14 +122,14 @@ public class NoticeController {
 
     @RequestMapping(value = "/audit/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Result audit(@PathVariable("id") Long id) {
+    public Result audit(@PathVariable("id")Long id) {
         Result r = new Result();
         Notice notice = noticeDao.findOne(id);
         String state = notice.getState();
-        if (state.equals("1")) {
+        if(state.equals("1")){
             r.setSuccess(false);
             r.setMsg("该公告已经发布");
-        } else {
+        }else{
             notice.setState("1");
             noticeDao.save(notice);
         }
@@ -171,4 +173,13 @@ public class NoticeController {
         mv.addObject("currentPage",pdata.getNumber());
         return mv;
     }
+
+    @RequestMapping("view/{id}")
+    public String view(@PathVariable("id") Long id, Model model) {
+        Notice notice = noticeDao.findOne(id);
+        if( notice == null )
+            notice = new Notice();
+        model.addAttribute("notice", notice);
+        return "resman/notice-view";
+     }
 }

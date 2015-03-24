@@ -20,7 +20,9 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String crtuser;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "crtuser")
+    private User crtuser;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -48,12 +50,13 @@ public class Question {
         this.id = id;
     }
 
-    public String getCrtuser() {
-        return crtuser;
+    public void setCrtuser(User crtuser) {
+        this.crtuser = crtuser;
     }
 
-    public void setCrtuser(String crtuser) {
-        this.crtuser = crtuser;
+    public User getCrtuser() {
+
+        return crtuser;
     }
 
     public Date getCrtdate() {
@@ -98,6 +101,6 @@ public class Question {
 
     public void addAnswer( Answer answer )
     {
-
+        answers.add(answer);
     }
 }

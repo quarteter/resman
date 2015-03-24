@@ -14,6 +14,7 @@ public class Result {
     private Map<String, Object> data = new HashMap<>();
 
     public Result() {
+
     }
 
     public Result(boolean success, String msg) {
