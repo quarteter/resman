@@ -10,4 +10,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "r_res_comments")
 public class ResComment extends BaseText {
+
+    private String resId;
+
+    public String getResId() {
+        return resId;
+    }
+
+    public void setResId(String resId) {
+        this.resId = resId;
+    }
 }
