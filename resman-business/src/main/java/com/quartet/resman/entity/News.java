@@ -25,7 +25,7 @@ public class News {
     private Date crtdate;
 
     private String title;
-    private String state;
+    private boolean publish;
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private String content;
@@ -82,12 +82,12 @@ public class News {
         this.title = title;
     }
 
-    public String getState() {
-        return state;
+    public boolean isPublish() {
+        return publish;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setPublish(boolean publish) {
+        this.publish = publish;
     }
 
     public String getContent() {

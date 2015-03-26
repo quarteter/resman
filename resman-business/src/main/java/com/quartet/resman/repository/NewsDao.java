@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface NewsDao extends JpaRepository<News,Long> {
 
-    public Page<News> findByState(String state,Pageable page);
+    public Page<News> findByPublish(boolean publish,Pageable page);
 }

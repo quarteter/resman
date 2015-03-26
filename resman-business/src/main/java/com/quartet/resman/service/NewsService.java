@@ -20,8 +20,8 @@ public class NewsService {
         return newsDao.findAll(page);
     }
 
-    public Page<News> getNews(String status,Pageable page){
-        return newsDao.findByState(status,page);
+    public Page<News> getNews(boolean publish,Pageable page){
+        return newsDao.findByPublish(publish, page);
     }
 
     public News getNews(Long id){

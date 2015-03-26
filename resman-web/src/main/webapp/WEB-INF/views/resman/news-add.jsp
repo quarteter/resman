@@ -7,6 +7,7 @@
     <script src="${ctx}/asset/js/plugins/validate/jquery.validate.min.js"></script>
     <script src="${ctx}/asset/js/plugins/validate/messages_zh.min.js"></script>
     <script src="${ctx}/asset/js/common.js"></script>
+    <script src="${ctx}/asset/js/plugins/iCheck/icheck.min.js"></script>
     <script src="${ctx}/asset/js/plugins/ueditor/ueditor.config.js"></script>
     <script src="${ctx}/asset/js/plugins/ueditor/ueditor.all.min.js"></script>
     <script src="${ctx}/asset/js/plugins/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -19,26 +20,44 @@
                         required: true,
                         minlength: 2,
                         maxlength: 20
+                    },
+                    "content": {
+                        required: true
                     }
                 }
             });
         }
-
         function bindSubmit() {
             $("#btnSubmit").on("click", function () {
                 if ($("#newsForm").valid()) {
-                    $.post('/news/add', $('#newsForm').serializeJson(), function (data) {
-                        if (data.success) {
-                            tipSuccess("操作成功");
-                            window.location.href = "/news/list";
-                        } else {
-                            tipError("操作失败");
-                        }
-                    });
+                    $("#newsForm").submit();
+                    <%--$.post('${ctx}/news/add', $('#newsForm').serializeJson(), function (data) {--%>
+                        <%--if (data.success) {--%>
+                            <%--tipSuccess("操作成功");--%>
+                            <%--window.location.href = "/news/list";--%>
+                        <%--} else {--%>
+                            <%--tipError("操作失败");--%>
+                        <%--}--%>
+                    <%--});--%>
                 }
             });
         }
+        function bindCheckState(){
+            $("#publish").on("ifChecked",function(){
+                $("#stateTxt").text("【发布 】");
+            });
+            $("#publish").on("ifUnchecked",function(){
+                $("#stateTxt").text("【未发布】");
+            });
+            $("#bannerNews").on("ifChecked",function(){
+                $("#isBannerTxt").text("【 是 】");
+            });
+            $("#bannerNews").on("ifUnchecked",function(){
+                $("#isBannerTxt").text("【 否 】");
+            });
+        }
         $(document).ready(function () {
+            bindCheckState();
             bindSubmit();
             addValidator();
         });
@@ -67,12 +86,12 @@
 
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="state">状态</label>
+                <label class="col-sm-2 control-label" for="publish">发布状态</label>
 
                 <div class="col-sm-4">
                     <%--<input id="state" class="form-control" name="title"/>--%>
                     <div class="checkbox">
-                        <label><input id="state" name="state" type="checkbox"/></label>
+                        <label><input id="publish" name="publish" type="checkbox"/>&nbsp;&nbsp;<span id="stateTxt">【未发布】</span></label>
                     </div>
                 </div>
             </div>
@@ -82,7 +101,7 @@
                 <div class="col-sm-4">
                     <%--<input id="state" class="form-control" name="title"/>--%>
                     <div class="checkbox">
-                        <label><input id="bannerNews" name="bannerNews" type="checkbox"/></label>
+                        <label><input id="bannerNews" name="bannerNews" type="checkbox"/>&nbsp;&nbsp;<span id="isBannerTxt">【 否 】</span></label>
                     </div>
                 </div>
             </div>
