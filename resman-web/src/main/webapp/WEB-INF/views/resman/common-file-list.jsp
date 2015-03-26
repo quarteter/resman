@@ -28,7 +28,7 @@
     </script>
 
     <script id="folder-dlg" type="text/x-jsrender">
-        <form class="form-horizontal" role="form" id="folderForm">
+        <form class="form-horizontal" role="form" id="folderForm" onsubmit="return false;">
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="name">名称</label>
 
@@ -40,8 +40,17 @@
 
     </script>
     <script>
-        var ctxPath = "${ctx}", func = "${func}", tabId = "#fileList",
-                filePath = "${path}", fileMenuId = "#menu",mcDir="${funcDef.mcDir}";
+        <%--var ctxPath = "${ctx}", func = "${func}", tabId = "#fileList",--%>
+                <%--filePath = "${path}", fileMenuId = "#menu",mcDir="${funcDef.mcDir}";--%>
+        var fmConf = {
+            "ctxPath" : "${ctx}",
+            "func" : "${func}",
+            "tabId": "#fileList",
+            "filePath": "${path}",
+            "fileMenuId": "#menu",
+            "mcDir": "${funcDef.mcDir}",
+            "allowFileExts":"${funcDef.allowFileExts}"
+        };
         $(document).ready(function () {
             $.fm.createFileTable();
             $.fm.createUploadMenu();
