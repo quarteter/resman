@@ -14,6 +14,7 @@ public class FileFuncDef {
     private String rootDir;
     private boolean rootDirPersonal;
     private String mcDir;//移动或复制的起始目录
+    private String allowFileExts;
     private List<FileFuncMenu> menus;
     private List<FileFuncMenu> moreMenus;
 
@@ -71,5 +72,13 @@ public class FileFuncDef {
 
     public void setMcDir(String mcDir) {
         this.mcDir = mcDir;
+    }
+
+    public String getAllowFileExts() {
+        return allowFileExts;
+    }
+
+    public void setAllowFileExts(String allowFileExts) {
+        this.allowFileExts = allowFileExts;
     }
 }
