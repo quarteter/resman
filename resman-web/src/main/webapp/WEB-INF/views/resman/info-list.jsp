@@ -5,7 +5,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>新闻列表</title>
+    <title>信息列表</title>
     <link href="${ctx}/asset/js/plugins/boottable/bootstrap-table.min.css" rel="stylesheet">
     <script src="${ctx}/asset/js/plugins/boottable/bootstrap-table.min.js"></script>
     <script src="${ctx}/asset/js/plugins/boottable/bootstrap-table-zh-CN.min.js"></script>
@@ -30,12 +30,12 @@
 <aside class="right-side">
     <section class="content-header">
         <h1>
-            新闻管理
-            <small>新闻列表</small>
+            信息管理
+            <small>信息列表</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="${ctx}/main"><i class="fa fa-dashboard"></i> 首页</a></li>
-            <li class="active">新闻列表</li>
+            <li class="active">信息列表</li>
         </ol>
     </section>
     <section class="content">
@@ -75,7 +75,7 @@
                     </ul>
                 </c:when>
                 <c:otherwise>
-                    <p>目前还没有发布的新闻!</p>
+                    <p>目前还没有发布的信息!</p>
                 </c:otherwise>
             </c:choose>
 

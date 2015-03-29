@@ -3,7 +3,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>添加新闻</title>
+    <title>信息发布</title>
     <script src="${ctx}/asset/js/plugins/validate/jquery.validate.min.js"></script>
     <script src="${ctx}/asset/js/plugins/validate/messages_zh.min.js"></script>
     <script src="${ctx}/asset/js/common.js"></script>
@@ -31,14 +31,6 @@
             $("#btnSubmit").on("click", function () {
                 if ($("#newsForm").valid()) {
                     $("#newsForm").submit();
-                    <%--$.post('${ctx}/news/add', $('#newsForm').serializeJson(), function (data) {--%>
-                        <%--if (data.success) {--%>
-                            <%--tipSuccess("操作成功");--%>
-                            <%--window.location.href = "/news/list";--%>
-                        <%--} else {--%>
-                            <%--tipError("操作失败");--%>
-                        <%--}--%>
-                    <%--});--%>
                 }
             });
         }
@@ -67,12 +59,12 @@
 <aside class="right-side">
     <section class="content-header">
         <h1>
-            新闻管理
-            <small>添加新闻</small>
+            信息管理
+            <small>信息发布</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="${ctx}/main"><i class="fa fa-dashboard"></i> 首页</a></li>
-            <li class="active">添加新闻</li>
+            <li class="active">信息发布</li>
         </ol>
     </section>
     <section class="content">
@@ -83,7 +75,18 @@
                 <div class="col-sm-4">
                     <input id="title" class="form-control" name="title"/>
                 </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="type">栏目</label>
 
+                <div class="col-sm-4">
+                    <select id="type" class="form-control" name="type">
+                        <option value="0">新闻 </option>
+                        <option value="1">知识堂 </option>
+                        <option value="2">技能大赛 </option>
+                        <option value="3">师资队伍</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="publish">发布状态</label>
