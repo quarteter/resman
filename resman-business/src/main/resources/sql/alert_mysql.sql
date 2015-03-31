@@ -113,3 +113,11 @@ INSERT INTO `s_role_func` VALUES (4, 2100);
 INSERT INTO `s_role_func` VALUES (4, 2101);
 INSERT INTO `s_role_func` VALUES (4, 2102);
 INSERT INTO `s_role_func` VALUES (4, 2103);
+
+
+insert into s_codes (id,category,code,name,seqNo) VALUES(1,"info","news","新闻",1);
+insert into s_codes (id,category,code,name,seqNo) VALUES(2,"info","knowledge","知识堂",2);
+insert into s_codes (id,category,code,name,seqNo) VALUES(3,"info","skillContest","技能大赛",3);
+insert into s_codes (id,category,code,name,seqNo) VALUES(4,"info","teacherGroup","师资队伍",4);
+
+
