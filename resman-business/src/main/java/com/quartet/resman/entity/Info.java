@@ -11,8 +11,12 @@ import java.util.Date;
  * 新闻
  */
 @Entity
-@Table(name = "r_news")
-public class News {
+@Table(name = "r_info")
+public class Info {
+
+    public enum Type {
+        news,knowledge,skillContest,teacherGroup
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +35,10 @@ public class News {
     private String content;
 
     private boolean bannerNews;
-    private String bannerImgUrl;
-
+    //信息的图片路径
+    private String imgPath;
+    @Enumerated
+    private Type type;
 
     public boolean isBannerNews() {
         return bannerNews;
@@ -40,14 +46,6 @@ public class News {
 
     public void setBannerNews(boolean bannerNews) {
         this.bannerNews = bannerNews;
-    }
-
-    public String getBannerImgUrl() {
-        return bannerImgUrl;
-    }
-
-    public void setBannerImgUrl(String bannerImgUrl) {
-        this.bannerImgUrl = bannerImgUrl;
     }
 
     public Long getId() {
@@ -96,5 +94,21 @@ public class News {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 }
