@@ -24,11 +24,11 @@ public class InfoService {
         return infoDao.findByPublish(publish, page);
     }
 
-    public Page<Info> getInfo(Info.Type type,Pageable page){
+    public Page<Info> getInfo(String type,Pageable page){
         return infoDao.findByType(type,page);
     }
 
-    public Page<Info> getInfo(Info.Type type,boolean publish,Pageable page){
+    public Page<Info> getInfo(String type,boolean publish,Pageable page){
         return infoDao.findByTypeAndPublish(type,publish,page);
     }
 

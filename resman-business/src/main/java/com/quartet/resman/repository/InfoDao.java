@@ -12,8 +12,8 @@ public interface InfoDao extends JpaRepository<Info, Long> {
 
     public Page<Info> findByPublish(boolean publish, Pageable page);
 
-    public Page<Info> findByType(Info.Type type,Pageable page);
+    public Page<Info> findByType(String type,Pageable page);
 
-    public Page<Info> findByTypeAndPublish(Info.Type type, boolean publish, Pageable page);
+    public Page<Info> findByTypeAndPublish(String type, boolean publish, Pageable page);
 
 }

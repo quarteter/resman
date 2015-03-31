@@ -20,30 +20,35 @@
             });
         },
         createUploadMenu: function () {
-            setTimeout(function () {
-                var btnUpload = $('#btnUpload');
-                if (btnUpload) {
-                    var conf = {
-                        height: 34,
-                        width: 100,
-                        buttonClass: 'btn btn-primary',
-                        removeTimeout: 0,
-                        swf: window.fmConf.ctxPath+'/asset/js/plugins/uploadify/uploadify.swf',
-                        uploader: window.fmConf.ctxPath+'/res/common/'+window.fmConf.func+'/upload',
-                        fileObjName: 'fileData',
-                        buttonText: '<span class="fa fa-upload"></span>&nbsp;上传文件',
-                        queueID: 'fileQueue',
-                        formData: {path: window.fmConf.filePath},
-                        onQueueComplete: function (queueData) {
-                            $('#fileList').bootstrapTable('refresh');
-                        }
-                    };
-                    if(window.fmConf.allowFileExts && window.fmConf.allowFileExts!=""){
-                        conf.fileTypeExts = window.fmConf.allowFileExts;
+            //setTimeout(function () {
+            //
+            //}, 10);
+            var btnUpload = $('#btnUpload');
+            if (btnUpload) {
+                var conf = {
+                    height: 34,
+                    width: 100,
+                    buttonClass: 'btn btn-primary',
+                    removeTimeout: 0,
+                    swf: window.fmConf.ctxPath+'/asset/js/plugins/uploadify/uploadify.swf',
+                    uploader: window.fmConf.ctxPath+'/res/common/'+window.fmConf.func+'/upload',
+                    fileObjName: 'fileData',
+                    buttonText: '<span class="fa fa-upload"></span>&nbsp;上传文件',
+                    queueID: 'fileQueue',
+                    formData: {path: window.fmConf.filePath},
+                    onInit:function(){
+                        $("#btnUpload-button").css("line-height","");
+                    },
+                    onQueueComplete: function (queueData) {
+                        $('#fileList').bootstrapTable('refresh');
                     }
-                    $('#btnUpload').uploadify(conf);
+                };
+                if(window.fmConf.allowFileExts && window.fmConf.allowFileExts!=""){
+                    conf.fileTypeExts = window.fmConf.allowFileExts;
                 }
-            }, 10);
+                $('#btnUpload').uploadify(conf);
+
+            }
         },
         createFolder: function () {
             BootstrapDialog.show({

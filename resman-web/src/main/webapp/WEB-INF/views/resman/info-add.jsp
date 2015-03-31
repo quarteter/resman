@@ -7,6 +7,7 @@
     <script src="${ctx}/asset/js/plugins/validate/jquery.validate.min.js"></script>
     <script src="${ctx}/asset/js/plugins/validate/messages_zh.min.js"></script>
     <script src="${ctx}/asset/js/common.js"></script>
+    <script src="${ctx}/asset/js/plugins/uploadify/jquery.uploadify.min.js"></script>
     <script src="${ctx}/asset/js/plugins/iCheck/icheck.min.js"></script>
     <script src="${ctx}/asset/js/plugins/ueditor/ueditor.config.js"></script>
     <script src="${ctx}/asset/js/plugins/ueditor/ueditor.all.min.js"></script>
@@ -39,7 +40,7 @@
                 $("#stateTxt").text("【发布 】");
             });
             $("#publish").on("ifUnchecked",function(){
-                $("#stateTxt").text("【未发布】");
+                $("#stateTxt").text("【不发布】");
             });
             $("#bannerNews").on("ifChecked",function(){
                 $("#isBannerTxt").text("【 是 】");
@@ -48,10 +49,32 @@
                 $("#isBannerTxt").text("【 否 】");
             });
         }
+        function createUploader(){
+            $("#imgUploader").uploadify({
+                height:34,
+                width:54,
+                fileObjName:'fileData',
+                swf: '${ctx}/asset/js/plugins/uploadify/uploadify.swf',
+                uploader: '${ctx}/info/imgUpload',
+                buttonClass:"btn btn-default",
+                buttonText:"上传",
+                fileTypeExts:"*.bmp;*.gif;*.jpg;*.jpeg;*.png;",
+                onInit:function(){
+                    $("#imgUploader-button").css("line-height","");
+                },
+                onUploadSuccess:function(file,data,response){
+                    var resp = eval("("+data+")");
+                    if(resp.success){
+                        $("#imgPath").val(resp.msg);
+                    }
+                }
+            });
+        }
         $(document).ready(function () {
             bindCheckState();
             bindSubmit();
             addValidator();
+            createUploader();
         });
     </script>
 </head>
@@ -68,7 +91,7 @@
         </ol>
     </section>
     <section class="content">
-        <form class="form-horizontal" role="form" method="post" id="newsForm">
+        <form class="form-horizontal" role="form" method="post" id="newsForm" action="${ctx}/info/add">
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="title">标题</label>
 
@@ -81,20 +104,23 @@
 
                 <div class="col-sm-4">
                     <select id="type" class="form-control" name="type">
-                        <option value="0">新闻 </option>
-                        <option value="1">知识堂 </option>
-                        <option value="2">技能大赛 </option>
-                        <option value="3">师资队伍</option>
+                        <c:forEach items="${infoType}" var="type">
+                            <option value="${type.code}">${type.name}</option>
+                        </c:forEach>
+                        <%--<option value="news">新闻 </option>--%>
+                        <%--<option value="knowledge">知识堂 </option>--%>
+                        <%--<option value="skillContest">技能大赛 </option>--%>
+                        <%--<option value="teacherGroup">师资队伍</option>--%>
                     </select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="publish">发布状态</label>
+                <label class="col-sm-2 control-label" for="publish">状态</label>
 
                 <div class="col-sm-4">
                     <%--<input id="state" class="form-control" name="title"/>--%>
                     <div class="checkbox">
-                        <label><input id="publish" name="publish" type="checkbox"/>&nbsp;&nbsp;<span id="stateTxt">【未发布】</span></label>
+                        <label style="padding-left: 0"><input id="publish" name="publish" type="checkbox"/>&nbsp;&nbsp;<span id="stateTxt">【未发布】</span></label>
                     </div>
                 </div>
             </div>
@@ -104,11 +130,20 @@
                 <div class="col-sm-4">
                     <%--<input id="state" class="form-control" name="title"/>--%>
                     <div class="checkbox">
-                        <label><input id="bannerNews" name="bannerNews" type="checkbox"/>&nbsp;&nbsp;<span id="isBannerTxt">【 否 】</span></label>
+                        <label style="padding-left: 0"><input id="bannerNews" name="bannerNews" type="checkbox"/>&nbsp;&nbsp;<span id="isBannerTxt">【 否 】</span></label>
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="from-group">
+                <label class="col-sm-2 control-label" for="imgPath">图片</label>
+                <div class="col-sm-4 input-group">
+                    <input id="imgPath" name="imgPath" type="text" class="form-control" style="margin-left: 5px" readonly/>
+                        <span class="input-group-btn">
+                            <button id="imgUploader" class="btn btn-default" type="button">上传</button>
+                        </span>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 10px">
                 <label class="col-sm-2 control-label" for="editor11">内容</label>
 
                 <div class="col-sm-8">
