@@ -1,11 +1,13 @@
 package com.quartet.resman.web.controller.resman;
 
+import com.quartet.resman.entity.Code;
 import com.quartet.resman.entity.Info;
 import com.quartet.resman.entity.Result;
 import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.service.CodeService;
 import com.quartet.resman.service.InfoService;
 import com.quartet.resman.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/3/25.
@@ -40,7 +41,7 @@ public class InfoController {
     private static final String CODE_INFO = "info";
 
     @Autowired
-    private InfoService newsService;
+    private InfoService infoService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -48,19 +49,25 @@ public class InfoController {
 
     @RequestMapping("/list")
     public ModelAndView list(@RequestParam(required = false) String type,
-                             @PageableDefault(sort = {"crtdate"}, direction = Sort.Direction.DESC) Pageable page) {
+                             @PageableDefault(size = 20,sort = {"crtdate"}, direction = Sort.Direction.DESC) Pageable page) {
         ModelAndView mv = new ModelAndView("resman/info-list");
         Page<Info> data = null;
-        if (type!=null){
-            data = newsService.getInfo(type,page);
-            mv.addObject("infoType",type);
+        if (StringUtils.isNotEmpty(type)){
+            data = infoService.getInfo(type,page);
+            mv.addObject("type",type);
         }else{
-            data = newsService.getInfo(page);
+            data = infoService.getInfo(page);
         }
         mv.addObject("news", data.getContent());
         mv.addObject("totalPages", data.getTotalPages());
         mv.addObject("curPage", data.getNumber());
-        mv.addObject("infoType",codeService.getCode(CODE_INFO));
+        List<Code> codes = codeService.getCode(CODE_INFO);
+        mv.addObject("infoType",codes);
+        Map<String,String> typeMap = new HashMap<>();
+        for (Code code : codes){
+            typeMap.put(code.getCode(),code.getName());
+        }
+        mv.addObject("typeMap",typeMap);
         return mv;
     }
 
@@ -78,9 +85,34 @@ public class InfoController {
             String userName = user.getUserName();
             news.setCrtuser(userName);
             news.setCrtdate(new Date());
-            newsService.addInfo(news);
+            infoService.addInfo(news);
+            return "redirect:/info/list?type="+news.getType();
         }
         return "redirect:/info/list";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView edit(Long id){
+        ModelAndView mv = new ModelAndView("resman/info-edit");
+        Info info = infoService.getInfoEager(id);
+        mv.addObject("info",info);
+        mv.addObject("infoType",codeService.getCode(CODE_INFO));
+        return mv;
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Result updateInfoPublishState(Long id,String publish){
+        boolean p = Boolean.valueOf(publish);
+        Result result = null;
+        try{
+            infoService.updateInfoPublishState(id,p);
+            result = new Result(true,"");
+        }catch (Throwable t){
+            t.printStackTrace();
+            result = new Result(false,"");
+        }
+        return result;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
@@ -88,7 +120,7 @@ public class InfoController {
     public Result deleteNews(Long id) {
         Result result = null;
         try {
-            newsService.deleteInfo(id);
+            infoService.deleteInfo(id);
             result = new Result(true, "");
         } catch (Exception e) {
             e.printStackTrace();

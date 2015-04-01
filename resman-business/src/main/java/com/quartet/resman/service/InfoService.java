@@ -36,6 +36,16 @@ public class InfoService {
         return infoDao.findOne(id);
     }
 
+    public Info getInfoEager(Long id){
+        Info info = infoDao.getOne(id);
+        info.getContent();
+        return info;
+    }
+
+    public void updateInfoPublishState(Long id,boolean publish){
+        infoDao.updateInfoPublishState(id,publish);
+    }
+
     public void addInfo(Info info){
         infoDao.save(info);
     }
