@@ -24,16 +24,26 @@ public class InfoService {
         return infoDao.findByPublish(publish, page);
     }
 
-    public Page<Info> getInfo(Info.Type type,Pageable page){
+    public Page<Info> getInfo(String type,Pageable page){
         return infoDao.findByType(type,page);
     }
 
-    public Page<Info> getInfo(Info.Type type,boolean publish,Pageable page){
+    public Page<Info> getInfo(String type,boolean publish,Pageable page){
         return infoDao.findByTypeAndPublish(type,publish,page);
     }
 
     public Info getInfo(Long id){
         return infoDao.findOne(id);
+    }
+
+    public Info getInfoEager(Long id){
+        Info info = infoDao.getOne(id);
+        info.getContent();
+        return info;
+    }
+
+    public void updateInfoPublishState(Long id,boolean publish){
+        infoDao.updateInfoPublishState(id,publish);
     }
 
     public void addInfo(Info info){

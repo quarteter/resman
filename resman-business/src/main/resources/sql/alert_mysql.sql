@@ -205,3 +205,11 @@ CREATE VIEW `v_homework` AS
         left join `s_users` `ue` ON ((`us`.`id` = `ue`.`id`)));
 
 
+
+
+insert into s_codes (id,category,code,name,seqNo) VALUES(1,"info","news","新闻",1);
+insert into s_codes (id,category,code,name,seqNo) VALUES(2,"info","knowledge","知识堂",2);
+insert into s_codes (id,category,code,name,seqNo) VALUES(3,"info","skillContest","技能大赛",3);
+insert into s_codes (id,category,code,name,seqNo) VALUES(4,"info","teacherGroup","师资队伍",4);
+
+

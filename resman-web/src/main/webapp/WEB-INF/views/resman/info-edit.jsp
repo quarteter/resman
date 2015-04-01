@@ -70,11 +70,15 @@
                 }
             });
         }
-        $(document).ready(function () {
+        $(document).ready(function(){
             bindCheckState();
             bindSubmit();
             addValidator();
             createUploader();
+
+        });
+        ue.ready(function(){
+            ue.setContent('${info.content}');
         });
     </script>
 </head>
@@ -92,11 +96,12 @@
     </section>
     <section class="content">
         <form class="form-horizontal" role="form" method="post" id="newsForm" action="${ctx}/info/add">
+            <input id="id" class="form-control" name="id" value="${info.id}" type="hidden"/>
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="title">标题</label>
 
                 <div class="col-sm-4">
-                    <input id="title" class="form-control" name="title"/>
+                    <input id="title" class="form-control" name="title" value="${info.title}"/>
                 </div>
             </div>
             <div class="form-group">
@@ -105,12 +110,8 @@
                 <div class="col-sm-4">
                     <select id="type" class="form-control" name="type">
                         <c:forEach items="${infoType}" var="type">
-                            <option value="${type.code}">${type.name}</option>
+                            <option value="${type.code}" <c:if test="${info.type == type.code}">selected</c:if> >${type.name}</option>
                         </c:forEach>
-                        <%--<option value="news">新闻 </option>--%>
-                        <%--<option value="knowledge">知识堂 </option>--%>
-                        <%--<option value="skillContest">技能大赛 </option>--%>
-                        <%--<option value="teacherGroup">师资队伍</option>--%>
                     </select>
                 </div>
             </div>
@@ -120,7 +121,9 @@
                 <div class="col-sm-4">
                     <%--<input id="state" class="form-control" name="title"/>--%>
                     <div class="checkbox">
-                        <label style="padding-left: 0"><input id="publish" name="publish" type="checkbox"/>&nbsp;&nbsp;<span id="stateTxt">【未发布】</span></label>
+                        <label style="padding-left: 0">
+                            <input id="publish" name="publish" type="checkbox" <c:if test="${info.publish==true}">checked</c:if> />
+                            &nbsp;&nbsp;<span id="stateTxt">【未发布】</span></label>
                     </div>
                 </div>
             </div>
@@ -130,14 +133,16 @@
                 <div class="col-sm-4">
                     <%--<input id="state" class="form-control" name="title"/>--%>
                     <div class="checkbox">
-                        <label style="padding-left: 0"><input id="bannerNews" name="bannerNews" type="checkbox"/>&nbsp;&nbsp;<span id="isBannerTxt">【 否 】</span></label>
+                        <label style="padding-left: 0">
+                            <input id="bannerNews" name="bannerNews" type="checkbox" <c:if test="${info.bannerNews==true}">checked </c:if> />
+                            &nbsp;&nbsp;<span id="isBannerTxt">【 否 】</span></label>
                     </div>
                 </div>
             </div>
             <div class="from-group">
                 <label class="col-sm-2 control-label" for="imgPath">图片</label>
                 <div class="col-sm-4 input-group">
-                    <input id="imgPath" name="imgPath" type="text" class="form-control" style="margin-left: 5px" readonly/>
+                    <input id="imgPath" name="imgPath" type="text" class="form-control" style="margin-left: 5px" value="${info.imgPath}" readonly/>
                         <span class="input-group-btn">
                             <button id="imgUploader" class="btn btn-default" type="button">上传</button>
                         </span>

@@ -14,9 +14,9 @@ import java.util.Date;
 @Table(name = "r_info")
 public class Info {
 
-    public enum Type {
-        news,knowledge,skillContest,teacherGroup
-    }
+//    public enum Type {
+//        news,knowledge,skillContest,teacherGroup
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,8 +37,10 @@ public class Info {
     private boolean bannerNews;
     //信息的图片路径
     private String imgPath;
-    @Enumerated
-    private Type type;
+//    @Enumerated
+//    private Type type;
+
+    private String type;
 
     public boolean isBannerNews() {
         return bannerNews;
@@ -96,11 +98,11 @@ public class Info {
         this.content = content;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(String type) {
         this.type = type;
     }
 
