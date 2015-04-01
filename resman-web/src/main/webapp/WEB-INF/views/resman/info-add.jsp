@@ -13,14 +13,14 @@
     <script src="${ctx}/asset/js/plugins/ueditor/ueditor.all.min.js"></script>
     <script src="${ctx}/asset/js/plugins/ueditor/lang/zh-cn/zh-cn.js"></script>
     <script>
-        UE.getEditor('editor11');
+        var ue = UE.getEditor('editor11');
         function addValidator() {
             $("#newsForm").validate({
                 rules: {
                     "title": {
                         required: true,
                         minlength: 2,
-                        maxlength: 20
+                        maxlength: 50
                     },
                     "content": {
                         required: true
