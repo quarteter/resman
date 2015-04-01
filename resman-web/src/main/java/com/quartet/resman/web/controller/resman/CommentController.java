@@ -7,6 +7,7 @@ import com.quartet.resman.entity.User;
 import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.repository.CommentDao;
 import com.quartet.resman.service.UserService;
+import com.quartet.resman.web.vo.CommentVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -36,29 +37,30 @@ public class CommentController {
     @Resource
     private UserService userService;
 
+
     @RequestMapping(value = "query")
     @ResponseBody
-    public Map<String, Object> query( Long resourceid, Comment.CommentType type, @PageableDefault Pageable page) {
+    public Map<String, Object> query( Long resourceid,String type, @PageableDefault Pageable page) {
         Page<Comment> comments = null;
-
-        if( type == null )
-            type = Comment.CommentType.Course;
-        comments = commentDao.findByResourceidAndType( resourceid , type , page );
+        Comment.CommentType eType = getEType( type );
+        comments = commentDao.findByResourceidAndType( resourceid , eType , page );
         Map<String, Object> map = new HashMap<>();
         map.put("rows", comments.getContent());
         map.put("total", comments.getTotalElements());
         return map;
     }
 
+
+
     @RequestMapping("save")
     @ResponseBody
-    public Result save(Comment vo) {
+    public Result save(CommentVo vo) {
         Result result = new Result();
         ShiroUser currentUser = userService.getCurrentUser();
         User user = userService.getUser( currentUser.getId() );
         Long id = vo.getId();
-        Comment comment = vo;
-
+        Comment comment = transfer(vo);
+        comment.setCrtuser(user);
         if( StringUtils.isEmpty(comment.getContent() ) ||  StringUtils.isEmpty(comment.getType() ) )
         {
             result.setSuccess(false);
@@ -66,18 +68,9 @@ public class CommentController {
             return result;
         }
 
-        if (id == null) {
-            comment.setType(vo.getType());
-            comment.setResourceid( vo.getResourceid() );
-        }
-        else
-        {
+        if (id != null) {
             comment = commentDao.getOne(id);
         }
-
-        comment.setCrtdate(new Date());
-        comment.setCrtuser( user );
-        comment.setContent(vo.getContent());
         commentDao.save(comment);
         return result;
     }
@@ -101,4 +94,23 @@ public class CommentController {
         return r;
     }
 
+    private  Comment.CommentType getEType( String _type)
+    {
+        Comment.CommentType eType = Comment.CommentType.from(_type);
+        if( eType == null )
+            eType = Comment.CommentType.Course;
+        return eType;
+    }
+
+    private Comment transfer(CommentVo _vo )
+    {
+        Comment comment = new Comment();
+        comment.setResourceid(_vo.getResourceid());
+        comment.setCrtdate(_vo.getCrtdate());
+        comment.setContent(_vo.getContent());
+        comment.setId(_vo.getId());
+        comment.setType( getEType( _vo.getType()));
+       // comment.setCrtuser( userService.getUser(_vo.getId() ));
+        return comment;
+    }
 }

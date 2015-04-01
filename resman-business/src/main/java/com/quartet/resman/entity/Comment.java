@@ -25,7 +25,7 @@ public class Comment {
         public static CommentType from( String va )
         {
 
-            if( "1".compareTo(va) == 0)
+            if( "0".compareTo(va) == 0)
                 return CommentType.Course;
             else if( "1".compareTo(va) == 0 )
                 return CommentType.Homework;
