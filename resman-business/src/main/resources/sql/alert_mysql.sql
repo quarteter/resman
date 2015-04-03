@@ -108,12 +108,20 @@ CREATE TABLE `r_course_student` (
 INSERT INTO `s_funcs` VALUES (2100, 0, '超级管理员', NULL, 10, '', '', 'fa fa-bar-chart-o');
 INSERT INTO `s_funcs` VALUES (2101, 1, '精品课程', 2100, 5, '/res/common/classic/list', '', NULL);
 INSERT INTO `s_funcs` VALUES (2102, 1, '教师空间', 2100, 10, '/res/common/personal/list', '', NULL);
-INSERT INTO `s_funcs` VALUES (2103, 1, '公告管理', 2100, 15, '/res/notice/pageList', '', NULL);
+INSERT INTO `s_funcs` VALUES (2103, 1, '精品素材', 2100, 15, '/res/common/material/list', '', NULL);
+INSERT INTO `s_funcs` VALUES (2104, 1, '精品文档', 2100, 20, '/res/common/docs/list', '', NULL);
+INSERT INTO `s_funcs` VALUES (2105, 1, '经常图库', 2100, 25, '/res/common/imgs/list', '', NULL);
+INSERT INTO `s_funcs` VALUES (2106, 1, '公告管理', 2100, 30, '/res/notice/pageList', '', NULL);
+INSERT INTO `s_funcs` VALUES (2107, 1, '信息发布', 2100, 35, '/info/list', '', NULL);
 
 INSERT INTO `s_role_func` VALUES (4, 2100);
 INSERT INTO `s_role_func` VALUES (4, 2101);
 INSERT INTO `s_role_func` VALUES (4, 2102);
 INSERT INTO `s_role_func` VALUES (4, 2103);
+INSERT INTO `s_role_func` VALUES (4, 2104);
+INSERT INTO `s_role_func` VALUES (4, 2105);
+INSERT INTO `s_role_func` VALUES (4, 2106);
+INSERT INTO `s_role_func` VALUES (4, 2107);
 
 -- ----------------------------
 -- 2015/3/24 作业 添加、问答视图

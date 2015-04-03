@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,6 +55,14 @@ public class FuncController {
         result.put("total",data.getTotalElements());
         return result;
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Func getFunction(@PathVariable("id") Long id){
+        Func func = funcService.getFunc(id);
+        return func;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public Result addFunc(Func func){
@@ -66,6 +75,19 @@ public class FuncController {
         }
         return result;
     }
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Result updateFunc(Func func){
+        Result result = null;
+        try{
+            funcService.updateFunc(func);
+            result = new Result(true,"");
+        }catch (Throwable t){
+            result = new Result(false,"");
+        }
+        return result;
+    }
+
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     @ResponseBody
     public Result delFunc(Long uid){

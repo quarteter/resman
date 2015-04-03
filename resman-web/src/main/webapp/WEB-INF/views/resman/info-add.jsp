@@ -24,6 +24,13 @@
                     },
                     "content": {
                         required: true
+                    },
+                    "imgPath":{
+                        required:{
+                            depends:function(element){
+                                return $($("#bannerNews").parent()[0]).attr("aria-checked")=="true";
+                            }
+                        }
                     }
                 }
             });

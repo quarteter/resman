@@ -43,4 +43,8 @@ public interface FuncDao extends JpaRepository<Func,Long> {
     @Query(value = "update Func f set f.seqNo = f.seqNo+5 where f.parent = ?1 and f.seqNo> ?2")
     @Modifying
     public void updateSeqNoNext(Long parent,Integer targetSeqNo);
+
+    @Query(value = "update Func f set f.name=?2, f.url=?3 ,f.seqNo=?4 ,f.iconCls=?5 where f.id =?1")
+    @Modifying
+    public void updateFuncInfo(Long id,String name,String url,Integer seqNo,String iconCls);
 }

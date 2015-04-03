@@ -24,7 +24,6 @@ public class FuncService {
         return funcDao.findByLevelOrderBySeqNoAsc(0);
     }
 
-
     public Page<Func> getFuncByParent(Long uid, Pageable page) {
         return funcDao.findByParent(uid, page);
     }
@@ -35,6 +34,10 @@ public class FuncService {
 
     public Page<Func> getFuncByParentAndLeaf(Long pid, Pageable page) {
         return funcDao.findByParentAndLeafTrueOrderBySeqNoAsc(pid, page);
+    }
+
+    public Func getFunc(Long uid){
+        return funcDao.findOne(uid);
     }
 
     public void addFunc(Func func) {
@@ -74,5 +77,9 @@ public class FuncService {
 
     public void delFunc(Long uid) {
         funcDao.delete(uid);
+    }
+
+    public void updateFunc(Func func){
+        funcDao.updateFuncInfo(func.getId(),func.getName(),func.getUrl(),func.getSeqNo(),func.getIconCls());
     }
 }

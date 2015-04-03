@@ -6,7 +6,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <header class="header">
   <a href="${ctx}/main" class="logo">
-    云终端安全管理系统
+    资源管理系统后台
   </a>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top" role="navigation">

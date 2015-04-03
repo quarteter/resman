@@ -147,5 +147,152 @@
         "action": "rename"
       }
     ]
+  },
+  "material": {
+    "name": "material",
+    "title": "精品素材",
+    "rootDir": "/material",
+    "rootDirPersonal": false,
+    "mcDir":"",
+    "menus": [
+      {
+        "id":"btnUpload",
+        "name": "上传文件",
+        "action": ""
+      },
+      {
+        "id":"btnCreateFolder",
+        "name": "新建文件夹",
+        "iconCls":"fa fa-folder-o",
+        "action": "createFolder"
+      },
+      {
+        "id":"btnDownload",
+        "name": "下载",
+        "iconCls": "fa fa-download",
+        "action": "downloadFile"
+      },
+      {
+        "id":"btnDelete",
+        "name": "删除",
+        "iconCls": "fa fa-trash",
+        "action": "deleteFile"
+      }
+    ],
+    "moreMenus": [
+      {
+        "id":"btnMoveTo",
+        "name": "移动到",
+        "action": "moveTo"
+      },
+      {
+        "id":"btnCopyTo",
+        "name": "复制到",
+        "action": "copyTo"
+      },
+      {
+        "id":"btnRename",
+        "name": "重命名",
+        "action": "rename"
+      }
+    ]
+  },
+  "docs": {
+    "name": "docs",
+    "title": "精品文档",
+    "rootDir": "/docs",
+    "rootDirPersonal": false,
+    "mcDir":"",
+    "menus": [
+      {
+        "id":"btnUpload",
+        "name": "上传文件",
+        "action": ""
+      },
+      {
+        "id":"btnCreateFolder",
+        "name": "新建文件夹",
+        "iconCls":"fa fa-folder-o",
+        "action": "createFolder"
+      },
+      {
+        "id":"btnDownload",
+        "name": "下载",
+        "iconCls": "fa fa-download",
+        "action": "downloadFile"
+      },
+      {
+        "id":"btnDelete",
+        "name": "删除",
+        "iconCls": "fa fa-trash",
+        "action": "deleteFile"
+      }
+    ],
+    "moreMenus": [
+      {
+        "id":"btnMoveTo",
+        "name": "移动到",
+        "action": "moveTo"
+      },
+      {
+        "id":"btnCopyTo",
+        "name": "复制到",
+        "action": "copyTo"
+      },
+      {
+        "id":"btnRename",
+        "name": "重命名",
+        "action": "rename"
+      }
+    ]
+  },
+  "imgs": {
+    "name": "imgs",
+    "title": "经常图库",
+    "rootDir": "/imgs",
+    "rootDirPersonal": false,
+    "mcDir":"",
+    "menus": [
+      {
+        "id":"btnUpload",
+        "name": "上传文件",
+        "action": ""
+      },
+      {
+        "id":"btnCreateFolder",
+        "name": "新建文件夹",
+        "iconCls":"fa fa-folder-o",
+        "action": "createFolder"
+      },
+      {
+        "id":"btnDownload",
+        "name": "下载",
+        "iconCls": "fa fa-download",
+        "action": "downloadFile"
+      },
+      {
+        "id":"btnDelete",
+        "name": "删除",
+        "iconCls": "fa fa-trash",
+        "action": "deleteFile"
+      }
+    ],
+    "moreMenus": [
+      {
+        "id":"btnMoveTo",
+        "name": "移动到",
+        "action": "moveTo"
+      },
+      {
+        "id":"btnCopyTo",
+        "name": "复制到",
+        "action": "copyTo"
+      },
+      {
+        "id":"btnRename",
+        "name": "重命名",
+        "action": "rename"
+      }
+    ]
   }
 }
