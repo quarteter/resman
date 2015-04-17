@@ -1,16 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
-<link href="css/css.css" rel="stylesheet" type="text/css" />
-<link href="css/news.css" rel="stylesheet" type="text/css" />
-		<script src="js/jquery-1.8.2.min.js" type="text/javascript"></script>
-		<script src="js/jquery.carouFredSel-6.0.4-packed.js" type="text/javascript"></script>
-<script type="text/javascript" src="js/jquery.1.10.2.js"></script>
-<script type="text/javascript" src="js/topanv.js"></script>
-<script language="JavaScript" type="text/javascript"> 
-function ChangeDiv(divId,divName,zDivCount,obj) 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>北京市黄庄职业高中：：动漫与游戏专业</title>
+    <link href="/asset/css/css.css" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/news.css" rel="stylesheet" type="text/css" />
+    <script src="/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="/asset/js/jquery.carouFredSel-6.0.4-packed.js" type="text/javascript"></script>
+    <script src="/asset/js/topanv.js" type="text/javascript" ></script>
+    <script language="JavaScript" type="text/javascript">
+        function ChangeDiv(divId,divName,zDivCount,obj)
 { 
 for(i=0;i<4;i++) 
 { 
@@ -58,16 +59,16 @@ $(document).ready(function(){
 </div>
 
 <div class="header">
- <div class="logo"><img src="images/logo.jpg" width="222" height="65" /></div>
+ <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65" /></div>
  <div class="nav">
  <ul>
-<li><a href="javascript:void(0)"  >网站首页</a></li>
-<li><a href="javascript:void(0)" >新闻动态</a></li>
-<li><a href="javascript:void(0)" class="nav_show">精品课程</a></li>
+<li><a href="/front/index"  >网站首页</a></li>
+<li><a href="/front/news" >新闻动态</a></li>
+<li><a href="/front/course">精品课程</a></li>
 <li><a href="javascript:void(0)">资源库</a></li>
 <li><a href="javascript:void(0)">成果展示</a></li>
-<li><a href="javascript:void(0)" >专家团队</a></li>
-<li><a href="javascript:void(0)">师生作品</a></li>
+<li><a href="/front/teachers">专家团队</a></li>
+<li><a href="/front/works" class="nav_show">师生作品</a></li>
  </ul>
   </div>
   </div>
@@ -92,12 +93,12 @@ $(function () {
  
      
   <div class="professional works">
-      <h1>精品课程</h1>
+      <h1>师生作品</h1>
       <ul>
-          <li><a href="#" class="curr">精品课程分类一</a></li>
-          <li><a href="#">精品课程分类二</a></li>
-          <li><a href="#">精品课程分类三</a></li>
-          <li><a href="#">精品课程分类四</a></li>
+          <li><a href="#" class="curr">学生作品</a></li>
+          <li><a href="#">老师作品</a></li>
+          <li><a href="#">大赛作品</a></li>
+          <li><a href="#">技能大赛</a></li>
       </ul>
   </div>
 
@@ -105,14 +106,14 @@ $(function () {
   </div>
  <div class="content_right">
    <div class="position">
-        <div class="home"><img src="images/home.png" width="19" height="19" /></div>
-      <div class="position_nav"> 您现在的位置 : 首页 / 精品课程 / 精品课程分类一 / 列表</div>
+        <div class="home"><img src="/asset/images/home.png" width="19" height="19" /></div>
+      <div class="position_nav"> 您现在的位置 : 首页 / 师生作品 / 学生作品 / 列表</div>
    </div>
    <div class="news_list works_con">
        <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
                  
                 </dd>
@@ -122,10 +123,10 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -133,20 +134,20 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
            
        </dl><dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -154,10 +155,10 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -165,20 +166,20 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
            
        </dl><dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -186,10 +187,10 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -197,20 +198,20 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
            
        </dl><dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -218,10 +219,10 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -229,20 +230,20 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
            
        </dl><dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -250,10 +251,10 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -261,20 +262,20 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
            
        </dl><dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -282,10 +283,10 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -293,20 +294,20 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
            
        </dl><dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -314,10 +315,10 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>
@@ -325,10 +326,10 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
-                <dd class="news_first_title"> <a href="#"><<精品课程--动漫原型设计>></a></dd>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
-                 查看次数：2909次
+                 
                 </dd>
                 
            </dt>

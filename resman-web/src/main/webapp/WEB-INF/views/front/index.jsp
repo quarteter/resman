@@ -62,13 +62,13 @@ $(document).ready(function(){
  <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65" /></div>
  <div class="nav">
  <ul>
-<li><a href="javascript:void(0)" class="nav_show">网站首页</a></li>
-<li><a href="javascript:void(0)">新闻动态</a></li>
-<li><a href="javascript:void(0)">精品课程</a></li>
+<li><a href="/front/index" class="nav_show">网站首页</a></li>
+<li><a href="/front/news">新闻动态</a></li>
+<li><a href="/front/course">精品课程</a></li>
 <li><a href="javascript:void(0)">资源库</a></li>
 <li><a href="javascript:void(0)">成果展示</a></li>
-<li><a href="javascript:void(0)">专家团队</a></li>
-<li><a href="javascript:void(0)">师生作品</a></li>
+<li><a href="/front/teachers">专家团队</a></li>
+<li><a href="/front/works">师生作品</a></li>
  </ul>
   </div>
   </div>

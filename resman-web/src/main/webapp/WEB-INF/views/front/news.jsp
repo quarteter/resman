@@ -1,16 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
-<link href="css/css.css" rel="stylesheet" type="text/css" />
-<link href="css/news.css" rel="stylesheet" type="text/css" />
-		<script src="js/jquery-1.8.2.min.js" type="text/javascript"></script>
-		<script src="js/jquery.carouFredSel-6.0.4-packed.js" type="text/javascript"></script>
-<script type="text/javascript" src="js/jquery.1.10.2.js"></script>
-<script type="text/javascript" src="js/topanv.js"></script>
-<script language="JavaScript" type="text/javascript"> 
-function ChangeDiv(divId,divName,zDivCount,obj) 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>北京市黄庄职业高中：：动漫与游戏专业</title>
+    <link href="/asset/css/css.css" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/news.css" rel="stylesheet" type="text/css" />
+    <script src="/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="/asset/js/jquery.carouFredSel-6.0.4-packed.js" type="text/javascript"></script>
+    <script src="/asset/js/topanv.js" type="text/javascript" ></script>
+    <script language="JavaScript" type="text/javascript">
+        function ChangeDiv(divId,divName,zDivCount,obj)
 { 
 for(i=0;i<4;i++) 
 { 
@@ -58,16 +59,16 @@ $(document).ready(function(){
 </div>
 
 <div class="header">
- <div class="logo"><img src="images/logo.jpg" width="222" height="65" /></div>
+ <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65" /></div>
  <div class="nav">
  <ul>
-<li><a href="javascript:void(0)"  >网站首页</a></li>
-<li><a href="javascript:void(0)" class="nav_show">新闻动态</a></li>
-<li><a href="javascript:void(0)">精品课程</a></li>
+<li><a href="/front/index"  >网站首页</a></li>
+<li><a href="/front/news" class="nav_show">新闻动态</a></li>
+<li><a href="/front/course">精品课程</a></li>
 <li><a href="javascript:void(0)">资源库</a></li>
 <li><a href="javascript:void(0)">成果展示</a></li>
-<li><a href="javascript:void(0)">专家团队</a></li>
-<li><a href="javascript:void(0)">师生作品</a></li>
+<li><a href="/front/teachers">专家团队</a></li>
+<li><a href="/front/works">师生作品</a></li>
  </ul>
   </div>
   </div>
@@ -134,7 +135,7 @@ $(function () {
 
     
     </div>
-<h2><img src="images/pic04.jpg" width="214" height="123" /></h2>
+<h2><img src="/asset/images/pic04.jpg" width="214" height="123" /></h2>
  
   </div>
  
@@ -151,13 +152,13 @@ $(function () {
   </div>
  <div class="content_right">
    <div class="position">
-        <div class="home"><img src="images/home.png" width="19" height="19" /></div>
+        <div class="home"><img src="/asset/images/home.png" width="19" height="19" /></div>
       <div class="position_nav"> 您现在的位置 : 首页 / 新闻动态 / 列表</div>
    </div>
    <div class="news_list">
        <dl>
            <dt>
-                <dt><img src="images/news_pic.png" width="200" height="132" /></dt>
+                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
                 <dd class="news_first_title"> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术" 培训</a></dd>
                 <dd>
                   为帮助全体教师尽快了解掌握微课设计制作的新技术、新理念，提升教师信息化教学素养和教育技术应用能力，1月28日，学校教科研处组织全校107名教师参加了"微课基础理论与制作技术"专题培训。
@@ -190,8 +191,7 @@ $(function () {
    </div>
   <div style="clear:both"></div>
   
-  <script src="js/jquery-1.8.3.min.js"></script>
- 
+
 <script>
 $(function(){
 	$(".zzsc .tab1 li").mouseover(function(){
