@@ -19,11 +19,11 @@ public interface SysUserDao extends JpaRepository<SysUser,Long> {
 
     public List<SysUser> findByIdNotAndSysName(Long uid, String name);
 
-    @Query(value = "select f from SysUser u join u.roles r join r.funcs f where u.id =?1 and r.id = ?2 " +
+    @Query(value = "select distinct f from SysUser u join u.roles r join r.funcs f where u.id =?1 and r.id = ?2 " +
             "order by f.level,f.seqNo")
     public List<Func> findUserRoleFunc(Long uid,Long roleId);
 
-    @Query(value = "select f from SysUser u join u.roles r join r.funcs f where u.id =?1 " +
+    @Query(value = "select distinct f from SysUser u join u.roles r join r.funcs f where u.id =?1 " +
             "order by f.level,f.seqNo")
     public List<Func> findUserRoleFunc(Long uid);
 
