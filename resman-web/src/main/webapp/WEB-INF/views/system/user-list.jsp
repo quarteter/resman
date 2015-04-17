@@ -24,7 +24,7 @@
         }
     </style>
     <script id="roleTpl" type="text/x-jsrender">
-        <option value="{{:id}}">{{:name}})</option>
+        <option value="{{:id}}">{{:name}}</option>
     </script>
     <script>
         function sexFormatter(value, row) {
@@ -68,8 +68,8 @@
 
             $("#btnUserRole").on("click", function () {
                 var sel = $("#userList").bootstrapTable('getSelections');
-                if (sel.length > 0 && sel[0].sysUserId!=null) {
-                    var uid = sel[0].sysUserId;
+                if (sel.length > 0) {
+                    var uid = sel[0].id;
                     BootstrapDialog.show({
                         title: "配置用户角色",
                         nl2br: false,

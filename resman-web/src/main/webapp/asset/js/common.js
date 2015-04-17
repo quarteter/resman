@@ -97,21 +97,22 @@ function goBack() {
                 btnTxt = "";
             if (options.cudBtn) {
                 btnTxt += '<button id="btnAdd" type="button" class="btn btn-default">'
-                + '<span class="fa fa-file-text"></span> 添加</button>'
+                + '<span class="fa fa-file-text"></span> 添加</button>&nbsp;'
                 + '<button id="btnEdit" type="button" class="btn btn-default">'
-                + '<span class="fa fa-edit"></span> 修改</button>'
+                + '<span class="fa fa-edit"></span> 修改</button>&nbsp;'
                 + '<button id="btnDel" type="button" class="btn btn-default">'
-                + '<span class="fa fa-trash"></span> 删除</button>';
+                + '<span class="fa fa-trash"></span> 删除</button>&nbsp;';
             }
             if (options.btns) {
                 $.each(options.btns, function (idx, val) {
-                    btnTxt += '<button id="' + val.id + '" type="button" class="btn btn-default"> '
-                    + '<span class="' + val.iconCls + '"></span> ' + val.name + '</button>';
+                    btnTxt += '<button id="' + val.id + '" type="button" class="btn btn-default">'
+                    + '<span class="' + val.iconCls + '"></span> ' + val.name + '</button>&nbsp;';
                 });
             }
             if (options.cudBtn || options.btns) {
                 btnTxt = '<div id="custom-toolbar">' +
-                '<div class="btn-group">' + btnTxt + '</div></div>';
+                //'<div class="btn-group">' + btnTxt + '</div></div>';
+                btnTxt + '</div></div>';
                 $(btnTxt).insertBefore(table);
             }
         },

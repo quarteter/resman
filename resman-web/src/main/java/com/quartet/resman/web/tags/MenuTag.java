@@ -4,6 +4,7 @@ import com.quartet.resman.entity.Func;
 import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.service.UserService;
 import com.quartet.resman.utils.SysUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
@@ -53,7 +54,7 @@ public class MenuTag extends SimpleTagSupport {
             }else{
                 sb.append("#'>");
             }
-            String iconCls = vo.getIconCls()!=null ? vo.getIconCls() : "fa fa-angle-double-right";
+            String iconCls = StringUtils.isNotEmpty(vo.getIconCls()) ? vo.getIconCls() : "fa fa-angle-double-right";
             sb.append("<i class='"+iconCls+"'></i> ");
             if (!vo.isLeaf()){
                 sb.append("<span>"+vo.getName()+"</span>");
