@@ -280,22 +280,22 @@ $(function () {
     </div>
  <div class="bout_right">
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic02.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic02.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic02.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic02.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
@@ -400,22 +400,22 @@ $(function () {
     </div>
  <div class="bout_right">
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic3.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic3.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic3.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic3.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【 刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic3.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic3.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【 民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic3.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic3.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门 刃加点推荐</a></dd>
    
    </dl>
@@ -487,22 +487,22 @@ $(function(){
     </div>
  <div class="bout_right">
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic02.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic02.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic02.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic02.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
@@ -527,22 +527,22 @@ $(function(){
     </div>
  <div class="bout_right">
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic1.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic1.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic1.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】 </a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic1.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
@@ -566,22 +566,22 @@ $(function(){
     </div>
  <div class="bout_right">
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic2.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic2.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic2.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
    <dl>
-    <dt><a href="#" class="avatar"><img src="images/pic2.jpg" width="165" height="105" /></a></dt>
+    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
    
    </dl>
