@@ -30,6 +30,7 @@
             <value>
                 /asset/** = anon
                 /favicon.ico = anon
+                /front/** = anon
                 /login = authc
                 /logout = logout
                 /** = user

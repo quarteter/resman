@@ -21,6 +21,7 @@
     <script src="${ctx}/asset/js/plugins/validate/jquery.validate.min.js"></script>
     <script src="${ctx}/asset/js/plugins/uploadify/jquery.uploadify.min.js"></script>
     <script src="${ctx}/asset/js/plugins/zTree/jquery.ztree.all-3.5.min.js"></script>
+    <script src="${ctx}/asset/js/plugins/cookie/jquery.cookie.js"></script>
     <script src="${ctx}/asset/js/common.js"></script>
     <script src="${ctx}/asset/js/file-manager.js"></script>
     <script id="view-dlg" type="text/x-jsrender">

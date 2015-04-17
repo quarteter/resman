@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+
+.content_right{width:732px; background:url(../images/news_bg.png) no-repeat top;min-height:880px;height:auto;padding:0 5px;margin-left:15px;}
+.main_content{margin-top:10px;}
+.position{height:46px; line-height:46px;border-bottom:3px solid #dcd9ef;}
+.position_nav{height:46px; line-height:46px; color:#777; float:left;}
+.home{width:19px; height:19px; float:left;padding-left:10px;padding-top:13px;margin-right:5px;}
+.news_list{padding:15px;}
+.news_list dl{height:132px;margin-bottom:10px;}
+.news_list dt{float:left;margin-right:15px; }
+.news_list dd{color:#666}
+.news_first_title{font-weight:600;height:30px; }
+.news_first_title a{color:#63F; }
+.news_first_more { height:30px;margin-top:10px;}
+.news_first_more a{display:block;padding:3px 0; width:80px; background:#D5CCF2; text-align:center; float:right}
+.news_list li{height:30px; line-height:30px;border-bottom:1px dotted #eee;}
+.news_first_more a:hover{background:#e76e35; color:#fff;}
+
+.news_list li span{float:right;color:#999;}
+.news_list li a{color:#0e51b7}
+.news_list li a:hover{color:#F60;}
+.pages{height:30px;}
+.pages a{float:left;margin-right:3px; background:#dcd9ef;padding:3px 10px;}
+.pages .curr{ background:#5f55b8;color:#fff;}
+.pages a:hover{background:#5f55b8;color:#fff;}
+
+/*新闻内容展示*/ 
+.news_list h1{font-size:18px; text-align:center;height:40px; line-height:40px; color:#5f55b8}
+.date{height:25px; line-height:25px; text-align:center; color:#666;}
+.news_content p{text-indent:1.5em; line-height:1.5em;padding:5px  0;}
+.news_list .relevant li{height:25px; line-height:25px;}
+.relevant {margin-top:10px;}
+/*师生作品*/
+.works {margin-top:0;}
+.works ul{padding:20px;margin-top:0px;}
+.works ul li a{display:block; height:35px; line-height:35px; background:#dcd9ef url(../images/Triangle.png) right center no-repeat; text-indent:20px;margin-top:5px;}
+.works ul li a.curr{background:#5f55b8 url(../images/Triangle1.png) right center no-repeat; color:#fff;}
+.works ul li a:hover{background:#5f55b8 url(../images/Triangle1.png) right center no-repeat; color:#fff;}
+/*works*/
+.works_con dl{width:200px; float:left;margin-right:30px;height:auto;margin-top:20px;}
+.works_con dl dt{float:none;}

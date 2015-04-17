@@ -9,5 +9,6 @@
 
     <mapping path="/*" decorator="/WEB-INF/layout/main.jsp"/>
     <mapping path="/res/document/view" exclue="true"/>
+    <mapping path="/front/*" exclue="true"/>
 
 </sitemesh>

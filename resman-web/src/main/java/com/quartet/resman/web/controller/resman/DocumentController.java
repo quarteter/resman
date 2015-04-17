@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -49,6 +50,9 @@ public class DocumentController {
         if (in == null)
             return;
         response.reset();
+        Cookie cookie = new Cookie(uuid,"complete");
+        cookie.setPath("/");
+        response.addCookie(cookie);
         response.setContentType("application/x-download");
         response.setCharacterEncoding("UTF-8");
         String fileDisplay = URLEncoder.encode(doc.getName(), "UTF-8");
@@ -60,6 +64,7 @@ public class DocumentController {
         while ((len = in.read(b, 0, 1024)) != -1) {
             out.write(b, 0, len);
         }
+
         IOUtils.closeQuietly(in);
         IOUtils.closeQuietly(out);
     }

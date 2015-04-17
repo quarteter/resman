@@ -102,7 +102,15 @@ public class CommonFileController {
                 list.add(map);
             } else {
                 Document document = (Document) node;
-                String size = String.valueOf(document.getSize() / 1024) + "KB";
+                String size = "0";
+                long docSize = document.getSize();
+                if(docSize > 1073741824){
+                    size =  String.format("%10.2f",docSize/1073741824.0) + " GB";
+                }else if(docSize>1048576){
+                    size =  String.format("%10.2f",docSize/1048576.0) + " MB";
+                }else {
+                    size =  docSize/1024 + " KB";
+                }
                 map.put("type", "1");
                 map.put("size", size);
                 fileList.add(map);
