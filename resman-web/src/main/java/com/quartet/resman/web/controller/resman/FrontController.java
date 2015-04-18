@@ -43,6 +43,7 @@ public class FrontController {
         model.addAttribute("curPage", news.getNumber());
         model.addAttribute("totalPage", news.getTotalPages());
         model.addAttribute("totalCount", news.getTotalElements());
+        model.addAttribute("bannerNews",infoService.getFirstBannerInfo(Constants.INFO_TYPE_NEWS));
         return "front/news";
     }
 
@@ -50,6 +51,14 @@ public class FrontController {
     public String newsDetail(@PathVariable(value = "id") Long id,Model model) {
         Info info = infoService.getInfoEager(id);
         model.addAttribute("news",info);
+        Info pre = infoService.getPreOrNextInfo(info.getId(),"pre");
+        Info next = infoService.getPreOrNextInfo(info.getId(),"next");
+        if (pre!=null){
+            model.addAttribute("pre",pre);
+        }
+        if (next!=null){
+            model.addAttribute("next",next);
+        }
         return "front/show_news";
     }
 

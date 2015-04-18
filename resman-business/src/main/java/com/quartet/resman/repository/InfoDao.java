@@ -4,13 +4,14 @@ import com.quartet.resman.entity.Info;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 /**
  * Created by Administrator on 2015/3/25.
  */
-public interface InfoDao extends JpaRepository<Info, Long> {
+public interface InfoDao extends JpaRepository<Info, Long>,JpaSpecificationExecutor<Info> {
 
     public Page<Info> findByPublish(boolean publish, Pageable page);
 

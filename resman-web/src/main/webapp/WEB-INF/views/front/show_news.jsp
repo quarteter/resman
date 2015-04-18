@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>北京市黄庄职业高中：：动漫与游戏专业</title>
+
     <link href="/asset/css/css.css" rel="stylesheet" type="text/css"/>
     <link href="/asset/css/news.css" rel="stylesheet" type="text/css"/>
     <script src="/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
@@ -63,16 +64,16 @@
 </div>
 
 <div class="header">
-    <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65"/></div>
+    <div class="logo"><img src="images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
-            <li><a href="/front/index">网站首页</a></li>
-            <li><a href="/front/news" class="nav_show">新闻动态</a></li>
-            <li><a href="/front/course">精品课程</a></li>
+            <li><a href="javascript:void(0)">网站首页</a></li>
+            <li><a href="javascript:void(0)" class="nav_show">新闻动态</a></li>
+            <li><a href="javascript:void(0)">精品课程</a></li>
             <li><a href="javascript:void(0)">资源库</a></li>
             <li><a href="javascript:void(0)">成果展示</a></li>
-            <li><a href="/front/teachers">专家团队</a></li>
-            <li><a href="/front/works">师生作品</a></li>
+            <li><a href="javascript:void(0)">专家团队</a></li>
+            <li><a href="javascript:void(0)">师生作品</a></li>
         </ul>
     </div>
 </div>
@@ -92,7 +93,6 @@
                 });
             });
         </script>
-
 
         <div class="students tab">
             <h1>学生专区</h1>
@@ -115,6 +115,7 @@
 
             </div>
             <div class="con2">
+
                 <ul>
                     <li><a href="#">名师、传承人进课——我校组织"微课基 </a></li>
                     <li><a href="#">堂微课程大智慧名师、传承人进课堂，助力黔西南中职 </a></li>
@@ -139,7 +140,7 @@
 
 
             </div>
-            <h2><img src="/asset/images/pic04.jpg" width="214" height="123"/></h2>
+            <h2><img src="images/pic04.jpg" width="214" height="123"/></h2>
 
         </div>
 
@@ -161,76 +162,26 @@
     <div class="content_right">
         <div class="position">
             <div class="home"><img src="/asset/images/home.png" width="19" height="19"/></div>
-            <div class="position_nav"> 您现在的位置 : 首页 / 新闻动态 / 列表</div>
+            <div class="position_nav"> 您现在的位置 : 首页 / 新闻动态 / 正文</div>
         </div>
         <div class="news_list">
-            <c:if test="${bannerNews!=null}">
-                <dl>
-                    <dt>
-                    <dt><img src="${bannerNews.imgPath}" width="200" height="132"/></dt>
-                    <dd class="news_first_title"><a href="${ctx}/front/news/${bannerNews.id}">${bannerNews.title}</a></dd>
-                    <dd>
-                        ${bannerNews.shortContent}
-                    </dd>
-                    <dd class="news_first_more"><a href="${ctx}/front/news/${bannerNews.id}">查看详细+</a></dd>
-                    </dt>
+            <h1>${news.title}</h1>
 
-                </dl>
-            </c:if>
-            <ul>
-                <c:if test="${fn:length(news)>0}">
-                    <c:forEach items="${news}" var="n">
-                        <li><span><fmt:formatDate value="${n.crtdate}" pattern="yyyy-MM-dd"></fmt:formatDate></span> · <a href="${ctx}/front/news/${n.id}">${n.title}</a></li>
-                    </c:forEach>
+            <div class="date">发布者：${news.crtuser} 时间：<fmt:formatDate value="${news.crtdate}" pattern="yyyy-MM-dd"></fmt:formatDate> </div>
+            <div class="news_content">
+                ${news.content}
+            </div>
+            <ul class="relevant">
+                <c:if test="${pre!=null}">
+                    <li><strong>上一篇:</strong><a href="${ctx}/news/${pre.id}">${pre.title}</a></li>
                 </c:if>
-
+                <c:if test="${next!=null}">
+                    <li><strong>上一篇:</strong><a href="${ctx}/news/${next.id}">${next.title}</a></li>
+                </c:if>
             </ul>
         </div>
-        <div class="pages">
-            <a href="#">共${totalCount}条记录 </a>
-            <c:choose>
-                <c:when test="${curPage-1 >= 0}">
-                    <a href="${ctx}/front/news?page=${curPage-1}">上一页</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="#">上一页</a>
-                </c:otherwise>
-            </c:choose>
-            <c:choose>
-                <c:when test="${(curPage+1)%5==0}">
-                    <%--<c:set var="curRange" value="${ (curPage+1)/5}"/>--%>
-                    <fmt:parseNumber var="curRange" integerOnly="true" value="${ (curPage+1)/5}"></fmt:parseNumber>
-                </c:when>
-                <c:otherwise>
-                    <%--<c:set var="curRange" value="${((curPage+1)/5) +1}"/>--%>
-                    <fmt:parseNumber var="curRange" integerOnly="true" value="${((curPage+1)/5) +1}"></fmt:parseNumber>
-                </c:otherwise>
-            </c:choose>
-            <c:set var="start" value="${(curRange-1)*5+1}"></c:set>
-            <c:choose>
-                <c:when test="${curRange*5 >= totalPage}">
-                    <c:set var="end" value="${totalPage}"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="end" value="${curRange*5}"/>
-                </c:otherwise>
-            </c:choose>
-            <c:forEach begin="${start}" end="${end}" varStatus="st">
-                <a href="${ctx}/front/news/?page=${st.current-1}" <c:if test="${st.current-1 == curPage}">class="curr" </c:if> >${st.current}</a>
-            </c:forEach>
 
-            <c:choose>
-                <c:when test="${curPage+1 < totalPage}">
-                    <a href="${ctx}/front/news?page=${curPage+1}">下一页</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="#">下一页</a>
-                </c:otherwise>
-            </c:choose>
-
-        </div>
         <div style="clear:both"></div>
-
 
         <script>
             $(function () {
@@ -310,8 +261,6 @@
 <div class="fooder">
     地址：北京市石景山区鲁谷东街29号 邮编：100040<br/>
     电话：010-68638293 传真：010-68638293 京ICP备07012769号 | 京公网安备11010702001098号
-
-
 </div>
 </body>
 </html>   

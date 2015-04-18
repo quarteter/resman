@@ -148,6 +148,13 @@
                         </span>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="shortContent">简述</label>
+
+                <div class="col-sm-4">
+                    <textarea id="shortContent" class="form-control" name="shortContent" rows="3"></textarea>
+                </div>
+            </div>
             <div class="form-group" style="margin-top: 10px">
                 <label class="col-sm-2 control-label" for="editor11">内容</label>
 

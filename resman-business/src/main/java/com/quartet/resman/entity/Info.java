@@ -42,6 +42,8 @@ public class Info {
 
     private String type;
 
+    private String shortContent;
+
     public boolean isBannerNews() {
         return bannerNews;
     }
@@ -112,5 +114,13 @@ public class Info {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public String getShortContent() {
+        return shortContent;
+    }
+
+    public void setShortContent(String shortContent) {
+        this.shortContent = shortContent;
     }
 }
