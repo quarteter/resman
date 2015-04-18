@@ -103,32 +103,32 @@
             </ul>
             <div class="con1">
 
-                <ul>
-                    <li><a href="#">微课程大智慧——我校组织"微课基 </a></li>
-                    <li><a href="#">名师、传承人进课堂，助力黔西南召开"旗袍传中职 </a></li>
-                    <li><a href="#">服装专业召开"旗袍传习馆建设研讨会</a></li>
-                    <li><a href="#">我校财经商贸 "京西杯"技能大赛</a></li>
-                    <li><a href="#">微课程大智慧——我校组织"微课基础</a></li>
-                    <li><a href="#">微课程大智慧——我校组织"微课基 </a></li>
+                <ul id="knowledgeUL">
+                    <%--<li><a href="#">微课程大智慧——我校组织"微课基 </a></li>--%>
+                    <%--<li><a href="#">名师、传承人进课堂，助力黔西南召开"旗袍传中职 </a></li>--%>
+                    <%--<li><a href="#">服装专业召开"旗袍传习馆建设研讨会</a></li>--%>
+                    <%--<li><a href="#">我校财经商贸 "京西杯"技能大赛</a></li>--%>
+                    <%--<li><a href="#">微课程大智慧——我校组织"微课基础</a></li>--%>
+                    <%--<li><a href="#">微课程大智慧——我校组织"微课基 </a></li>--%>
                 </ul>
 
 
             </div>
             <div class="con2">
-                <ul>
-                    <li><a href="#">名师、传承人进课——我校组织"微课基 </a></li>
-                    <li><a href="#">堂微课程大智慧名师、传承人进课堂，助力黔西南中职 </a></li>
-                    <li><a href="#">服装专业习馆建设研讨会</a></li>
-                    <li><a href="#">我校财经商贸 "京西杯"技能大赛</a></li>
-                    <li><a href="#">微课程大智慧——我校组织"微课基础</a></li>
-                    <li><a href="#">微课程大智慧——我校组织"微课基 </a></li>
+                <ul id="quesUL">
+                    <%--<li><a href="#">名师、传承人进课——我校组织"微课基 </a></li>--%>
+                    <%--<li><a href="#">堂微课程大智慧名师、传承人进课堂，助力黔西南中职 </a></li>--%>
+                    <%--<li><a href="#">服装专业习馆建设研讨会</a></li>--%>
+                    <%--<li><a href="#">我校财经商贸 "京西杯"技能大赛</a></li>--%>
+                    <%--<li><a href="#">微课程大智慧——我校组织"微课基础</a></li>--%>
+                    <%--<li><a href="#">微课程大智慧——我校组织"微课基 </a></li>--%>
                 </ul>
 
 
             </div>
             <div class="con3">
 
-                <ul>
+                <ul id="connUL">
                     <li><a href="#">校财经商贸 "京西杯微课程大智慧——我校组织"微课基 </a></li>
                     <li><a href="#">名师、传承人进课堂，助力黔西南中职 </a></li>
                     <li><a href="#">服装专业召开"馆建设研讨会</a></li>
@@ -301,6 +301,24 @@
             });
         </script>
 
+        <script>
+            function createLi(data,url,targetUL){
+                $.each(data,function(idx,val){
+                    var li ='<li><a href="${c}'+ url+'/'+val.id+'">'+val.title+'</a></li>';
+                    $(li).appendTo(targetUL);
+                });
+            }
+            function createStudentAreaData(){
+                $.get("${ctx}/front/studentArea",{},function(data){
+                    createLi(data['knowledge'],"/front/knowledge","#knowledgeUL");
+                    createLi(data['ques'],"/front/ques","#quesUL");
+                    createLi(data['conn'],"/front/conn","#connUL");
+                });
+            }
+            $(document).ready(function(){
+                createStudentAreaData();
+            });
+        </script>
 
     </div>
 </div>

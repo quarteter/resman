@@ -68,11 +68,11 @@
     <div class="nav">
         <ul>
             <li><a href="javascript:void(0)">网站首页</a></li>
-            <li><a href="javascript:void(0)" class="nav_show">新闻动态</a></li>
+            <li><a href="javascript:void(0)">新闻动态</a></li>
             <li><a href="javascript:void(0)">精品课程</a></li>
             <li><a href="javascript:void(0)">资源库</a></li>
             <li><a href="javascript:void(0)">成果展示</a></li>
-            <li><a href="javascript:void(0)">专家团队</a></li>
+            <li><a href="javascript:void(0)" class="nav_show">专家团队</a></li>
             <li><a href="javascript:void(0)">师生作品</a></li>
         </ul>
     </div>
@@ -148,22 +148,22 @@
     </div>
     <div class="content_right">
         <div class="position">
-            <div class="home"><img src="/asset/images/home.png" width="19" height="19"/></div>
-            <div class="position_nav"> 您现在的位置 : 首页 / 新闻动态 / 正文</div>
+            <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
+            <div class="position_nav"> 您现在的位置 : 首页 / 专家团队 / 正文</div>
         </div>
         <div class="news_list">
-            <h1>${news.title}</h1>
+            <h1>${info.title}</h1>
 
-            <div class="date">发布者：${news.crtuser} 时间：<fmt:formatDate value="${news.crtdate}" pattern="yyyy-MM-dd"></fmt:formatDate> </div>
+            <%--<div class="date">发布者：信息中心 时间：2015-3-2 点击：238</div>--%>
             <div class="news_content">
-                ${news.content}
+                ${info.content}
             </div>
             <ul class="relevant">
                 <c:if test="${pre!=null}">
-                    <li><strong>上一篇:</strong><a href="${ctx}/news/${pre.id}">${pre.title}</a></li>
+                    <li><strong>上一篇:</strong><a href="${ctx}/teachers/${pre.id}">${pre.title}</a></li>
                 </c:if>
                 <c:if test="${next!=null}">
-                    <li><strong>上一篇:</strong><a href="${ctx}/news/${next.id}">${next.title}</a></li>
+                    <li><strong>上一篇:</strong><a href="${ctx}/teachers/${next.id}">${next.title}</a></li>
                 </c:if>
             </ul>
         </div>
@@ -267,6 +267,8 @@
 <div class="fooder">
     地址：北京市石景山区鲁谷东街29号 邮编：100040<br/>
     电话：010-68638293 传真：010-68638293 京ICP备07012769号 | 京公网安备11010702001098号
+
+
 </div>
 </body>
 </html>   
