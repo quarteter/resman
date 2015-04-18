@@ -13,4 +13,10 @@ public class Constants {
     public static final String NT_FILE ="rm:file";
 
     public static final String CACHE_DIR = "cache";
+
+
+    public static final String INFO_TYPE_NEWS="news";
+    public static final String INFO_TYPE_KNOWLEDGE="knowledge";
+    public static final String INFO_TYPE_SKILL="skillContest";
+    public static final String INFO_TYPE_TEACHERGROUP="teacherGroup";
 }
