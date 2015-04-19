@@ -44,6 +44,9 @@ public class Info {
 
     private String shortContent;
 
+    @Column(columnDefinition = "0")
+    private Long readCount;
+
     public boolean isBannerNews() {
         return bannerNews;
     }
@@ -122,5 +125,13 @@ public class Info {
 
     public void setShortContent(String shortContent) {
         this.shortContent = shortContent;
+    }
+
+    public Long getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(Long readCount) {
+        this.readCount = readCount;
     }
 }

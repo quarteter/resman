@@ -85,6 +85,7 @@ public class InfoController {
             String userName = user.getUserName();
             news.setCrtuser(userName);
             news.setCrtdate(new Date());
+            news.setReadCount(0L);
             infoService.addInfo(news);
             return "redirect:/info/list?type="+news.getType();
         }

@@ -23,4 +23,8 @@ public interface InfoDao extends JpaRepository<Info, Long>,JpaSpecificationExecu
     @Modifying
     public void updateInfoPublishState(Long id,boolean publish);
 
+    @Query("update Info i set i.readCount= i.readCount+1 where i.id =?1")
+    @Modifying
+    public void updateInfoReadCount(Long id);
+
 }

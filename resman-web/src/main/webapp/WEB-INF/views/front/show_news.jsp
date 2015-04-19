@@ -64,7 +64,7 @@
 </div>
 
 <div class="header">
-    <div class="logo"><img src="images/logo.jpg" width="222" height="65"/></div>
+    <div class="logo"><img src="${ctx}/assert/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
             <li><a href="javascript:void(0)">网站首页</a></li>
@@ -154,7 +154,9 @@
         <div class="news_list">
             <h1>${news.title}</h1>
 
-            <div class="date">发布者：${news.crtuser} 时间：<fmt:formatDate value="${news.crtdate}" pattern="yyyy-MM-dd"></fmt:formatDate> </div>
+            <div class="date">发布者：${news.crtuser}
+                时间：<fmt:formatDate value="${news.crtdate}" pattern="yyyy-MM-dd"></fmt:formatDate> 点击：${news.readCount}
+            </div>
             <div class="news_content">
                 ${news.content}
             </div>

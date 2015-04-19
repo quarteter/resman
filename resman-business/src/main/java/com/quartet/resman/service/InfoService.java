@@ -67,7 +67,7 @@ public class InfoService {
         return null;
     }
 
-    public Info getPreOrNextInfo(Long id,String dire){
+    public Info getPreOrNextInfo(Long id,String dire,String infoType){
         List<SearchFilter> filters = new ArrayList();
         SearchFilter f1 = null;
         if(dire.equalsIgnoreCase("pre")){
@@ -76,10 +76,12 @@ public class InfoService {
             f1 = new SearchFilter("id", SearchFilter.Operator.GT,id);
         }
         SearchFilter f2 = new SearchFilter("publish", SearchFilter.Operator.EQ,true);
+        SearchFilter f3 = new SearchFilter("type",SearchFilter.Operator.EQ, infoType);
         filters.add(f1);
         filters.add(f2);
+        filters.add(f3);
         Pageable p = new PageRequest(0,1);
-        Page<Info> data = infoDao.findAll(DynamicSpecifications.bySearchFilter(filters,Info.class),p);
+        Page<Info> data = infoDao.findAll(DynamicSpecifications.bySearchFilter(filters, Info.class), p);
         List<Info> list = data.getContent();
         if(list!=null && list.size()>0){
             return list.get(0);
@@ -98,7 +100,11 @@ public class InfoService {
     }
 
     public void updateInfoPublishState(Long id,boolean publish){
-        infoDao.updateInfoPublishState(id,publish);
+        infoDao.updateInfoPublishState(id, publish);
+    }
+
+    public void updateInfoReadCount(Long id){
+       infoDao.updateInfoReadCount(id);
     }
 
     public void addInfo(Info info){

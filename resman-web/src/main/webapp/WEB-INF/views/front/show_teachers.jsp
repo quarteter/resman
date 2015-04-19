@@ -64,7 +64,7 @@
 </div>
 
 <div class="header">
-    <div class="logo"><img src="images/logo.jpg" width="222" height="65"/></div>
+    <div class="logo"><img src="${ctx}/asset/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
             <li><a href="javascript:void(0)">网站首页</a></li>
