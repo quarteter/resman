@@ -15,6 +15,13 @@
     <script>
         var ue = UE.getEditor('editor11');
         function addValidator() {
+            $(document).on("focusin", "#imgPath", function (event) {
+                $(this).prop('readonly', true);
+            });
+
+            $(document).on("focusout", "#imgPath", function (event) {
+                $(this).prop('readonly', false);
+            });
             $("#newsForm").validate({
                 rules: {
                     "title": {
@@ -24,6 +31,20 @@
                     },
                     "content": {
                         required: true
+                    } , "imgPath":{
+                        required:{
+                            depends:function(element){
+                                return $($("#bannerNews").parent()[0]).attr("aria-checked")=="true";
+                            }
+                        }
+                    },
+                    "shortContent":{
+                        required:{
+                            depends:function(element){
+                                return $($("#bannerNews").parent()[0]).attr("aria-checked")=="true";
+                            }
+                        },
+                        maxlength:200
                     }
                 }
             });
@@ -123,7 +144,15 @@
                     <div class="checkbox">
                         <label style="padding-left: 0">
                             <input id="publish" name="publish" type="checkbox" <c:if test="${info.publish==true}">checked</c:if> />
-                            &nbsp;&nbsp;<span id="stateTxt">【未发布】</span></label>
+                            &nbsp;&nbsp;<span id="stateTxt">
+                            <c:choose>
+                                     <c:when test="${info.publish==true}">
+                                         【发布】
+                                     </c:when>
+                                <c:otherwise>
+                                    【未发布】
+                                </c:otherwise>
+                            </c:choose></span></label>
                     </div>
                 </div>
             </div>
@@ -135,7 +164,14 @@
                     <div class="checkbox">
                         <label style="padding-left: 0">
                             <input id="bannerNews" name="bannerNews" type="checkbox" <c:if test="${info.bannerNews==true}">checked </c:if> />
-                            &nbsp;&nbsp;<span id="isBannerTxt">【 否 】</span></label>
+                            &nbsp;&nbsp;<span id="isBannerTxt"><c:choose>
+                            <c:when test="${info.publish==true}">
+                                【 是 】
+                            </c:when>
+                            <c:otherwise>
+                                【 否 】
+                            </c:otherwise>
+                        </c:choose></span></label>
                     </div>
                 </div>
             </div>
@@ -148,11 +184,11 @@
                         </span>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-top: 15px">
                 <label class="col-sm-2 control-label" for="shortContent">简述</label>
 
                 <div class="col-sm-4">
-                    <textarea id="shortContent" class="form-control" name="shortContent" rows="3"></textarea>
+                    <textarea id="shortContent" class="form-control" name="shortContent" rows="3">${info.shortContent}</textarea>
                 </div>
             </div>
             <div class="form-group" style="margin-top: 10px">

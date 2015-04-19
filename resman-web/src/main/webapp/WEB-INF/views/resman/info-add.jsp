@@ -15,6 +15,13 @@
     <script>
         var ue = UE.getEditor('editor11');
         function addValidator() {
+            $(document).on("focusin", "#imgPath", function (event) {
+                $(this).prop('readonly', true);
+            });
+
+            $(document).on("focusout", "#imgPath", function (event) {
+                $(this).prop('readonly', false);
+            });
             $("#newsForm").validate({
                 rules: {
                     "title": {
@@ -25,19 +32,20 @@
                     "content": {
                         required: true
                     },
-                    "imgPath":{
-                        required:{
-                            depends:function(element){
-                                return $($("#bannerNews").parent()[0]).attr("aria-checked")=="true";
+                    "imgPath": {
+                        required: {
+                            depends: function (element) {
+                                return $($("#bannerNews").parent()[0]).attr("aria-checked") == "true";
                             }
                         }
                     },
-                    "shortConent":{
-                        required:{
-                            depends:function(element){
-                                return $($("#bannerNews").parent()[0]).attr("aria-checked")=="true";
+                    "shortContent": {
+                        required: {
+                            depends: function (element) {
+                                return $($("#bannerNews").parent()[0]).attr("aria-checked") == "true";
                             }
-                        }
+                        },
+                        maxlength: 200
                     }
                 }
             });
@@ -49,36 +57,36 @@
                 }
             });
         }
-        function bindCheckState(){
-            $("#publish").on("ifChecked",function(){
+        function bindCheckState() {
+            $("#publish").on("ifChecked", function () {
                 $("#stateTxt").text("【发布 】");
             });
-            $("#publish").on("ifUnchecked",function(){
+            $("#publish").on("ifUnchecked", function () {
                 $("#stateTxt").text("【不发布】");
             });
-            $("#bannerNews").on("ifChecked",function(){
+            $("#bannerNews").on("ifChecked", function () {
                 $("#isBannerTxt").text("【 是 】");
             });
-            $("#bannerNews").on("ifUnchecked",function(){
+            $("#bannerNews").on("ifUnchecked", function () {
                 $("#isBannerTxt").text("【 否 】");
             });
         }
-        function createUploader(){
+        function createUploader() {
             $("#imgUploader").uploadify({
-                height:34,
-                width:54,
-                fileObjName:'fileData',
+                height: 34,
+                width: 54,
+                fileObjName: 'fileData',
                 swf: '${ctx}/asset/js/plugins/uploadify/uploadify.swf',
                 uploader: '${ctx}/info/imgUpload',
-                buttonClass:"btn btn-default",
-                buttonText:"上传",
-                fileTypeExts:"*.bmp;*.gif;*.jpg;*.jpeg;*.png;",
-                onInit:function(){
-                    $("#imgUploader-button").css("line-height","");
+                buttonClass: "btn btn-default",
+                buttonText: "上传",
+                fileTypeExts: "*.bmp;*.gif;*.jpg;*.jpeg;*.png;",
+                onInit: function () {
+                    $("#imgUploader-button").css("line-height", "");
                 },
-                onUploadSuccess:function(file,data,response){
-                    var resp = eval("("+data+")");
-                    if(resp.success){
+                onUploadSuccess: function (file, data, response) {
+                    var resp = eval("(" + data + ")");
+                    if (resp.success) {
                         $("#imgPath").val(resp.msg);
                     }
                 }
@@ -134,7 +142,9 @@
                 <div class="col-sm-4">
                     <%--<input id="state" class="form-control" name="title"/>--%>
                     <div class="checkbox">
-                        <label style="padding-left: 0"><input id="publish" name="publish" type="checkbox"/>&nbsp;&nbsp;<span id="stateTxt">【未发布】</span></label>
+                        <label style="padding-left: 0"><input id="publish" name="publish"
+                                                              type="checkbox"/>&nbsp;&nbsp;<span
+                                id="stateTxt">【未发布】</span></label>
                     </div>
                 </div>
             </div>
@@ -144,20 +154,23 @@
                 <div class="col-sm-4">
                     <%--<input id="state" class="form-control" name="title"/>--%>
                     <div class="checkbox">
-                        <label style="padding-left: 0"><input id="bannerNews" name="bannerNews" type="checkbox"/>&nbsp;&nbsp;<span id="isBannerTxt">【 否 】</span></label>
+                        <label style="padding-left: 0"><input id="bannerNews" name="bannerNews" type="checkbox"/>&nbsp;&nbsp;<span
+                                id="isBannerTxt">【 否 】</span></label>
                     </div>
                 </div>
             </div>
             <div class="from-group">
                 <label class="col-sm-2 control-label" for="imgPath">图片</label>
+
                 <div class="col-sm-4 input-group">
-                    <input id="imgPath" name="imgPath" type="text" class="form-control" style="margin-left: 5px" readonly/>
+                    <input id="imgPath" name="imgPath" type="text" class="form-control" style="margin-left: 5px"
+                           readonly="readonly"/>
                         <span class="input-group-btn">
                             <button id="imgUploader" class="btn btn-default" type="button">上传</button>
                         </span>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-top:15px;">
                 <label class="col-sm-2 control-label" for="shortContent">简述</label>
 
                 <div class="col-sm-4">
