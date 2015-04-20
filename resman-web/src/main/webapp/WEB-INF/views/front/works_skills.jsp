@@ -7,7 +7,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>北京市黄庄职业高中：：动漫与游戏专业</title>
-
     <link href="${ctx}/asset/css/css.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/asset/css/news.css" rel="stylesheet" type="text/css"/>
     <script src="${ctx}/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
@@ -16,13 +15,9 @@
     <script language="JavaScript" type="text/javascript">
         function ChangeDiv(divId, divName, zDivCount, obj) {
             for (i = 0; i < 4; i++) {
-                document.getElementById(divName + i).style.display = "none";
-//将所有的层都隐藏 
+                document.getElementById(divName + i).style.display = "none";//将所有的层都隐藏
             }
-            document.getElementById(divName + divId).style.display = "block";
-
-
-//显示当前层
+            document.getElementById(divName + divId).style.display = "block";//显示当前层
             var $len = document.getElementById("title").getElementsByTagName("li").length;
             for (j = 0; j < $len; j++) {
                 if (j == divId) {
@@ -64,11 +59,11 @@
 </div>
 
 <div class="header">
-    <div class="logo"><img src="${ctx}/assert/images/logo.jpg" width="222" height="65"/></div>
+    <div class="logo"><img src="${ctx}/asset/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
             <li><a href="javascript:void(0)">网站首页</a></li>
-            <li><a href="javascript:void(0)" class="nav_show">新闻动态</a></li>
+            <li><a href="javascript:void(0)">新闻动态</a></li>
             <li><a href="javascript:void(0)">精品课程</a></li>
             <li><a href="javascript:void(0)">资源库</a></li>
             <li><a href="javascript:void(0)">成果展示</a></li>
@@ -93,83 +88,120 @@
                 });
             });
         </script>
-
-        <div class="students tab">
-            <h1>学生专区</h1>
-            <ul class="menu">
-                <li class="active" style="margin:0;"><a href="javascript:void(0)">知识堂</a></li>
-                <li><a href="javascript:void(0)">问答</a></li>
-                <li><a href="javascript:void(0)">交流</a></li>
+        <div class="professional works">
+            <h1>师生作品</h1>
+            <ul>
+                <li><a href="${ctx}/front/wss?type=skillContest" <c:if test="${type=='skills'}">class="curr"</c:if> >技能大赛</a></li>
+                <li><a href="${ctx}/front/wss?type=sworks" <c:if test="${type=='sworks'}">class="curr"</c:if>>学生作品</a></li>
+                <li><a href="${ctx}/front/wss?type=tworks" <c:if test="${type=='tworks'}">class="curr"</c:if>>老师作品</a></li>
+                <li><a href="${ctx}/front/wss?type=contest_works" <c:if test="${type=='contest_works'}">class="curr"</c:if>>大赛作品</a></li>
             </ul>
-            <div class="con1">
-
-                <ul id="knowledgeUL">
-                </ul>
-
-
-            </div>
-            <div class="con2">
-                <ul id="quesUL">
-                </ul>
-
-
-            </div>
-            <div class="con3">
-
-                <ul id="connUL">
-                    <li><a href="#">校财经商贸 "京西杯微课程大智慧——我校组织"微课基 </a></li>
-                    <li><a href="#">名师、传承人进课堂，助力黔西南中职 </a></li>
-                    <li><a href="#">服装专业召开"馆建设研讨会</a></li>
-                    <li><a href="#">我"技能大赛</a></li>
-                    <li><a href="#">微课程大智旗袍传习慧——我校组织"微课基础</a></li>
-                    <li><a href="#">微课程大智慧——我校组织"微课基 </a></li>
-                </ul>
-
-
-            </div>
-            <h2><img src="${ctx}/asset/images/pic04.jpg" width="214" height="123"/></h2>
-
         </div>
-
-
-        <div class="professional">
-            <h1>专业简介</h1>
-
-            <p>
-                北京市黄庄职业高中位于石景山区鲁谷东街，是一所面向全国招生的国家级重点职业高中。1981年，在北京市黄庄中学的基础上，创办了北京市第一个服装专业职业高中班，1984年成为独立设校的职业高中，正式更名为"北京市黄庄职业高中"。2006年，石景山区为最大限度地发挥区职教资源优势，对职教
-                职业高中、古城旅游职业学校进行了资源整合，目前已形成学历教育、社会培训、实训经营等分类设置，学历、非学历并举，产学研有机结合，资源全面统筹，多品牌经营，一体化管理的办学格局。
-            </p>
-
-            <h2><a href="#">详细+</a>
-            </h2>
-        </div>
-
-
     </div>
     <div class="content_right">
         <div class="position">
-            <div class="home"><img src="/asset/images/home.png" width="19" height="19"/></div>
-            <div class="position_nav"> 您现在的位置 : 首页 / 新闻动态 / 正文</div>
+            <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
+            <div class="position_nav"> 您现在的位置 : 首页 / 师生作品 / <c:choose>
+                <c:when test="${type=='skillContest'}">
+                    技能大赛
+                </c:when>
+                <c:when test="${type=='sworks'}">
+                    学生作品
+                </c:when>
+                <c:when test="${type=='tworks'}">
+                    老师作品
+                </c:when>
+                <c:when test="${type=='contest_works'}">
+                    大赛作品
+                </c:when>
+            </c:choose> / 列表</div>
         </div>
-        <div class="news_list">
-            <h1>${news.title}</h1>
+        <div class="news_list <c:if test="${type!='skillContest'}">works_con</c:if> ">
+            <c:if test="${type=='skillContest'}">
+                <c:if test="${banner!=null}">
+                    <dl>
+                        <dt>
+                        <dt><img src="${ctx}${banner.imgPath}" width="200" height="132"/></dt>
+                        <dd class="news_first_title"><a
+                                href="${ctx}/front/wss/{banner.id}?type=${type}">${banner.title}</a></dd>
+                        <dd>
+                                ${banner.shortContent}
+                        </dd>
+                        <dd class="news_first_more"><a href="${ctx}/front/wss/${banner.id}?type=${type}">查看详细+</a></dd>
+                        </dt>
 
-            <div class="date">发布者：${news.crtuser}
-                时间：<fmt:formatDate value="${news.crtdate}" pattern="yyyy-MM-dd"></fmt:formatDate> 点击：${news.readCount}
-            </div>
-            <div class="news_content">
-                ${news.content}
-            </div>
-            <ul class="relevant">
-                <c:if test="${pre!=null}">
-                    <li><strong>上一篇:</strong><a href="${ctx}/news/${pre.id}">${pre.title}</a></li>
+                    </dl>
                 </c:if>
-                <c:if test="${next!=null}">
-                    <li><strong>下一篇:</strong><a href="${ctx}/news/${next.id}">${next.title}</a></li>
-                </c:if>
-            </ul>
+                <ul>
+                    <c:forEach items="${infos}" var="info">
+                        <li><span><fmt:formatDate value="${info.crtdate}" pattern="yyyy-MM-dd"></fmt:formatDate> </span>
+                            ·
+                            <a href="${ctx}/front/wss/${info.id}?type=${type}">${info.title}</a></li>
+                    </c:forEach>
+                </ul>
+            </c:if>
+            <c:if test="${type!='skillContest'}">
+                <c:forEach items="${infos}" var="info">
+                    <dl>
+                        <dt>
+                        <dt><img src="${ctx}${info.imgPath}" width="200" height="132"/></dt>
+                        <dd class="news_first_title"><a
+                                href="${ctx}/front/wss/${info.id}?type=${type}">${info.title}</a></dd>
+                        <dd>
+
+                        </dd>
+
+                        </dt>
+
+                    </dl>
+                </c:forEach>
+            </c:if>
+
         </div>
+        <div class="pages">
+            <a href="#">共${totalCount}条记录 </a>
+            <c:choose>
+                <c:when test="${curPage-1 >= 0}">
+                    <a href="${ctx}/front/teachers?page=${curPage-1}">上一页</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="#">上一页</a>
+                </c:otherwise>
+            </c:choose>
+            <c:choose>
+                <c:when test="${(curPage+1)%5==0}">
+                    <%--<c:set var="curRange" value="${ (curPage+1)/5}"/>--%>
+                    <fmt:parseNumber var="curRange" integerOnly="true" value="${ (curPage+1)/5}"></fmt:parseNumber>
+                </c:when>
+                <c:otherwise>
+                    <%--<c:set var="curRange" value="${((curPage+1)/5) +1}"/>--%>
+                    <fmt:parseNumber var="curRange" integerOnly="true" value="${((curPage+1)/5) +1}"></fmt:parseNumber>
+                </c:otherwise>
+            </c:choose>
+            <c:set var="start" value="${(curRange-1)*5+1}"></c:set>
+            <c:choose>
+                <c:when test="${curRange*5 >= totalPage}">
+                    <c:set var="end" value="${totalPage}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="end" value="${curRange*5}"/>
+                </c:otherwise>
+            </c:choose>
+            <c:forEach begin="${start}" end="${end}" varStatus="st">
+                <a href="${ctx}/front/teachers/?page=${st.current-1}"
+                   <c:if test="${st.current-1 == curPage}">class="curr" </c:if> >${st.current}</a>
+            </c:forEach>
 
+            <c:choose>
+                <c:when test="${curPage+1 < totalPage}">
+                    <a href="${ctx}/front/teachers?page=${curPage+1}">下一页</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="#">下一页</a>
+                </c:otherwise>
+            </c:choose>
+
+        </div>
         <div style="clear:both"></div>
 
         <script>
@@ -241,25 +273,6 @@
             });
         </script>
 
-        <script>
-            function createLi(data,url,targetUL){
-                $.each(data,function(idx,val){
-                    var li ='<li><a href="${c}'+ url+'/'+val.id+'">'+val.title+'</a></li>';
-                    $(li).appendTo(targetUL);
-                });
-            }
-            function createStudentAreaData(){
-                $.get("${ctx}/front/studentArea",{},function(data){
-                    createLi(data['knowledge'],"/front/knowledge","#knowledgeUL");
-                    createLi(data['ques'],"/front/ques","#quesUL");
-                    createLi(data['conn'],"/front/conn","#connUL");
-                });
-            }
-            $(document).ready(function(){
-                createStudentAreaData();
-            });
-        </script>
-
 
     </div>
 </div>
@@ -269,6 +282,8 @@
 <div class="fooder">
     地址：北京市石景山区鲁谷东街29号 邮编：100040<br/>
     电话：010-68638293 传真：010-68638293 京ICP备07012769号 | 京公网安备11010702001098号
+
+
 </div>
 </body>
 </html>   

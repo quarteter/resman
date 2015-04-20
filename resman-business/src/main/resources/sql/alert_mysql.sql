@@ -219,5 +219,10 @@ insert into s_codes (id,category,code,name,seqNo) VALUES(1,"info","news","新闻
 insert into s_codes (id,category,code,name,seqNo) VALUES(2,"info","knowledge","知识堂",2);
 insert into s_codes (id,category,code,name,seqNo) VALUES(3,"info","skillContest","技能大赛",3);
 insert into s_codes (id,category,code,name,seqNo) VALUES(4,"info","teacherGroup","师资队伍",4);
+insert into s_codes (id,category,code,name,seqNo) VALUES(5,"info","sworks","学生作品",5);
+insert into s_codes (id,category,code,name,seqNo) VALUES(6,"info","tworks","老师作品",6);
+insert into s_codes (id,category,code,name,seqNo) VALUES(7,"info","contest_works","大赛作品",7);
+insert into s_codes (id,category,code,name,seqNo) VALUES(8,"info","major","专业介绍",8);
+insert into s_codes (id,category,code,name,seqNo) VALUES(9,"info","contact","联系我们",9);
 
 

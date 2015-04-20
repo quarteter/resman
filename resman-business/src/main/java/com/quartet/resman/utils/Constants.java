@@ -19,4 +19,9 @@ public class Constants {
     public static final String INFO_TYPE_KNOWLEDGE="knowledge";
     public static final String INFO_TYPE_SKILL="skillContest";
     public static final String INFO_TYPE_TEACHERGROUP="teacherGroup";
+    public static final String INFO_TYPE_SWORK="sworks";
+    public static final String INFO_TYPE_TWORK="tworks";
+    public static final String INFO_TYPE_CONTESTWORK="contest_works";
+    public static final String INFO_TYPE_MAJOR="major";
+    public static final String INFO_TYPE_CONTACT="contact";
 }
