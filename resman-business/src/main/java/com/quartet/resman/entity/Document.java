@@ -13,6 +13,10 @@ public class Document extends Entry{
     private Long size;
     private String mimeType;
     private String encoding;
+    //针对视频文件的属性
+    private String imgPath;     //视频截图的存储路径
+    private String originStorePath; //原始视频文件的存储路径
+    private String storedPath;      //转换后的视频文件存储路径
 //    private InputStream content;
     private FileStream fileStream;
 
@@ -64,12 +68,39 @@ public class Document extends Entry{
         this.fileStream = fileStream;
     }
 
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    public String getOriginStorePath() {
+        return originStorePath;
+    }
+
+    public void setOriginStorePath(String originStorePath) {
+        this.originStorePath = originStorePath;
+    }
+
+    public String getStoredPath() {
+        return storedPath;
+    }
+
+    public void setStoredPath(String storedPath) {
+        this.storedPath = storedPath;
+    }
+
     @Override
     public String toString() {
-        return "File{" +
-                "encoding='" + encoding + '\'' +
+        return "Document{" +
+                "size=" + size +
                 ", mimeType='" + mimeType + '\'' +
-                ", size=" + size +
+                ", encoding='" + encoding + '\'' +
+                ", imgPath='" + imgPath + '\'' +
+                ", originStorePath='" + originStorePath + '\'' +
+                ", storedPath='" + storedPath + '\'' +
                 "} " + super.toString();
     }
 }
