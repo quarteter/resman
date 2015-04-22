@@ -39,14 +39,10 @@ public class Config {
     private String SYSTEM_IMAGEMAGICK_CONVERT;
 
     @Value("${system.swftools.pdf2swf}")
-    private String  SYSTEM_SWFTOOLS_PDF2SWF;
+    private String SYSTEM_SWFTOOLS_PDF2SWF;
 
     @Value("${system.ghostscript}")
     private String SYSTEM_GHOSTSCRIPT;
-
-    @Value("${system.ffmpeg.extractImg}")
-    private String SYSTEM_FFMPEG_EXTRACTIMG;
-
 
     public String getFolderPersonal() {
         return folderPersonal;
@@ -60,39 +56,35 @@ public class Config {
         return folderClassicCourse;
     }
 
-    public String getCachSWF(){
+    public String getCachSWF() {
         return repDir + File.separator + "cache" + File.separator + "swf";
     }
 
-    public String getCachPDF(){
+    public String getCachPDF() {
         return repDir + File.separator + "cache" + File.separator + "pdf";
     }
 
-    public String getOpenofficePath(){
+    public String getOpenofficePath() {
         return SYSTEM_OPENOFFICE_PATH;
     }
 
-    public int getOpenofficePort(){
+    public int getOpenofficePort() {
         return SYSTEM_OPENOFFICE_PORT;
     }
 
-    public int getOpenofficeTasks(){
+    public int getOpenofficeTasks() {
         return SYSTEM_OPENOFFICE_TASKS;
     }
 
-    public String getImagemagickConvert(){
+    public String getImagemagickConvert() {
         return SYSTEM_IMAGEMAGICK_CONVERT;
     }
 
-    public String getSwftoolsPdf2SWF(){
+    public String getSwftoolsPdf2SWF() {
         return SYSTEM_SWFTOOLS_PDF2SWF;
     }
 
-    public String getGhostscript(){
+    public String getGhostscript() {
         return SYSTEM_GHOSTSCRIPT;
-    }
-
-    public String getFFMPEGExtractImg(){
-        return SYSTEM_FFMPEG_EXTRACTIMG;
     }
 }
