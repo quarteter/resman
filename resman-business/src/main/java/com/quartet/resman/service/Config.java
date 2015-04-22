@@ -44,6 +44,9 @@ public class Config {
     @Value("${system.ghostscript}")
     private String SYSTEM_GHOSTSCRIPT;
 
+    @Value("${system.ffmpeg.extractImg}")
+    private String SYSTEM_FFMPEG_EXTRACTIMG;
+
 
     public String getFolderPersonal() {
         return folderPersonal;
@@ -87,5 +90,9 @@ public class Config {
 
     public String getGhostscript(){
         return SYSTEM_GHOSTSCRIPT;
+    }
+
+    public String getFFMPEGExtractImg(){
+        return SYSTEM_FFMPEG_EXTRACTIMG;
     }
 }
