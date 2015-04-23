@@ -225,4 +225,13 @@ insert into s_codes (id,category,code,name,seqNo) VALUES(7,"info","contest_works
 insert into s_codes (id,category,code,name,seqNo) VALUES(8,"info","major","专业介绍",8);
 insert into s_codes (id,category,code,name,seqNo) VALUES(9,"info","contact","联系我们",9);
 
+--添加新表，记录资源的预览次数和下载次数，2015-04-23
+DROP TABLE IF EXISTS `r_res_count`;
+CREATE TABLE `r_res_count` (
+  `id` varchar(100) NOT NULL DEFAULT '',
+  `view_count` int(11) DEFAULT NULL,
+  `down_count` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
 
