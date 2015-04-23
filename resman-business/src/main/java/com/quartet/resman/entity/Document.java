@@ -17,6 +17,9 @@ public class Document extends Entry{
     private String imgPath;     //视频截图的存储路径
     private String originStorePath; //原始视频文件的存储路径
     private String storedPath;      //转换后的视频文件存储路径
+
+    private boolean converted;
+
 //    private InputStream content;
     private FileStream fileStream;
 
@@ -90,6 +93,14 @@ public class Document extends Entry{
 
     public void setStoredPath(String storedPath) {
         this.storedPath = storedPath;
+    }
+
+    public boolean isConverted() {
+        return converted;
+    }
+
+    public void setConverted(boolean converted) {
+        this.converted = converted;
     }
 
     @Override
