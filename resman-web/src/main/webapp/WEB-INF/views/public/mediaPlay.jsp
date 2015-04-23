@@ -17,11 +17,13 @@
             $("#jquery_jplayer_1").jPlayer({
                 ready: function () {
                     $(this).jPlayer("setMedia", {
-                        m4v: "${ctx}/res/document/play?uuid=${uuid}"
+                        flv: "${ctx}/res/document/play?uuid=${uuid}",
+                        poster:"/jsp/test.jpg"
                     });
                 },
                 swfPath: "${ctx}/asset/js/plugins/jplayer",
-                supplied: "webmv, ogv, m4v",
+                solutions: "flash, html",
+                supplied: "flv",
                 size: {
                     width: "865px",
                     height: "400px",

@@ -4,6 +4,7 @@ import com.quartet.resman.converter.DocConverter;
 import com.quartet.resman.core.MimeTypeConfig;
 import com.quartet.resman.entity.Document;
 import com.quartet.resman.service.Config;
+import com.quartet.resman.service.ResCountService;
 import com.quartet.resman.store.FileService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,9 @@ public class DocumentController {
     private DocConverter docConverter;
 
     @Resource
+    private ResCountService resCountService;
+
+    @Resource
     private Config config;
 
     /**
@@ -45,6 +49,7 @@ public class DocumentController {
      */
     @RequestMapping("download")
     public void download(String uuid, HttpServletResponse response) throws Exception {
+        resCountService.addDownCount(uuid);
         Document doc = fileService.getFileInfoByUUID(uuid);
         InputStream in = fileService.readFile(doc.getPath());
         if (in == null)
@@ -71,6 +76,7 @@ public class DocumentController {
 
     @RequestMapping("/view")
     public String view(String uuid, Model model) {
+        resCountService.addViewCount(uuid);
         model.addAttribute("uuid", uuid);
         Document doc = fileService.getFileInfoByUUID(uuid);
         String mimeType = doc.getMimeType();

@@ -70,8 +70,12 @@ public class MimeTypeConfig {
     public static String EXT_MD_OGG = "ogg";
     public static String EXT_MD_WEBM = "webm";
     public static String EXT_MD_WAV = "wav";
+    public static String EXT_MD_WMV = "wmv";
+    public static String EXT_MD_AVI = "avi";
+    public static String EXT_MD_FLV = "flv";
 
-    private static List<String> playSupported = Arrays.asList(new String[]{EXT_MD_MP3, EXT_MD_MP4, EXT_MD_OGG, EXT_MD_WEBM, EXT_MD_WAV});
+
+    private static List<String> playSupported = Arrays.asList(new String[]{EXT_MD_MP3, EXT_MD_MP4, EXT_MD_OGG, EXT_MD_WEBM, EXT_MD_WAV, EXT_MD_WMV, EXT_MD_AVI, EXT_MD_FLV});
 
     public static boolean convertibleToPlay(String from) {
         return playSupported.contains(from);

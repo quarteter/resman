@@ -65,7 +65,7 @@ $(document).ready(function(){
 <li><a href="/front/index" class="nav_show">网站首页</a></li>
 <li><a href="/front/news">新闻动态</a></li>
 <li><a href="/front/course">精品课程</a></li>
-<li><a href="javascript:void(0)">资源库</a></li>
+<li><a href="/front/resources/classic">资源库</a></li>
 <li><a href="javascript:void(0)">成果展示</a></li>
 <li><a href="/front/teachers">专家团队</a></li>
 <li><a href="/front/works">师生作品</a></li>

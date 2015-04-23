@@ -281,7 +281,7 @@
         <button id="btnDownload" type="button" class="btn btn-default"><span class="fa fa-download"></span>&nbsp;下载
         </button>
         <button id="btnDelete" type="button" class="btn btn-default"><span class="fa fa-trash"></span>&nbsp;删除</button>
-       <button id="btnShare" type="button" class="btn btn-default"><span class="fa fa-share-alt"></span>&nbsp;分享
+      <!-- <button id="btnShare" type="button" class="btn btn-default"><span class="fa fa-share-alt"></span>&nbsp;分享
         </button>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -293,7 +293,7 @@
                 <li><a href="javascript:void(0)" onclick="copy()">复制到</a></li>
                 <li><a href="javascript:void(0)" onclick="rename()">重命名</a></li>
             </ul>
-        </div>
+        </div>  -->
     </div>
     <div id="fileQueue"></div>
 

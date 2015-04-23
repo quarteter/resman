@@ -31,6 +31,7 @@
                 /asset/** = anon
                 /favicon.ico = anon
                 /front/** = anon
+                /res/document/** = anon
                 /ueditor/** = anon
                 /login = authc
                 /logout = logout

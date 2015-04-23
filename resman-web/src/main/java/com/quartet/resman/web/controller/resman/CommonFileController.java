@@ -343,7 +343,7 @@ public class CommonFileController {
      * @param name
      * @return
      */
-    private FileFuncDef getFuncDefByName(String name) {
+    public FileFuncDef getFuncDefByName(String name) {
         if (funcDefs != null) {
             return funcDefs.get(name);
         }
@@ -357,7 +357,7 @@ public class CommonFileController {
      * @param dirPersonal
      * @return
      */
-    private String initRoot(String rootDir, boolean dirPersonal) {
+    public String initRoot(String rootDir, boolean dirPersonal) {
         Folder rootFolder = folderService.getFolder(rootDir);
         ShiroUser user = userService.getCurrentUser();
         if (rootFolder == null) {
