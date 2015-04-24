@@ -40,3 +40,25 @@
 /*works*/
 .works_con dl{width:200px; float:left;margin-right:30px;height:auto;margin-top:20px;}
 .works_con dl dt{float:none;}
+/*视频展示页面*/
+.video_show{background:url(../images/video_bg.jpg) top center  no-repeat;  min-height:670px;height:auto;  width:981px;padding:0 5px;}
+.video{width:892px;height:410px; background:#5f55b8;margin:0 auto; margin-top:24px;}
+.video_content{width:892px;margin:0 auto; height:auto;margin-top:20px;margin-bottom:40px;}
+
+.video_title{height:45px; line-height:45px;width:96px; text-align:center; background:url(../images/video_title.png);margin-bottom:10px;}
+.video_left{width:620px;height:394px;padding-left:10px;padding-top:10px;float:left;}
+.video_right{float:left; color:#fff; width:248px;padding-left:10px;padding-top:10px;}
+.course_name{ font-size:18px;height:35px; line-height:35px; font-weight:0;}
+/*资源页面*/
+.resources{background: url(../images/resources_bg.png)  top center  no-repeat;  min-height:670px;height:auto;  width:981px;padding:0 5px;}
+.resources_search{width:981px;height:68px; background:url(../images/search.png) no-repeat;}
+.resources_search_left{float:left;padding-left:80px;padding-top:15px; color:#5f55b8;}
+.search_text{height:32px;width:300px;border:none;line-height:32px;color:#999;border-bottom:2px solid #dcd9ef;}
+.search_button{border:none; border-bottom:2px solid #5f55b8; width:80px; text-align:center; line-height:34px; height:34px; background:#7066cc;color:#fff;}
+.resources_search_right{float:left;padding-left:10px;padding-top:15px;}
+.resources_content{padding:20px;}
+.resources_content .boutique {background:url(../images/sn_bg.png) no-repeat top; width:100%;margin-top:0px;height:auto;}
+.thead,.ta,.tb{height:30px;border-bottom:1px solid #CCC; line-height:30px;}
+.boutique a{color:#5f55b8}
+.ta{background:#fafafa;}
+.page_s{padding-top:30px;padding-left:250px;}
