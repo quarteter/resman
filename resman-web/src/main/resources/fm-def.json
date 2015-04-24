@@ -60,7 +60,7 @@
     "rootDir": "/jpk",
     "rootDirPersonal": false,
     "mcDir":"",
-    "allowFileExts":"*.flv;*.mp4",
+    "allowFileExts":"*.avi;*.flv;*.mp4",
     "menus": [
       {
         "id":"btnUpload",

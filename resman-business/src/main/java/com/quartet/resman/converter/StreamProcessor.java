@@ -9,8 +9,9 @@ import java.io.InputStreamReader;
 
 /**
  * Created by lcheng on 2015/4/23.
+ *
  */
-public class StreamProcessor extends Thread{
+public class StreamProcessor{
 
     private static Logger log = LoggerFactory.getLogger(StreamProcessor.class);
 
@@ -24,8 +25,7 @@ public class StreamProcessor extends Thread{
         this.type = type;
     }
 
-    @Override
-    public void run() {
+    public void process(){
         try (InputStreamReader isr = new InputStreamReader(is);
              BufferedReader reader = new BufferedReader(isr)) {
             String line = null;
@@ -41,7 +41,7 @@ public class StreamProcessor extends Thread{
                 }
             }
         } catch (Exception e) {
-
+            log.error(e.getMessage());
         }
     }
 }

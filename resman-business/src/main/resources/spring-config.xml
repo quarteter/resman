@@ -98,7 +98,7 @@
     </aop:config>
 
     <import resource="spring-config-task.xml"/>
-    <!--<import resource="spring-config-shiro.xml"/>-->
+    <import resource="spring-config-shiro.xml"/>
     <import resource="spring-config-jcr.xml"/>
 
 </beans>

@@ -16,14 +16,18 @@
 
             $("#jquery_jplayer_1").jPlayer({
                 ready: function () {
+                    <%--$(this).jPlayer("setMedia", {--%>
+                        <%--flv: "${ctx}/res/document/play?uuid=${uuid}",--%>
+                        <%--poster:"/jsp/test.jpg"--%>
+                    <%--});--%>
                     $(this).jPlayer("setMedia", {
-                        flv: "${ctx}/res/document/play?uuid=${uuid}",
-                        poster:"/jsp/test.jpg"
+                        m4v: "${videoServer}${url}"
                     });
+
                 },
                 swfPath: "${ctx}/asset/js/plugins/jplayer",
-                solutions: "flash, html",
-                supplied: "flv",
+//                solutions: "flash, html",
+                supplied: "webmv, ogv, m4v,flv",
                 size: {
                     width: "865px",
                     height: "400px",

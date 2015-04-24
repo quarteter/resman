@@ -14,6 +14,8 @@ public class Constants {
 
     public static final String CACHE_DIR = "cache";
 
+    public static final String REP_JPK = "/jpk";
+
 
     public static final String INFO_TYPE_NEWS="news";
     public static final String INFO_TYPE_KNOWLEDGE="knowledge";

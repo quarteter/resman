@@ -42,9 +42,6 @@
             });
         },
         createUploadMenu: function () {
-            //setTimeout(function () {
-            //
-            //}, 10);
             var btnUpload = $('#btnUpload');
             if (btnUpload) {
                 var conf = {
@@ -52,6 +49,7 @@
                     width: 100,
                     buttonClass: 'btn btn-primary',
                     removeTimeout: 0,
+                    'fileSizeLimit' : '100MB',
                     swf: window.fmConf.ctxPath+'/asset/js/plugins/uploadify/uploadify.swf',
                     uploader: window.fmConf.ctxPath+'/res/common/'+window.fmConf.func+'/upload',
                     fileObjName: 'fileData',
@@ -117,13 +115,24 @@
                 BootstrapDialog.confirm('确认要删除吗?', function (result) {
                     if (result) {
                         var names = "",postUrl=window.fmConf.ctxPath+"/res/common/"+window.fmConf.func+"/delete";
+                        //for (var i = 0; i < sel.length; i++) {
+                        //    names = names + sel[i].name + ",";
+                        //}
+                        //$.post(postUrl, {
+                        //    names: names,
+                        //    path: window.fmConf.filePath
+                        //}, function (data) {
+                        //    if (data.success) {
+                        //        $('#fileList').bootstrapTable('refresh');
+                        //    } else {
+                        //        tipError("删除数据失败！");
+                        //    }
+                        //});
+                        var ids = "";
                         for (var i = 0; i < sel.length; i++) {
-                            names = names + sel[i].name + ",";
+                            ids = ids + sel[i].uuid + ",";
                         }
-                        $.post(postUrl, {
-                            names: names,
-                            path: window.fmConf.filePath
-                        }, function (data) {
+                        $.post(postUrl, {ids: ids}, function (data) {
                             if (data.success) {
                                 $('#fileList').bootstrapTable('refresh');
                             } else {
@@ -199,7 +208,8 @@
             if (sel.length > 0) {
                 var name = sel[0].name;
                 var href = window.fmConf.ctxPath+"/res/document/download?uuid="+sel[0].uuid;
-                window.open(href, null, 'height=250, width=400, top=50,left=50, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+                //window.open(href, null, 'height=250, width=400, top=50,left=50, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+                window.location.href = href;
                 //var frame = $('<iframe style="display: none;" class="multi-download-frame"></iframe>');
                 //frame.attr('src',href);
                 //$('body').append(frame);

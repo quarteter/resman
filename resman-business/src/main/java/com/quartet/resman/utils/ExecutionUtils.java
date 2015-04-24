@@ -214,7 +214,7 @@ public class ExecutionUtils {
 	}
 
 	public static ExecutionResult runCmd(String cmd,int timeOutMinutes) throws SecurityException, InterruptedException, IOException{
-		return runCmdImpl1(cmd.split(" "),TimeUnit.MINUTES.toMillis(timeOutMinutes));
+		return runCmdImpl1(cmd.split(" "), TimeUnit.MINUTES.toMillis(timeOutMinutes));
 	}
 	
 	/**
@@ -291,8 +291,8 @@ public class ExecutionUtils {
 
 		StreamProcessor esp = new StreamProcessor(process.getErrorStream(),false,"error");
 		StreamProcessor isp = new StreamProcessor(process.getInputStream(),false,"info");
-		esp.start();
-		isp.start();
+		esp.process();
+		isp.process();
 
 		process.waitFor();
 		t.cancel();

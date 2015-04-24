@@ -7,6 +7,7 @@ import com.quartet.resman.service.Config;
 import com.quartet.resman.service.ResCountService;
 import com.quartet.resman.store.FileService;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * 文档相关操作
@@ -51,7 +52,25 @@ public class DocumentController {
     public void download(String uuid, HttpServletResponse response) throws Exception {
         resCountService.addDownCount(uuid);
         Document doc = fileService.getFileInfoByUUID(uuid);
-        InputStream in = fileService.readFile(doc.getPath());
+        InputStream in = null;
+        String mimeType = doc.getMimeType();
+        if (StringUtils.isNotEmpty(mimeType) &&
+                mimeType.matches("(avi|wmv|rmvb|rm|asx|mkv|asf|mpg|swf|3gp|mp4|mov|vob|flv)$")){
+            String originPath = doc.getOriginStorePath();
+            if(StringUtils.isNotEmpty(doc.getStoredPath())){
+                String videoPath = config.getVideoPath();
+                videoPath += doc.getStoredPath();
+                if (Files.exists(Paths.get(videoPath))){
+                    in = new BufferedInputStream(new FileInputStream(new File(videoPath)));
+                }
+            }else if (StringUtils.isNotEmpty(originPath)){
+                if (Files.exists(Paths.get(originPath))){
+                    in = new BufferedInputStream(new FileInputStream(new File(originPath)));
+                }
+            }
+        }else{
+            in = fileService.readFile(doc.getPath());
+        }
         if (in == null)
             return;
         response.reset();
@@ -84,6 +103,8 @@ public class DocumentController {
             return "public/swfView";
         } else if (MimeTypeConfig.convertibleToPlay(mimeType)) {
             model.addAttribute("name", doc.getName());
+            model.addAttribute("url",doc.getStoredPath());
+            model.addAttribute("videoServer",config.getVideoServer());
             return "public/mediaPlay";
         } else {
             return "public/resDown";
