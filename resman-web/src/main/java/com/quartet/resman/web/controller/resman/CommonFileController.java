@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.quartet.resman.converter.ConverterService;
 import com.quartet.resman.converter.PreviewTask;
+import com.quartet.resman.converter.VideoConvertTask;
 import com.quartet.resman.entity.*;
 import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.service.Config;
@@ -14,18 +15,22 @@ import com.quartet.resman.utils.FileUtils;
 import com.quartet.resman.utils.Types;
 import com.quartet.resman.web.vo.FileFuncDef;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -48,6 +53,11 @@ public class CommonFileController {
 
     @Autowired
     private ConverterService converterService;
+    @Autowired
+    private Config config;
+
+    @Autowired
+    private ThreadPoolTaskExecutor executor;
 
     private static Map<String, FileFuncDef> funcDefs;
     private static String FUNC_DEF_JSON = "/fm-def.json";
@@ -104,12 +114,12 @@ public class CommonFileController {
                 Document document = (Document) node;
                 String size = "0";
                 long docSize = document.getSize();
-                if(docSize > 1073741824){
-                    size =  String.format("%10.2f",docSize/1073741824.0) + " GB";
-                }else if(docSize>1048576){
-                    size =  String.format("%10.2f",docSize/1048576.0) + " MB";
-                }else {
-                    size =  docSize/1024 + " KB";
+                if (docSize > 1073741824) {
+                    size = String.format("%10.2f", docSize / 1073741824.0) + " GB";
+                } else if (docSize > 1048576) {
+                    size = String.format("%10.2f", docSize / 1048576.0) + " MB";
+                } else {
+                    size = docSize / 1024 + " KB";
                 }
                 map.put("type", "1");
                 map.put("size", size);
@@ -190,7 +200,8 @@ public class CommonFileController {
      */
     @RequestMapping("/upload")
     @ResponseBody
-    public Result upload(@PathVariable String func, String path, @RequestParam("fileData") MultipartFile uploadFile) {
+    public Result upload(@PathVariable String func, String path, @RequestParam("fileData") MultipartFile uploadFile,
+                         HttpServletRequest request) {
         ShiroUser user = userService.getCurrentUser();
         Result result = new Result();
         FileFuncDef def = getFuncDefByName(func);
@@ -203,14 +214,33 @@ public class CommonFileController {
         InputStream in = null;
         Document doc = null;
         try {
-            in = uploadFile.getInputStream();
-            doc = new Document(filePath + fileName, user.getUserName(), new FileStream(in), uploadFile.getSize());
-            doc.setMimeType(mimeType);
-            fileService.addFile(doc);
-            IOUtils.closeQuietly(in);
 
-            PreviewTask task = new PreviewTask(doc.getUuid(), converterService);
-            task.start();
+            if (mimeType.matches("(avi|wmv|rmvb|rm|asx|mkv|asf|mpg|swf|3gp|mp4|mov|vob|flv)$")) {
+                //表明是视频文件，先进行文件存储
+
+                String originalPath = getVideoOriginalPath(fileName);
+                uploadFile.transferTo(new File(originalPath));
+
+                doc = new Document(filePath + fileName, user.getUserName(), null, uploadFile.getSize());
+                doc.setMimeType(mimeType);
+                doc.setConverted(false);
+                doc.setOriginStorePath(originalPath);
+
+                fileService.addFile(doc);
+
+                executor.execute(new VideoConvertTask(doc.getUuid(), mimeType, originalPath,
+                        getVideoConvertedPath(fileName), getVideoImgPath(request,fileName)));
+
+            } else {
+                in = uploadFile.getInputStream();
+                doc = new Document(filePath + fileName, user.getUserName(), new FileStream(in), uploadFile.getSize());
+                doc.setMimeType(mimeType);
+                fileService.addFile(doc);
+                IOUtils.closeQuietly(in);
+
+                PreviewTask task = new PreviewTask(doc.getUuid(), converterService);
+                task.start();
+            }
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -273,7 +303,7 @@ public class CommonFileController {
     public Result copyTo(String srcPath, String destPath) {
         Result result = null;
         try {
-            folderService.copyTo(srcPath,destPath);
+            folderService.copyTo(srcPath, destPath);
             result = new Result(true, "");
         } catch (Throwable e) {
             e.printStackTrace();
@@ -284,19 +314,19 @@ public class CommonFileController {
 
     @RequestMapping(value = "/folderList", method = RequestMethod.POST)
     @ResponseBody
-    public List<Map<String,Object>> childrenFolderList(String parent,String srcPath) {
+    public List<Map<String, Object>> childrenFolderList(String parent, String srcPath) {
         //List<Map<String,Object>> result = new ArrayList<>();
         String parentDir = srcPath;
-        if (StringUtils.isNotEmpty(srcPath)){
+        if (StringUtils.isNotEmpty(srcPath)) {
             int idx = srcPath.lastIndexOf("/");
-            if (idx>0){
-                parentDir = srcPath.substring(0,idx);
+            if (idx > 0) {
+                parentDir = srcPath.substring(0, idx);
             }
         }
         if (StringUtils.isNotEmpty(parent) && !parent.equals("all")) {
             List<Entry> children = folderService.getChildrenFolders(parent);
-            return convertEntries(children,parentDir);
-        }else  {
+            return convertEntries(children, parentDir);
+        } else {
             return getRootFolders(parentDir);
         }
     }
@@ -382,42 +412,109 @@ public class CommonFileController {
         return format.format(date);
     }
 
-    private List<Map<String,Object>> convertEntries(List<Entry> nodes,String parentPath){
-        List<Map<String,Object>> result = new ArrayList<>();
-        for (Entry entry : nodes){
-            Map<String,Object> map = new HashMap<>();
-            map.put("uid",entry.getUuid());
-            map.put("name",entry.getName());
-            map.put("folderPath",entry.getPath());
-            if (entry.getPath().equals(parentPath)){
-                map.put("chkDisabled",true);
+    private List<Map<String, Object>> convertEntries(List<Entry> nodes, String parentPath) {
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Entry entry : nodes) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("uid", entry.getUuid());
+            map.put("name", entry.getName());
+            map.put("folderPath", entry.getPath());
+            if (entry.getPath().equals(parentPath)) {
+                map.put("chkDisabled", true);
             }
-            map.put("isParent",true);
+            map.put("isParent", true);
             result.add(map);
         }
         return result;
     }
 
-    private List<Map<String,Object>> getRootFolders(String parentPath){
-        List<Map<String,Object>> result = new ArrayList<>();
-        Map<String,Object> map =null;
-        Map<String,String> names = new HashMap<>();
-        names.put("/personal","个人空间");
-        names.put("/jpk","精品课程");
+    private List<Map<String, Object>> getRootFolders(String parentPath) {
+        List<Map<String, Object>> result = new ArrayList<>();
+        Map<String, Object> map = null;
+        Map<String, String> names = new HashMap<>();
+        names.put("/personal", "个人空间");
+        names.put("/jpk", "精品课程");
 
-        for (String key : names.keySet()){
+        for (String key : names.keySet()) {
             Folder folder = folderService.getFolder(key);
             map = new HashMap<>();
-            map.put("uid",folder.getUuid());
-            map.put("name",names.get(key));
-            map.put("folderPath",folder.getPath());
-            map.put("isParent",true);
-            if (key.equals(parentPath)){
-                map.put("chkDisabled",true);
+            map.put("uid", folder.getUuid());
+            map.put("name", names.get(key));
+            map.put("folderPath", folder.getPath());
+            map.put("isParent", true);
+            if (key.equals(parentPath)) {
+                map.put("chkDisabled", true);
             }
             result.add(map);
         }
         return result;
+    }
+
+    private String getVideoOriginalPath(String fileName) {
+        String jkDir = config.getRepDir();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        String date = format.format(new Date());
+        String path = jkDir + "/" + date;
+        path = decoratePath(path,fileName);
+        return path;
+    }
+
+    private String getVideoConvertedPath(String fileName) {
+        String root = config.getVideoPath();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        String date = format.format(new Date());
+        String path = root + "/" + date;
+        path = decoratePath(path,fileName);
+        return path;
+    }
+
+    private String getVideoImgPath(HttpServletRequest request, String fileName) {
+        String savePath = request.getServletContext().getRealPath("/");
+        savePath = savePath.replace("\\", "/") + "ueditor/vimgs/";
+        String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
+        savePath += date;
+        Path sp = Paths.get(savePath);
+        if (!Files.exists(sp)) {
+            try {
+                Files.createDirectories(sp);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (fileName != null) {
+            int idx = fileName.lastIndexOf(".");
+            if (idx != -1) {
+                savePath = savePath + "/" + fileName.substring(0, idx) + "-" +
+                        System.currentTimeMillis() + ".jpg";
+            } else {
+                savePath = savePath + "/" + fileName + "-" + System.currentTimeMillis() + ".jps";
+            }
+        } else {
+            savePath = savePath + "/" + System.currentTimeMillis() + ".jpg";
+        }
+        return savePath;
+    }
+
+    private String decoratePath(String dir,String fileName){
+        Path p = Paths.get(dir);
+        if (!Files.exists(p)) {
+            try {
+                Files.createDirectories(p);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (fileName != null) {
+            int idx = fileName.lastIndexOf(".");
+            if (idx != -1) {
+                dir = dir + "/" + fileName.substring(0, idx) + "-" +
+                        System.currentTimeMillis() + fileName.substring(idx);
+            } else {
+                dir = dir + "/" + fileName + "-" + System.currentTimeMillis();
+            }
+        }
+        return dir;
     }
 
 }

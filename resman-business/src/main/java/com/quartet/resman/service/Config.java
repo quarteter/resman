@@ -44,6 +44,9 @@ public class Config {
     @Value("${system.ghostscript}")
     private String SYSTEM_GHOSTSCRIPT;
 
+    @Value("${video.dir}")
+    private String videoPath;
+
     public String getFolderPersonal() {
         return folderPersonal;
     }
@@ -86,5 +89,9 @@ public class Config {
 
     public String getGhostscript() {
         return SYSTEM_GHOSTSCRIPT;
+    }
+
+    public String getVideoPath(){
+        return videoPath;
     }
 }

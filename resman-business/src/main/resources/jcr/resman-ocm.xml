@@ -36,6 +36,7 @@
         <field-descriptor fieldName="imgPath" jcrName="rm:imgPath" jcrType="String"/>
         <field-descriptor fieldName="originStorePath" jcrName="rm:originStorePath" jcrType="String"/>
         <field-descriptor fieldName="storedPath" jcrName="rm:storedPath" jcrType="String"/>
+        <field-descriptor fieldName="converted" jcrName="rm:converted" jcrType="Boolean"/>
 
         <bean-descriptor fieldName="fileStream" jcrName="rm:fileStream" autoUpdate="false" autoInsert="true" autoRetrieve="false"/>
     </class-descriptor>

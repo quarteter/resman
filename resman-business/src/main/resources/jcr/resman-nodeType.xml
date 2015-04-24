@@ -48,6 +48,8 @@
         <propertyDefinition name="rm:imgPath" requiredType="String" autoCreated="false" onParentVersion="COPY" protected="false" multiple="false"/>
         <propertyDefinition name="rm:originStorePath" requiredType="String" autoCreated="false" onParentVersion="COPY" protected="false" multiple="false"/>
         <propertyDefinition name="rm:storedPath" requiredType="String" autoCreated="false" onParentVersion="COPY" protected="false" multiple="false"/>
+        <propertyDefinition name="rm:converted" requiredType="Boolean" autoCreated="false" onParentVersion="COPY" protected="false" multiple="false"/>
+
         <childNodeDefinition name="*" defaultPrimaryType="rm:fileStream" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" sameNameSiblings="false">
             <requiredPrimaryTypes>
                 <requiredPrimaryType>rm:fileStream</requiredPrimaryType>

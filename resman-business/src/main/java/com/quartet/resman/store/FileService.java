@@ -46,6 +46,11 @@ public class FileService {
         mappingTemplate.save();
     }
 
+    public void updateFile(Document document){
+        mappingTemplate.update(document);
+        mappingTemplate.save();
+    }
+
     /**
      * 根据路径以及相关属性查找文件。
      * 请根据实际情况设置parentPath的值，如/jpk//,/jpk/
@@ -59,10 +64,14 @@ public class FileService {
     @Transactional(readOnly = true)
     public List<Document> queryFile(String parentPath, String nodeNameLike, String status, String visibility) {
         QueryManager qm = mappingTemplate.createQueryManager();
-        String expression = "jcr:like(fn:name(),'%" + nodeNameLike + "%')";
         Filter filter = qm.createFilter(Document.class);
-        filter.setScope(parentPath);
-        filter.addJCRExpression(expression);
+        if (StringUtils.isNotEmpty(parentPath)){
+            filter.setScope(parentPath);
+        }
+        if (StringUtils.isNotEmpty(nodeNameLike)){
+            String expression = "jcr:like(fn:name(),'%" + nodeNameLike + "%')";
+            filter.addJCRExpression(expression);
+        }
         if (StringUtils.isNotEmpty(status)) {
             filter.addEqualTo("status", status);
         }

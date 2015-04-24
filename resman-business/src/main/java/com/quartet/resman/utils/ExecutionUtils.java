@@ -1,15 +1,12 @@
 package com.quartet.resman.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import com.quartet.resman.converter.StreamProcessor;
 import com.quartet.resman.entity.ExecutionResult;
 import com.quartet.resman.service.Config;
 import com.quartet.resman.utils.cl.BinaryClassLoader;
@@ -215,6 +212,10 @@ public class ExecutionUtils {
 		log.debug("runCmd({})", cmd);
 		return runCmdImpl(cmd.split(" "), TimeUnit.MINUTES.toMillis(Config.SYSTEM_EXECUTION_TIMEOUT));
 	}
+
+	public static ExecutionResult runCmd(String cmd,int timeOutMinutes) throws SecurityException, InterruptedException, IOException{
+		return runCmdImpl1(cmd.split(" "),TimeUnit.MINUTES.toMillis(timeOutMinutes));
+	}
 	
 	/**
 	 * Execute command line
@@ -265,6 +266,47 @@ public class ExecutionUtils {
 			log.debug("Normal program termination");
 		}
 		
+		process.destroy();
+		log.debug("Elapse time: {}", FormatUtil.formatSeconds(System.currentTimeMillis() - start));
+		return ret;
+	}
+
+	private static ExecutionResult runCmdImpl1(final String cmd[], final long timeout) throws SecurityException,
+			InterruptedException, IOException {
+		log.debug("runCmdImpl({}, {})", Arrays.toString(cmd), timeout);
+		ExecutionResult ret = new ExecutionResult();
+		long start = System.currentTimeMillis();
+		final ProcessBuilder pb = new ProcessBuilder(cmd);
+		final Process process = pb.redirectErrorStream(true).start();
+
+		Timer t = new Timer("Process Execution Timeout");
+		t.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				process.destroy();
+				log.warn("Process killed due to timeout.");
+				log.warn("CommandLine: {}", Arrays.toString(cmd));
+			}
+		}, timeout);
+
+		StreamProcessor esp = new StreamProcessor(process.getErrorStream(),false,"error");
+		StreamProcessor isp = new StreamProcessor(process.getInputStream(),false,"info");
+		esp.start();
+		isp.start();
+
+		process.waitFor();
+		t.cancel();
+		ret.setExitValue(process.exitValue());
+
+		// Check return code
+		if (ret.getExitValue() != 0) {
+			log.warn("Abnormal program termination: {}", ret.getExitValue());
+			log.warn("CommandLine: {}", Arrays.toString(cmd));
+			log.warn("STDERR: {}", ret.getStderr());
+		} else {
+			log.debug("Normal program termination");
+		}
+
 		process.destroy();
 		log.debug("Elapse time: {}", FormatUtil.formatSeconds(System.currentTimeMillis() - start));
 		return ret;
