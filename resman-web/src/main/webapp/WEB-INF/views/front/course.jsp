@@ -30,8 +30,6 @@
         }
         $(document).ready(function () {
             $(".selecter li ul").hide();
-
-
         })
 
     </script>
@@ -106,290 +104,78 @@
             <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
             <div class="position_nav"> 您现在的位置 : 首页 / 精品课程 / <c:if test="${parentName!=null}">${parentName} / </c:if>列表</div>
         </div>
+
         <div class="news_list works_con">
-            <dl>
-                <dt>
-                <dt><img src="${ctx}/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
 
-                </dd>
+            <c:forEach begin="${start}" end="${end}" varStatus="st">
+                <dl>
+                    <dt>
+                    <dt><img src="${ctx}${files[st.current].imgPath}" width="200" height="132"/></dt>
+                    <dd class="news_first_title">
+                        <a href="${ctx}/front/course/play?id=${files[st.current].uuid}">
+                            <c:set value="${files[st.current].name}" var="name"></c:set>
+                            <c:set value="${name.lastIndexOf('.')}" var="idx"></c:set>
+                            <c:set value="${name.substring(0,idx)}" var="n"></c:set>
+                        <<${n}>>
+                        </a>
+                    </dd>
+                    <dd>
 
-                </dt>
+                    </dd>
 
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
+                    </dt>
 
-                </dt>
+                </dl>
+            </c:forEach>
 
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
-            <dl>
-                <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132"/></dt>
-                <dd class="news_first_title"><a href="#"><
-                    <精品课程--动漫原型设计>>
-                </a></dd>
-                <dd>
-                    查看次数：2909次
-                </dd>
-
-                </dt>
-
-            </dl>
             <div style="clear:both"></div>
 
         </div>
         <div class="pages">
-            <a href="#">共12条记录 </a> <a href="#">上一页</a> <a href="#" class="curr">1</a> <a href="#">2 </a> <a
-                href="#">3</a> <a href="#">4</a> <a href="#">5</a> <a href="#">下一页</a>
+
+            <a href="#">共${totalCount}条记录 </a>
+            <c:choose>
+                <c:when test="${curPage-1 >= 0}">
+                    <a href="${ctx}/front/course?page=${curPage-1}">上一页</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="#">上一页</a>
+                </c:otherwise>
+            </c:choose>
+            <c:choose>
+                <c:when test="${(curPage+1)%5==0}">
+                    <%--<c:set var="curRange" value="${ (curPage+1)/5}"/>--%>
+                    <fmt:parseNumber var="curRange" integerOnly="true" value="${ (curPage+1)/5}"></fmt:parseNumber>
+                </c:when>
+                <c:otherwise>
+                    <%--<c:set var="curRange" value="${((curPage+1)/5) +1}"/>--%>
+                    <fmt:parseNumber var="curRange" integerOnly="true" value="${((curPage+1)/5) +1}"></fmt:parseNumber>
+                </c:otherwise>
+            </c:choose>
+            <c:set var="start" value="${(curRange-1)*5+1}"></c:set>
+            <c:choose>
+                <c:when test="${curRange*5 >= totalPage}">
+                    <c:set var="end" value="${totalPage}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="end" value="${curRange*5}"/>
+                </c:otherwise>
+            </c:choose>
+            <c:forEach begin="${start}" end="${end}" varStatus="st">
+                <a href="${ctx}/front/course/?page=${st.current-1}" <c:if test="${st.current-1 == curPage}">class="curr" </c:if> >${st.current}</a>
+            </c:forEach>
+
+            <c:choose>
+                <c:when test="${curPage+1 < totalPage}">
+                    <a href="${ctx}/front/course?page=${curPage+1}">下一页</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="#">下一页</a>
+                </c:otherwise>
+            </c:choose>
 
         </div>
         <div style="clear:both"></div>
-
 
         <script>
             $(function () {

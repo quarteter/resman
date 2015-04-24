@@ -22,13 +22,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/front/course")
 public class FrontCourseController {
+    private static final int pageSize = 9;
     @Autowired
     private FolderService folderService;
     @Autowired
     private FileService fileService;
 
     @RequestMapping("/list")
-    public String list(String parent,@PageableDefault(size =10) Pageable page,Model model) {
+    public String list(String parent,@PageableDefault(size = pageSize) Pageable page,Model model) {
         String parentPath = null;
         if (StringUtils.isEmpty(parent)) {
             parentPath = Constants.REP_JPK;
@@ -43,9 +44,15 @@ public class FrontCourseController {
         model.addAttribute("files", files);
         model.addAttribute("curPage",page.getPageNumber());
         int totalSize = files.size();
-        int totalPage = totalSize % 10 ==0 ? totalSize /10 : (totalSize /10 + 1);
+        int totalPage = (totalSize % pageSize ==0) ? totalSize /pageSize : (totalSize /pageSize + 1);
         model.addAttribute("totalPage",totalPage);
         model.addAttribute("totalCount",totalSize);
+        model.addAttribute("start",page.getPageNumber()*pageSize);
+        int end = (page.getPageNumber()+1) * pageSize;
+        end = end > files.size() ? (files.size()-1) : (end-1);
+        model.addAttribute("start",page.getPageNumber()*pageSize);
+        model.addAttribute("end",end);
+
         return "front/course";
     }
 }
