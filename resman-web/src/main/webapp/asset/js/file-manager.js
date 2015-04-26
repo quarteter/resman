@@ -336,7 +336,7 @@
         nameFormatter: function (value, row) {
             if (row.type == '0') {
                 var path = encodeURI(window.fmConf.filePath + "/" + value),
-                    path = encodeURI(path), hrefUrl = window.fmConf.ctxPath + "/res/common/" + window.fmConf.func + "/list?path=" + path;
+                     hrefUrl = window.fmConf.ctxPath + "/res/common/" + window.fmConf.func + "/list?path=" + path;
                 return '<i class="fa fa-folder"></i> <a href="' + hrefUrl + '">' + value + '</a>'
             } else {
                 var name = row.name,idx = name.lastIndexOf("."),subfix=null;
@@ -382,7 +382,7 @@
                             enable: true,
                             url: window.fmConf.ctxPath +"/res/common/"+ window.fmConf.func+"/folderList",
                             autoParam: ["folderPath=parent"],
-                            otherParam:['srcPath',srcPath]
+                            otherParam:['srcPath',srcPath,'mcDir',parent]
                         },
                         check:{
                             enable: true,

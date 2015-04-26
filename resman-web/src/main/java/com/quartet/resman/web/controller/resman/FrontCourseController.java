@@ -47,11 +47,10 @@ public class FrontCourseController {
         int totalPage = (totalSize % pageSize ==0) ? totalSize /pageSize : (totalSize /pageSize + 1);
         model.addAttribute("totalPage",totalPage);
         model.addAttribute("totalCount",totalSize);
-        model.addAttribute("start",page.getPageNumber()*pageSize);
         int end = (page.getPageNumber()+1) * pageSize;
         end = end > files.size() ? (files.size()-1) : (end-1);
-        model.addAttribute("start",page.getPageNumber()*pageSize);
-        model.addAttribute("end",end);
+        model.addAttribute("beginIdx",page.getPageNumber()*pageSize);
+        model.addAttribute("endIdx",end);
 
         return "front/course";
     }

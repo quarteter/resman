@@ -207,6 +207,7 @@
                 </c:otherwise>
             </c:choose>
             <c:set var="start" value="${(curRange-1)*5+1}"></c:set>
+            ${curPage} | ${curRange}  |  ${start}
             <c:choose>
                 <c:when test="${curRange*5 >= totalPage}">
                     <c:set var="end" value="${totalPage}"/>

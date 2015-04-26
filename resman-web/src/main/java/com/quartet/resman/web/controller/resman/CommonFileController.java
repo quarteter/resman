@@ -221,21 +221,26 @@ public class CommonFileController {
                 //表明是视频文件，先进行文件存储
                 String originalPath = VideoRelatedActions.getVideoOriginalPath(fileName);
                 String convertedPath = VideoRelatedActions.getVideoConvertedPath(fileName);
+                doc = new Document(filePath + fileName, user.getUserName(), null, uploadFile.getSize());
+                String srcType = "";
                 if(mimeType.matches("(flv|mp4)$")){
                     uploadFile.transferTo(new File(convertedPath));
+                    doc.setOriginStorePath(convertedPath);
+                    srcType = convertedPath;
                 }else{
                     uploadFile.transferTo(new File(originalPath));
+                    doc.setOriginStorePath(originalPath);
+                    srcType = originalPath;
                 }
 
-                doc = new Document(filePath + fileName, user.getUserName(), null, uploadFile.getSize());
                 doc.setMimeType(mimeType);
                 doc.setConverted(false);
-                doc.setOriginStorePath(originalPath);
 
                 fileService.addFile(doc);
 
                 String webRoot = request.getServletContext().getRealPath("/");
-                executor.execute(new VideoConvertTask(doc.getUuid(), mimeType, originalPath,convertedPath,
+
+                executor.execute(new VideoConvertTask(doc.getUuid(), mimeType, srcType,convertedPath,
                         VideoRelatedActions.getVideoImgPath(webRoot, fileName)));
 
             } else {
@@ -354,7 +359,7 @@ public class CommonFileController {
 
     @RequestMapping(value = "/folderList", method = RequestMethod.POST)
     @ResponseBody
-    public List<Map<String, Object>> childrenFolderList(String parent, String srcPath) {
+    public List<Map<String, Object>> childrenFolderList(String parent, String srcPath,String mcDir) {
         //List<Map<String,Object>> result = new ArrayList<>();
         String parentDir = srcPath;
         if (StringUtils.isNotEmpty(srcPath)) {
@@ -364,9 +369,12 @@ public class CommonFileController {
             }
         }
         if (StringUtils.isNotEmpty(parent) && !parent.equals("all")) {
-            List<Entry> children = folderService.getChildrenFolders(parent);
+            List<Folder> children = folderService.getChildrenFolders(parent);
             return convertEntries(children, parentDir);
-        } else {
+        } else if (StringUtils.isNotEmpty(mcDir) && !mcDir.equals("all")){
+            List<Folder> children = folderService.getChildrenFolders(mcDir);
+            return convertEntries(children, parentDir);
+        }else {
             return getRootFolders(parentDir);
         }
     }
@@ -452,7 +460,7 @@ public class CommonFileController {
         return format.format(date);
     }
 
-    private List<Map<String, Object>> convertEntries(List<Entry> nodes, String parentPath) {
+    private List<Map<String, Object>> convertEntries(List<? extends Entry> nodes, String parentPath) {
         List<Map<String, Object>> result = new ArrayList<>();
         for (Entry entry : nodes) {
             Map<String, Object> map = new HashMap<>();
