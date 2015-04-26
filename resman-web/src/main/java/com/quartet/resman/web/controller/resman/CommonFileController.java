@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.quartet.resman.converter.ConverterService;
 import com.quartet.resman.converter.PreviewTask;
 import com.quartet.resman.converter.VideoConvertTask;
+import com.quartet.resman.converter.VideoRelatedActions;
 import com.quartet.resman.entity.*;
 import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.service.Config;
@@ -123,6 +124,7 @@ public class CommonFileController {
                 }
                 map.put("type", "1");
                 map.put("size", size);
+                map.put("mimeType",document.getMimeType());
                 fileList.add(map);
             }
         }
@@ -217,9 +219,13 @@ public class CommonFileController {
 
             if (mimeType.matches("(avi|wmv|rmvb|rm|asx|mkv|asf|mpg|swf|3gp|mp4|mov|vob|flv)$")) {
                 //表明是视频文件，先进行文件存储
-
-                String originalPath = getVideoOriginalPath(fileName);
-                uploadFile.transferTo(new File(originalPath));
+                String originalPath = VideoRelatedActions.getVideoOriginalPath(fileName);
+                String convertedPath = VideoRelatedActions.getVideoConvertedPath(fileName);
+                if(mimeType.matches("(flv|mp4)$")){
+                    uploadFile.transferTo(new File(convertedPath));
+                }else{
+                    uploadFile.transferTo(new File(originalPath));
+                }
 
                 doc = new Document(filePath + fileName, user.getUserName(), null, uploadFile.getSize());
                 doc.setMimeType(mimeType);
@@ -228,8 +234,9 @@ public class CommonFileController {
 
                 fileService.addFile(doc);
 
-                executor.execute(new VideoConvertTask(doc.getUuid(), mimeType, originalPath,
-                        getVideoConvertedPath(fileName), getVideoImgPath(request,fileName)));
+                String webRoot = request.getServletContext().getRealPath("/");
+                executor.execute(new VideoConvertTask(doc.getUuid(), mimeType, originalPath,convertedPath,
+                        VideoRelatedActions.getVideoImgPath(webRoot, fileName)));
 
             } else {
                 in = uploadFile.getInputStream();
@@ -241,7 +248,6 @@ public class CommonFileController {
                 PreviewTask task = new PreviewTask(doc.getUuid(), converterService);
                 task.start();
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setSuccess(false);
@@ -251,29 +257,63 @@ public class CommonFileController {
         return result;
     }
 
+//    /**
+//     * 删除文件
+//     *
+//     * @param path
+//     * @param names
+//     * @return
+//     */
+//    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Result delete(@PathVariable String func, String path, String names) {
+//        FileFuncDef def = getFuncDefByName(func);
+//        String rootPath = initRoot(def.getRootDir(), def.isRootDirPersonal());
+//        Result r = new Result();
+//        if (StringUtils.isNotEmpty(names)) {
+//            String[] nameArray = names.split(",");
+//            try {
+//                for (String name : nameArray) {
+//                    String filePath = rootPath;
+//                    if (StringUtils.isEmpty(path))
+//                        filePath = filePath + "/" + name;
+//                    else
+//                        filePath = filePath + path + "/" + name;
+//                    folderService.deleteFolder(filePath);
+//                }
+//            } catch (Throwable t) {
+//                r.setSuccess(false);
+//                r.setMsg("删除失败！");
+//                t.printStackTrace();
+//            }
+//        }
+//        return r;
+//    }
+
     /**
      * 删除文件
-     *
-     * @param path
-     * @param names
+     * @param func
+     * @param ids
      * @return
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public Result delete(@PathVariable String func, String path, String names) {
+    public Result delete(@PathVariable String func, String ids) {
         FileFuncDef def = getFuncDefByName(func);
-        String rootPath = initRoot(def.getRootDir(), def.isRootDirPersonal());
+        //String rootPath = initRoot(def.getRootDir(), def.isRootDirPersonal());
         Result r = new Result();
-        if (StringUtils.isNotEmpty(names)) {
-            String[] nameArray = names.split(",");
+        if (StringUtils.isNotEmpty(ids)) {
+            String[] idsArray = ids.split(",");
             try {
-                for (String name : nameArray) {
-                    String filePath = rootPath;
-                    if (StringUtils.isEmpty(path))
-                        filePath = filePath + "/" + name;
-                    else
-                        filePath = filePath + path + "/" + name;
-                    folderService.deleteFolder(filePath);
+                for (String id : idsArray) {
+                    Object obj = folderService.getObjectByUUID(id);
+                    if(obj!=null){
+                        if (obj instanceof Document){
+                            Document doc = (Document)obj;
+                            VideoRelatedActions.deleteVideoFiles(doc);
+                        }
+                    }
+                    folderService.deleteFolderByUuid(id);
                 }
             } catch (Throwable t) {
                 r.setSuccess(false);

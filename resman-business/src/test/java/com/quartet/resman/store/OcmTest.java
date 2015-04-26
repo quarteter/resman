@@ -145,7 +145,7 @@ public class OcmTest {
 
     @Test
     public void testGetChildrenFolder(){
-        List<Entry> folders = folderService.getChildrenFolders("/jpk");
+        List<Folder> folders = folderService.getChildrenFolders("/jpk");
         Assert.assertTrue(folders.size()>0);
     }
 

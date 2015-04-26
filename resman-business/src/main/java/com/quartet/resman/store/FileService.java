@@ -62,7 +62,8 @@ public class FileService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<Document> queryFile(String parentPath, String nodeNameLike, String status, String visibility) {
+    public List<Document> queryFile(String parentPath, String nodeNameLike,
+                                    String status, String visibility) {
         QueryManager qm = mappingTemplate.createQueryManager();
         Filter filter = qm.createFilter(Document.class);
         if (StringUtils.isNotEmpty(parentPath)){

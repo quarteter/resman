@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import com.quartet.resman.converter.StreamProcessor;
 import com.quartet.resman.entity.ExecutionResult;
 import com.quartet.resman.service.Config;
 import com.quartet.resman.utils.cl.BinaryClassLoader;
@@ -213,7 +214,7 @@ public class ExecutionUtils {
 	}
 
 	public static ExecutionResult runCmd(String cmd,int timeOutMinutes) throws SecurityException, InterruptedException, IOException{
-		return runCmdImpl1(cmd.split(" "),TimeUnit.MINUTES.toMillis(timeOutMinutes));
+		return runCmdImpl1(cmd.split(" "), TimeUnit.MINUTES.toMillis(timeOutMinutes));
 	}
 	
 	/**
@@ -288,19 +289,10 @@ public class ExecutionUtils {
 			}
 		}, timeout);
 
-		InputStream stderr = process.getErrorStream();
-		InputStreamReader isr = new InputStreamReader(stderr);
-		BufferedReader br = new BufferedReader(isr);
-		String line = null;
-
-		while ( (line = br.readLine()) != null)
-			System.out.println(line);
-//		try {
-//			ret.setStdout(IOUtils.toString(process.getInputStream()));
-//			ret.setStderr(IOUtils.toString(process.getErrorStream()));
-//		} catch (IOException e) {
-//			// Ignore
-//		}
+		StreamProcessor esp = new StreamProcessor(process.getErrorStream(),false,"error");
+		StreamProcessor isp = new StreamProcessor(process.getInputStream(),false,"info");
+		esp.process();
+		isp.process();
 
 		process.waitFor();
 		t.cancel();

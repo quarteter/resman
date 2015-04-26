@@ -47,6 +47,9 @@ public class Config {
     @Value("${video.dir}")
     private String videoPath;
 
+    @Value("${video.server}")
+    private String videoServer;
+
     public String getFolderPersonal() {
         return folderPersonal;
     }
@@ -93,5 +96,9 @@ public class Config {
 
     public String getVideoPath(){
         return videoPath;
+    }
+
+    public String getVideoServer() {
+        return videoServer;
     }
 }

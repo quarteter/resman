@@ -1,5 +1,6 @@
 package com.quartet.resman.store;
 
+import com.quartet.resman.entity.Document;
 import com.quartet.resman.entity.Entry;
 import com.quartet.resman.entity.Folder;
 import org.apache.jackrabbit.ocm.exception.JcrMappingException;
@@ -62,6 +63,7 @@ public class FolderService {
                 @Override
                 public Object doInJcr(Session session) throws IOException, RepositoryException {
                     node.remove();
+                    session.save();
                     return null;
                 }
             });
@@ -109,7 +111,7 @@ public class FolderService {
         mappingTemplate.execute(new JcrCallback<Object>() {
             @Override
             public Object doInJcr(Session session) throws IOException, RepositoryException {
-                session.getWorkspace().copy(srcPath,destPath);
+                session.getWorkspace().copy(srcPath, destPath);
                 session.save();
                 return null;
             }
@@ -133,6 +135,16 @@ public class FolderService {
             @Override
             public Folder doInJcrMapping(ObjectContentManager manager) throws JcrMappingException {
                 return (Folder) manager.getObjectByUuid(uuid);
+            }
+        });
+    }
+
+    @Transactional(readOnly = true)
+    public Object getObjectByUUID(final String uid){
+        return mappingTemplate.execute(new JcrMappingCallback<Object>() {
+            @Override
+            public Object doInJcrMapping(ObjectContentManager manager) throws JcrMappingException {
+                return manager.getObjectByUuid(uid);
             }
         });
     }
@@ -177,16 +189,16 @@ public class FolderService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<Entry> getChildrenFolders(final String path){
+    public List<Folder> getChildrenFolders(final String path){
 
-        return mappingTemplate.execute(new JcrCallback<List<Entry>>() {
+        return mappingTemplate.execute(new JcrCallback<List<Folder>>() {
             @Override
-            public List<Entry> doInJcr(Session session) throws IOException, RepositoryException {
+            public List<Folder> doInJcr(Session session) throws IOException, RepositoryException {
                 String tempPath = path;
                 if(!path.startsWith("/")){
                     tempPath = "/"+path;
                 }
-                List<Entry> result = new ArrayList();
+                List<Folder> result = new ArrayList();
 
                 javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
                 String sql = "SELECT * FROM [rm:folder] AS f where ISCHILDNODE(f,'"+tempPath+"')";
@@ -195,8 +207,34 @@ public class FolderService {
                 for (NodeIterator it = nodeResult.getNodes(); it.hasNext(); ) {
                     Node n = it.nextNode();
                     Entry entry = NodeMapper.mapEntry(n);
-                    if (entry != null) {
-                        result.add(entry);
+                    if (entry != null && entry instanceof Folder) {
+                        result.add((Folder)entry);
+                    }
+                }
+                return result;
+            }
+        });
+    }
+
+    public List<Document> getChildrenFiles(final String path){
+        return mappingTemplate.execute(new JcrCallback<List<Document>>() {
+            @Override
+            public List<Document> doInJcr(Session session) throws IOException, RepositoryException {
+                String tempPath = path;
+                if(!path.startsWith("/")){
+                    tempPath = "/"+path;
+                }
+                List<Document> result = new ArrayList();
+
+                javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
+                String sql = "SELECT * FROM [rm:file] AS f where ISCHILDNODE(f,'"+tempPath+"')";
+                javax.jcr.query.Query query = qm.createQuery(sql, javax.jcr.query.Query.JCR_SQL2);
+                QueryResult nodeResult = query.execute();
+                for (NodeIterator it = nodeResult.getNodes(); it.hasNext(); ) {
+                    Node n = it.nextNode();
+                    Entry entry = NodeMapper.mapEntry(n);
+                    if (entry != null && entry instanceof Document) {
+                        result.add((Document)entry);
                     }
                 }
                 return result;

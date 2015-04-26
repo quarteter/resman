@@ -35,24 +35,26 @@ public class VideoConvertTask implements Runnable {
 
     @Override
     public void run() {
-        String command = getConvertCommand(srcType);
-        if (command == null) {
-            throw new RuntimeException("can not find commands to convert the video...");
-        }
+        extract(srcPath, imgPath);
         try {
+            if(srcType.matches("(flv|mp4)$")){
+                logger.info("不需要对视频({})进行转换",srcPath);
+            }else{
+                String command = getConvertCommand(srcType);
+                if (command == null) {
+                    throw new RuntimeException("can not find commands to convert the video...");
+                }
+                logger.debug("开始视频转换，源文件:{}", srcPath);
+                ExecutionUtils.runCmd(command, getConvertTimeOut());
+                logger.debug("视频文件转换结束，目标文件:{}", outPath);
+            }
 
-            extract(srcPath, imgPath);
-
-            logger.debug("开始视频转换，源文件:{}", srcPath);
-            ExecutionUtils.runCmd(command, getConvertTimeOut());
-            logger.debug("视频文件转换结束，目标文件:{}", outPath);
-
-//            FileService fileService = SysUtils.getBean("fileService", FileService.class);
-//            Document doc = fileService.getFileInfoByUUID(this.docUid);
-//            doc.setImgPath(imgPath);
-//            doc.setStoredPath(getPlayPath());
-//            doc.setConverted(true);
-//            fileService.updateFile(doc);
+            FileService fileService = SysUtils.getBean("fileService", FileService.class);
+            Document doc = fileService.getFileInfoByUUID(this.docUid);
+            doc.setImgPath(VideoRelatedActions.extractImgPath(imgPath));
+            doc.setStoredPath(getPlayPath());
+            doc.setConverted(true);
+            fileService.updateFile(doc);
 
         } catch (Exception e) {
             logger.error("视频文件转换出错，源文件:{}", srcPath);
