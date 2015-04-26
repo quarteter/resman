@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -75,15 +78,12 @@ $(document).ready(function(){
  <div class="main_content">
   <div class="content_left">
     <div class="notice">
-     <h1><span><a href="#">更多>></a></span>通知公告</h1>
-    <ul>
-     <li><a href="#">微课程大智慧——我校组织"微课基 </a></li>
-     <li><a href="#">名师、传承人进课堂，助力黔西南中职 </a></li>
-     <li><a href="#">服装专业召开"旗袍传习馆建设研讨会</a></li>
-     <li><a href="#">我校财经商贸 "京西杯"技能大赛</a></li>
-     <li><a href="#">微课程大智慧——我校组织"微课基础</a></li>
-     <li><a href="#">微课程大智慧——我校组织"微课基 </a></li>
-      </ul>
+     <h1><span><a href="./notices">更多>></a></span>通知公告</h1>
+         <ul>
+             <c:forEach items="${notices_list}" var="n">
+                 <a href="notices/${n.id}">${n.title} </a>
+             </c:forEach>
+          </ul>
     </div>
   <div class="login">
   <h1> <a href="#"><img src="/asset/images/login_01.jpg" width="240" height="137" /></a></h1>
@@ -123,34 +123,25 @@ $(function () {
   	<ul class="menu">
 		<li class="active" style="margin:0;"><a href="javascript:void(0)">知识堂</a></li>
 		<li><a href="javascript:void(0)">问答</a></li>
-		<li><a href="javascript:void(0)">交流</a></li>
+<!--		<li><a href="javascript:void(0)">交流</a></li> -->
    	  </ul>
   	<div class="con1">
-    
-        <ul>
-     <li><a href="#">微课程大智慧——我校组织"微课基 </a></li>
-     <li><a href="#">名师、传承人进课堂，助力黔西南召开"旗袍传中职 </a></li>
-     <li><a href="#">服装专业召开"旗袍传习馆建设研讨会</a></li>
-     <li><a href="#">我校财经商贸 "京西杯"技能大赛</a></li>
-     <li><a href="#">微课程大智慧——我校组织"微课基础</a></li>
-     <li><a href="#">微课程大智慧——我校组织"微课基 </a></li>
-      </ul>
-
-    
+    <!--知识堂-->
+     <ul>
+      <c:forEach items="${knowledge_list}" var="n" >
+                    <li> <a href="news/${n.id}">${n.title}</a></li>
+      </c:forEach>
+    </ul>
     </div>
       	<div class="con2">
-    
-        <ul>
-     <li><a href="#">名师、传承人进课——我校组织"微课基 </a></li>
-     <li><a href="#">堂微课程大智慧名师、传承人进课堂，助力黔西南中职 </a></li>
-     <li><a href="#">服装专业习馆建设研讨会</a></li>
-     <li><a href="#">我校财经商贸 "京西杯"技能大赛</a></li>
-     <li><a href="#">微课程大智慧——我校组织"微课基础</a></li>
-     <li><a href="#">微课程大智慧——我校组织"微课基 </a></li>
+       <ul>
+           <c:forEach items="${question_list}" var="n" >
+               <li> <a href="news/${n.id}">${n.title}</a></li>
+           </c:forEach>
       </ul>
-
-    
     </div>
+
+      <!--
   	<div class="con3">
     
         <ul>
@@ -164,6 +155,8 @@ $(function () {
 
     
     </div>
+    -->
+
 <h2><img src="/asset/images/pic04.jpg" width="214" height="123" /></h2>
  
   </div>
@@ -195,35 +188,36 @@ $(function () {
   <div class="new_data">
    <div class="new ">
     <h3><ul id="tit">
-  <li class="title_show"  id="mod1" onmouseover="switchmodTag('mod','slidingList','1');this.blur();"> 按学科分类 </li><li  id="mod2" onmouseover="switchmodTag('mod','slidingList','2');this.blur();">  按系列分类</li>
-<li class="float" style="background:none;"><span><a href="javascript:void(0)">更多>></a></span></li>
+  <li class="title_show"  id="mod1" onmouseover="$('#listmoretag').attr('href','./news/'); switchmodTag('mod','slidingList','1');this.blur();">新闻动态</li>
+  <li  id="mod2" onmouseover="$('#listmoretag').attr('href','./news/'); switchmodTag('mod','slidingList','2');this.blur();">研究展示</li>
+<li class="float" style="background:none;"><span><a id="listmoretag" href="./news/">更多>></a></span></li>
     </ul> 
       </h3>
-    <ul  id="slidingList1">
-    <h1><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术</a></h1>
- <li><span>[2015-01-28]</span> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></li>
- <li><span>[2015-01-28]</span> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></li>
- <li><span>[2015-01-28]</span> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></li>
- <li><span>[2015-01-28]</span> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></li>
-  <li><span>[2015-01-28]</span> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></li>
-
- <li><span>[2015-01-28]</span> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></li>
-
-   </ul>
+    <!--新闻列表-->
+        <ul  id="slidingList1">
+            <c:if test="${fn:length(news_list)>0}">
+                <h1><a href="./news/${news_list[0].id} ">${news_list[0].title}</a></h1>
+            </c:if>
+            <c:if test="${fn:length(news_list)>1}">
+                <c:forEach items="${news_list}" var="n" begin="1">
+                     <li><span>[<fmt:formatDate value="${n.crtdate}" pattern="yyyy-MM-dd"/>  ]</span> <a href="news/${n.id}">${n.title}</a></li>
+                </c:forEach>
+            </c:if>
+      </ul>
+       <!--研究成果-->
 <ul class="slidingList_none" id="slidingList2" >
-    <h1><a href="#">黄庄职高党员干部参观"教育领域警示教育展览"</a></h1>
-
- <li><span>[2015-01-28]</span> <a href="#">黄庄职高党员干部参观"教育领域警示教育展览"</a></li>
- <li><span>[2015-01-28]</span> <a href="#">黄庄职高党员干部参观"教育领域警示教育展览"</a></li>
- <li><span>[2015-01-28]</span> <a href="#">黄庄职高党员干部参观"教育领域警示教育展览"</a></li>
- <li><span>[2015-01-28]</span> <a href="#">黄庄职高党员干部参观"教育领域警示教育展览"</a></li>
- <li><span>[2015-01-28]</span> <a href="#">黄庄职高党员干部参观"教育领域警示教育展览"</a></li>
- <li><span>[2015-01-28]</span> <a href="#">黄庄职高党员干部参观"教育领域警示教育展览"</a></li>
+    <c:if test="${fn:length(achievement_list)>0}">
+        <h1><a href="./news/${achievement_list[0].id} ">${achievement_list[0].title}</a></h1>
+    </c:if>
+    <c:if test="${fn:length(achievement_list)>1}">
+        <c:forEach items="${achievement_list}" var="n" begin="1">
+            <li><span>[<fmt:formatDate value="${n.crtdate}" pattern="yyyy-MM-dd"/>  ]</span> <a href="news/${n.id}">${n.title}</a></li>
+        </c:forEach>
+    </c:if>
 
  </ul>
 
-   
-   
+
    </div>
   <div class="data">
     <h1>资料库</h1>
@@ -240,11 +234,15 @@ $(function () {
    
   </ul> 
   <div style="clear:both"></div>
-  <dl>           
-      <dt>【攻略】</dt>  <dd><a href="#">海量的学习资源等你下载
- 资源</a></dd>       
-      <dt>【攻略】</dt>  <dd>  
-        <a href="#">如何使用平台添加资源</a></dd>       
+  <dl>
+
+      <c:if test="${fn:length(strategy_list)>0}">
+          <c:forEach items="${strategy_list}" var="n">
+              <dt>【攻略】</dt> <dd>  <a href="news/${n.id}">${n.title}</a></dd>
+          </c:forEach>
+      </c:if>
+
+
    </dl>
    <h2><img src="/asset/images/pic03.jpg" width="218" height="90" /></h2>
    </div>
@@ -463,7 +461,7 @@ $(function(){
  <li class="tit_show" style="margin-left:25px;">技能大赛 </li>
  <li>师生作品 </li>
  <li>师资团队 </li>
- <span class="float" style="background:none;"><a href="javascript:void(0)">更多>></a></span>
+ <span class="float" style="background:none;"><a href="./news">更多>></a></span>
                       
 	 </ul>                                                               
  <div style="clear:both"></div>
@@ -476,38 +474,23 @@ $(function(){
   <h2><img src="/asset/images/pic01.jpg" width="280" height="139" /></h2>
   <div style="clear:both"></div>
   <dl>
-  <dd>  <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-  <dd>  <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-    <dd> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-
-  <dd> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-  <dd> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
+      <!--skill-->
+      <c:forEach items="${sikll_list}" var="n">
+          <dd>  <a href="news/${n.id}">${n.title}</a></dd>
+     </c:forEach>
   </dl>
   
     </div>
  <div class="bout_right">
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
- 
- 
+     <!--skill-->
+     <c:if test="${fn:length(sikll_hot)>0}">
+         <c:forEach items="${sikll_hot}" var="n">
+              <dl>
+             <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" alt="${n.title}"/></a></dt>
+             <dd><a href="news/${n.id}">【热门】${n.title}</a></dd>
+            </dl>
+         </c:forEach>
+     </c:if>
  </div>
   </div></p>
   </li>
@@ -516,37 +499,27 @@ $(function(){
  <div  class="bout_left">
   <h2><img src="/asset/images/pic01.jpg" width="280" height="139" /></h2>
   <dl>
-  <dd>  <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-  <dd>  <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-  <dd> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-  <dd> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-    <dd> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-
+      <!--stworks_list-->
+    <c:if test="${fn:length(stworks_list)>0}">
+      <c:forEach items="${stworks_list}" var="n">
+          <dd>  <a href="news/${n.id}">${n.title}</a></dd>
+      </c:forEach>
+    </c:if>
   </dl>
   
     </div>
  <div class="bout_right">
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】 </a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
- 
+
+     <c:if test="${fn:length(stworks_hot)>0}">
+         <c:forEach items="${stworks_hot}" var="n">
+             <dl>
+                 <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165" height="105" alt="${n.title}"/></a></dt>
+                 <dd><a href="news/${n.id}">【热门】${n.title}</a></dd>
+             </dl>
+         </c:forEach>
+     </c:if>
+
+
  
  </div>
   </div></p>
@@ -556,37 +529,29 @@ $(function(){
  <div  class="bout_left">
   <h2><img src="/asset/images/pic01.jpg" width="280" height="139" /></h2>
   <dl>
-  <dd>  <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-  <dd>  <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-  <dd> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-  <dd> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-  <dd> <a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
+      <dl>
+          <!--teachergroup_list-->
+    <c:if test="${fn:length(teachergroup_list)>0}">
+          <c:forEach items="${teachergroup_list}" var="n">
+              <dd>  <a href="news/${n.id}">${n.title}</a></dd>
+          </c:forEach>
+    </c:if>
+      </dl>
   </dl>
   
     </div>
  <div class="bout_right">
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
- 
- 
+     <!--teachergroup_list-->
+     <c:if test="${fn:length(teachergroup_hot)>0}">
+         <c:forEach items="${teachergroup_hot}" var="n">
+             <dl>
+             <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
+             <dd><a href="news/${n.id}">【热门】${n.title}</a></dd>
+             </dl>
+         </c:forEach>
+     </c:if>
+
+
  </div>
   </div></p>
   </li>

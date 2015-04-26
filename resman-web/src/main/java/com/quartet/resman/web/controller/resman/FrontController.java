@@ -46,7 +46,7 @@ public class FrontController {
 
     @RequestMapping(value = "index")
     public String index() {
-        return "front/index";
+        return "forward:./home";
     }
 
     @RequestMapping(value = "works")
