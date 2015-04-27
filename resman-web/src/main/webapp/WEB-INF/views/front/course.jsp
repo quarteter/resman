@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -102,21 +103,20 @@
     <div class="content_right">
         <div class="position">
             <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
-            <div class="position_nav"> 您现在的位置 : 首页 / 精品课程 / <c:if test="${parentName!=null}">${parentName} / </c:if>列表</div>
+            <div class="position_nav"> 您现在的位置 : 首页 / 精品课程 / <c:if test="${parentName!=null}">${parentName} / </c:if>列表
+            </div>
         </div>
-
         <div class="news_list works_con">
-
-            <c:forEach begin="${start}" end="${end}" varStatus="st">
+            <c:forEach begin="${beginIdx}" end="${endIdx}" varStatus="st">
                 <dl>
                     <dt>
                     <dt><img src="${ctx}${files[st.current].imgPath}" width="200" height="132"/></dt>
                     <dd class="news_first_title">
                         <a href="${ctx}/front/course/play?id=${files[st.current].uuid}">
                             <c:set value="${files[st.current].name}" var="name"></c:set>
-                            <c:set value="${name.lastIndexOf('.')}" var="idx"></c:set>
+                            <c:set value="${name.indexOf('.')}" var="idx"></c:set>
                             <c:set value="${name.substring(0,idx)}" var="n"></c:set>
-                        <<${n}>>
+                            <<${n}>>
                         </a>
                     </dd>
                     <dd>
@@ -153,6 +153,7 @@
                 </c:otherwise>
             </c:choose>
             <c:set var="start" value="${(curRange-1)*5+1}"></c:set>
+
             <c:choose>
                 <c:when test="${curRange*5 >= totalPage}">
                     <c:set var="end" value="${totalPage}"/>
@@ -162,12 +163,13 @@
                 </c:otherwise>
             </c:choose>
             <c:forEach begin="${start}" end="${end}" varStatus="st">
-                <a href="${ctx}/front/course/?page=${st.current-1}" <c:if test="${st.current-1 == curPage}">class="curr" </c:if> >${st.current}</a>
+                <a href="${ctx}/front/course/list?page=${st.current-1}<c:if test="${parent!=null}">&parent=${parent}</c:if>"
+                   <c:if test="${st.current-1 == curPage}">class="curr" </c:if> >${st.current}</a>
             </c:forEach>
 
             <c:choose>
                 <c:when test="${curPage+1 < totalPage}">
-                    <a href="${ctx}/front/course?page=${curPage+1}">下一页</a>
+                    <a href="${ctx}/front/course/list?page=${curPage+1}">下一页</a>
                 </c:when>
                 <c:otherwise>
                     <a href="#">下一页</a>
