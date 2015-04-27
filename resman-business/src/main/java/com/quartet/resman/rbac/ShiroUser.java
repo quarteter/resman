@@ -12,7 +12,7 @@ public class ShiroUser implements Serializable{
     private Long id;
     private Long roleId;
     private String userName;
-
+    private String roleName;
     public ShiroUser(Long id,String userName) {
         this.userName = userName;
         this.id = id;
@@ -46,6 +46,14 @@ public class ShiroUser implements Serializable{
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }
 

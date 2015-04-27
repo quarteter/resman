@@ -10,9 +10,11 @@
 <title>北京市黄庄职业高中：：动漫与游戏专业</title>
 <link href="/asset/css/css.css" rel="stylesheet" type="text/css" />
 
-<script src="/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
-<script src="/asset/js/jquery.carouFredSel-6.0.4-packed.js" type="text/javascript"></script>
-<script src="/asset/js/topanv.js" type="text/javascript" ></script>
+<script src="${ctx}/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script src="${ctx}/asset/js/jquery.carouFredSel-6.0.4-packed.js" type="text/javascript"></script>
+<script src="${ctx}/asset/js/topanv.js" type="text/javascript" ></script>
+<script src="${ctx}/asset/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="${ctx}/asset/js/plugins/validate/messages_zh.min.js"></script>
 <script language="JavaScript" type="text/javascript"> 
 function ChangeDiv(divId,divName,zDivCount,obj) 
 { 
@@ -88,12 +90,12 @@ $(document).ready(function(){
   <div class="login">
   <h1> <a href="#"><img src="/asset/images/login_01.jpg" width="240" height="137" /></a></h1>
    <ul>
-    <li><a href="#" class="a1">个人中心</a></li>
+    <li><a href="javascript:void(0)" onclick="LoginIn(true);" class="a1">个人中心</a></li>
     <li><a href="#" class="a2">我的资源</a></li>
     <li><a href="#" class="a3">个人资料</a></li>
     <li><a href="#" class="a4">我的课程</a></li>
     <li><a href="#" class="a5">作业管理</a></li>
-    <li><a href="#" class="a6">退出登录</a></li>
+    <li><a href="javascript:void(0)" onclick="LoginOut();"  class="a6">退出登录</a></li>
         
         
 <!--            <li><a href="#"><img src="images/ioc_1.png"   onmouseover="this.src='images/ioc_1hover.png'" onmouseout="this.src='images/ioc_1.png'"/>个人中心</a></li>
@@ -189,7 +191,7 @@ $(function () {
    <div class="new ">
     <h3><ul id="tit">
   <li class="title_show"  id="mod1" onmouseover="$('#listmoretag').attr('href','./news/'); switchmodTag('mod','slidingList','1');this.blur();">新闻动态</li>
-  <li  id="mod2" onmouseover="$('#listmoretag').attr('href','./news/'); switchmodTag('mod','slidingList','2');this.blur();">研究展示</li>
+  <li  id="mod2" onmouseover="$('#listmoretag').attr('href','./news/'); switchmodTag('mod','slidingList','2');this.blur();">成果展示</li>
 <li class="float" style="background:none;"><span><a id="listmoretag" href="./news/">更多>></a></span></li>
     </ul> 
       </h3>
@@ -461,7 +463,7 @@ $(function(){
  <li class="tit_show" style="margin-left:25px;">技能大赛 </li>
  <li>师生作品 </li>
  <li>师资团队 </li>
- <span class="float" style="background:none;"><a href="./news">更多>></a></span>
+ <span class="float" style="background:none;"><a id="skill_more_link" href="./news">更多>></a></span>
                       
 	 </ul>                                                               
  <div style="clear:both"></div>
@@ -471,7 +473,7 @@ $(function(){
 <li ><p>
  <div class="slid">
  <div  class="bout_left">
-  <h2><img src="/asset/images/pic01.jpg" width="280" height="139" /></h2>
+  <h2><a href="news/${skill_banner.id}" alt="${skill_banner.title}"><img src="${skill_banner.imgPath}" width="280" height="139" /></a></h2>
   <div style="clear:both"></div>
   <dl>
       <!--skill-->
@@ -486,7 +488,7 @@ $(function(){
      <c:if test="${fn:length(sikll_hot)>0}">
          <c:forEach items="${sikll_hot}" var="n">
               <dl>
-             <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" alt="${n.title}"/></a></dt>
+             <dt><a href="news/${n.id}" class="avatar"><img src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
              <dd><a href="news/${n.id}">【热门】${n.title}</a></dd>
             </dl>
          </c:forEach>
@@ -497,7 +499,7 @@ $(function(){
 <li  ><p>
 <div class="slid">
  <div  class="bout_left">
-  <h2><img src="/asset/images/pic01.jpg" width="280" height="139" /></h2>
+  <h2><a href="news/${stworks_banner.id}"  alt="${skill_banner.title}" > <img src="${stworks_banner.imgPath}" width="280" height="139" /></a></h2>
   <dl>
       <!--stworks_list-->
     <c:if test="${fn:length(stworks_list)>0}">
@@ -513,7 +515,7 @@ $(function(){
      <c:if test="${fn:length(stworks_hot)>0}">
          <c:forEach items="${stworks_hot}" var="n">
              <dl>
-                 <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165" height="105" alt="${n.title}"/></a></dt>
+                 <dt><a href="news/${n.id}" class="avatar"><img src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
                  <dd><a href="news/${n.id}">【热门】${n.title}</a></dd>
              </dl>
          </c:forEach>
@@ -527,7 +529,7 @@ $(function(){
 <li><p>
 <div class="slid">
  <div  class="bout_left">
-  <h2><img src="/asset/images/pic01.jpg" width="280" height="139" /></h2>
+  <h2><a href="news/${teachergroup_banner.id}"  alt="${teachergroup_banner.title}"><img src="${teachergroup_banner.imgPath}" width="280" height="139"  alt="${skill_banner.title}"/></a></h2>
   <dl>
       <dl>
           <!--teachergroup_list-->
@@ -541,11 +543,11 @@ $(function(){
   
     </div>
  <div class="bout_right">
-     <!--teachergroup_list-->
+     <!--teachergroup_hotlist-->
      <c:if test="${fn:length(teachergroup_hot)>0}">
          <c:forEach items="${teachergroup_hot}" var="n">
              <dl>
-             <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
+             <dt><a href="news/${n.id}" class="avatar"><img src="${n.imgPath}" width="165" height="105" /></a></dt>
              <dd><a href="news/${n.id}">【热门】${n.title}</a></dd>
              </dl>
          </c:forEach>
@@ -562,6 +564,18 @@ $(function(){
   </div>
   <script>
 $(function(){
+    /**
+      x chage more link url
+     */
+    function changeMoreLink( idx )
+    {
+        var surl = './news/';
+        if( idx == 0 ) surl = './news/';
+        else if( idx == 1 ) surl = './news/';
+        else  surl = './news/';
+        $('#skill_more_link').attr('href', surl);
+    }
+
 	$('.zzsc1 .content1 ul').width(720*$('.zzsc1 .content1 li').length+'px');
 	$(".zzsc1 .tab2 li").mouseover(function(){
 		$(this).addClass('tit_show').siblings().removeClass('tit_show');
@@ -571,6 +585,7 @@ $(function(){
 		$('.zzsc1 .content1 ul').stop().animate({
 			left:distance
 		});
+        changeMoreLink(index);
 	});
 	
 	var auto = 1;  //等于1则自动切换，其他任意数字则不自动切换
@@ -585,7 +600,9 @@ $(function(){
 			$('.zzsc1 .content1 ul').stop().animate({
 				left:distance
 			});
-		}
+
+            changeMoreLink(index);
+  		}
 		var tabChange = setInterval(autotab,3000);
 		//鼠标悬停暂停切换
 		$('.zzsc1').mouseover(function(){
@@ -594,8 +611,133 @@ $(function(){
 		$('.zzsc1').mouseout(function(){
 			tabChange = setInterval(autotab,3000);
 		});
-	  }  
+	  }
+
 });
+    //sync post
+    function syncPost( url , data , onSuccess )
+    {
+        $.ajax({
+            type : "post",
+            url : url,
+            data :data,
+            async : false,
+            success : function(data){
+                // data = eval("(" + data + ")");
+                if( onSuccess != null && onSuccess != undefined )
+                {
+                    onSuccess( data );
+                }
+            }
+        });
+    }
+
+
+    /**
+    *登录动作
+     */
+      function LoginIn( bLogAction )
+      {
+          var userInfo = null;
+          var user = $("#user").val();
+          var pass = $("#pass").val();
+          syncPost("${ctx}/login",{username:user,password:pass} );
+          syncPost("${ctx}/front/getUserInfo",null,
+                  function( data )
+                  {
+                      userInfo = data;
+                  }
+          );
+
+          showLoginPage( userInfo );
+
+          //未登录或者登录失败,并且点击登录按钮
+          if( userInfo == null &&  bLogAction == true )
+          {
+                alert('登陆失败,用户名或密码不正确!');
+          }
+      }
+
+        /**
+         * 签出
+         */
+      function LoginOut()
+      {
+         syncPost("${ctx}/logout" );
+         showLogoutPage();
+      }
+
+        /**
+        *主页左侧显示未登录DIV
+         */
+      function showLogoutPage()
+      {
+
+      }
+
+        /*
+        *主页左侧登录页面切换
+        * */
+      function showLoginPage(userInfo )
+      {
+          //未登录，显示登录框
+         if( userInfo == null )
+         {
+
+         }
+         //管理员
+         else if( userInfo.roleId == 4 )
+         {
+
+         }
+         //学生
+         else if( userInfo.roleId == 6 )
+         {
+
+         }
+         else
+         {
+             alert( '用户权限分配错误或未分配权限');
+         }
+    }
+
+    function bindLoginAction() {
+        $("#btnLogin").on("click", function () {
+            if ($("#LoginForm").valid()) {
+                    LoginIn( true );
+            }
+        });
+    }
+
+    function bindLogoutAction() {
+        $("#btnLogout").on("click", function () {
+            LoginOut();
+        });
+    }
+
+    function addValidator() {
+           $("#LoginForm").validate({
+                rules: {
+                    "user": {
+                        required: true,
+                        minlength: 4,
+                        maxlength: 40
+                    },
+                    "pass": {
+                        required: true,
+                        minlength: 4,
+                        maxlength: 40
+                    }
+                }
+            });
+}
+
+    $(document).ready(function(){
+/*     addValidator();
+        LoginIn( false );
+        bindLoginAction();
+        bindLogoutAction();*/
+    });
 </script>
 
     

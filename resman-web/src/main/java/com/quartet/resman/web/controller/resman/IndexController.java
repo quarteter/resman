@@ -3,10 +3,13 @@ package com.quartet.resman.web.controller.resman;
 import com.quartet.resman.entity.Info;
 import com.quartet.resman.entity.Notice;
 import com.quartet.resman.entity.Question;
+import com.quartet.resman.entity.Result;
+import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.repository.NoticeDao;
 import com.quartet.resman.repository.QuestionDao;
 import com.quartet.resman.service.InfoService;
 import com.quartet.resman.service.QuestionService;
+import com.quartet.resman.service.UserService;
 import com.quartet.resman.utils.Constants;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +45,9 @@ public class IndexController {
 
     @Autowired
     private NoticeDao noticeDao;
+
+    @Autowired
+    private UserService userService;
 
 
     //通知
@@ -79,6 +86,15 @@ public class IndexController {
         init(model);
         return "front/index";
     }
+
+    @RequestMapping(value = "getUserInfo" , method = RequestMethod.POST )
+    public ShiroUser getUserInfo ( ) {
+        ShiroUser usr = userService.getCurrentUser();
+        return usr;
+    }
+
+
+
     private void init(Model model)
     {
         getNotice(model);

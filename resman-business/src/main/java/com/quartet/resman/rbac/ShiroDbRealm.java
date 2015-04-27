@@ -1,5 +1,6 @@
 package com.quartet.resman.rbac;
 
+import com.quartet.resman.entity.Role;
 import com.quartet.resman.entity.SysUser;
 import com.quartet.resman.service.UserService;
 import org.apache.shiro.authc.*;
@@ -12,6 +13,7 @@ import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author lcheng
@@ -42,6 +44,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
         SysUser sysUser = userService.getSysUser(sysName);
         if (sysUser != null) {
             ShiroUser shiroUser = new ShiroUser(sysUser.getId(), sysUser.getSysName());
+            Role role = getFirstRole( sysUser.getRoles() );
+            if( role != null )
+            {
+                shiroUser.setRoleName( role.getName() );
+                shiroUser.setRoleId( role.getId() );
+            }
             SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(shiroUser, sysUser.getPassWd(),
                     ByteSource.Util.bytes(sysUser.getSalt()), getName());
             return info;
@@ -61,5 +69,13 @@ public class ShiroDbRealm extends AuthorizingRealm {
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+
+    private Role getFirstRole( Set<Role> roles )
+    {
+        if( roles == null || roles.size() == 0 )
+            return null;
+        return roles.iterator().next();
     }
 }

@@ -35,11 +35,17 @@ CREATE TABLE `s_codes` (
 -- ----------------------------
 -- Records of s_codes
 -- ----------------------------
-INSERT INTO `s_codes` VALUES ('1', 'info', 'news', '新闻', '1');
-INSERT INTO `s_codes` VALUES ('2', 'info', 'knowledge', '知识堂', '2');
-INSERT INTO `s_codes` VALUES ('3', 'info', 'skillContest', '技能大赛', '3');
-INSERT INTO `s_codes` VALUES ('4', 'info', 'teacherGroup', '师资队伍', '4');
-
+insert into s_codes (id,category,code,name,seqNo) VALUES(1,"info","news","新闻",1);
+insert into s_codes (id,category,code,name,seqNo) VALUES(2,"info","knowledge","知识堂",2);
+insert into s_codes (id,category,code,name,seqNo) VALUES(3,"info","skillContest","技能大赛",3);
+insert into s_codes (id,category,code,name,seqNo) VALUES(4,"info","teacherGroup","师资队伍",4);
+insert into s_codes (id,category,code,name,seqNo) VALUES(5,"info","sworks","学生作品",5);
+insert into s_codes (id,category,code,name,seqNo) VALUES(6,"info","tworks","老师作品",6);
+insert into s_codes (id,category,code,name,seqNo) VALUES(7,"info","contest_works","大赛作品",7);
+insert into s_codes (id,category,code,name,seqNo) VALUES(8,"info","major","专业介绍",8);
+insert into s_codes (id,category,code,name,seqNo) VALUES(9,"info","contact","联系我们",9);
+insert into s_codes (id,category,code,name,seqNo) VALUES(10,"info","strategy","攻略展示",10);
+insert into s_codes (id,category,code,name,seqNo) VALUES(11,"info","achievement","成果展示",11);
 -- ----------------------------
 -- Table structure for s_funcs
 -- ----------------------------
@@ -147,7 +153,7 @@ CREATE TABLE `s_roles` (
 -- ----------------------------
 INSERT INTO `s_roles` VALUES ('4', '系统管理员', null, 'admin');
 INSERT INTO `s_roles` VALUES ('5', '研发部经理', null, 'manager');
-
+INSERT INTO `s_roles` VALUES ('6', '学生', null, 'student');
 -- ----------------------------
 -- Table structure for s_role_func
 -- ----------------------------
