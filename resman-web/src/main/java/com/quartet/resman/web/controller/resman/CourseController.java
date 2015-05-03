@@ -7,10 +7,11 @@ import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.repository.CategoryDao;
 import com.quartet.resman.repository.CourseDao;
 import com.quartet.resman.repository.CourseStudentDao;
-import com.quartet.resman.repository.NoticeDao;
+import com.quartet.resman.service.CourseService;
 import com.quartet.resman.service.UserService;
 import com.quartet.resman.store.FileService;
 import com.quartet.resman.store.FolderService;
+import com.quartet.resman.utils.Constants;
 import com.quartet.resman.utils.FileUtils;
 import com.quartet.resman.utils.Types;
 import org.apache.commons.io.IOUtils;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.io.InputStream;
 import java.util.*;
 
@@ -53,6 +55,9 @@ public class CourseController {
 
     @Resource
     private FolderService folderService;
+
+    @Resource
+    private CourseService courseService;
 
     @RequestMapping("list")
     public String list(String pid, Model model) {
@@ -103,6 +108,37 @@ public class CourseController {
         } else {
             return "resman/job-add";
         }
+    }
+
+    @RequestMapping(value = "addDocCourse",method = RequestMethod.GET)
+    public String addDocCourse(){
+        return "resman/docCourse-add";
+    }
+
+    @RequestMapping(value = "addDocCourse",method = RequestMethod.POST)
+    @ResponseBody
+    public Result addDocCourse(@Valid DocCourse course){
+        String path = Constants.REP_JPK+"/"+course.getName();
+        ShiroUser user = userService.getCurrentUser();
+        Folder folder = new Folder(path,user.getUserName(),Types.Folders.ClassicCourse.getValue());
+        if (course!=null && StringUtils.isNotEmpty(course.getDocUid())){
+            folder.setUuid(course.getDocUid());
+        }
+        Result result;
+        try{
+            courseService.addOrUpdateDocCourse(folder, course);
+            result = new Result(true,"");
+        } catch(Exception e){
+            result = new Result(false,"");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "editDocCourse",method = RequestMethod.GET)
+    public String editDocCourse(String uid,Model model){
+        DocCourse course = courseService.getDocCourseByUid(uid);
+        model.addAttribute("course",course);
+        return "resman/docCourse-edit";
     }
 
     @RequestMapping("edit/{id}")

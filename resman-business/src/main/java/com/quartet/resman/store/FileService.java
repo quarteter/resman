@@ -1,6 +1,7 @@
 package com.quartet.resman.store;
 
 import com.quartet.resman.entity.Document;
+import com.quartet.resman.entity.Folder;
 import com.quartet.resman.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.JcrConstants;
@@ -203,5 +204,17 @@ public class FileService {
                 return allSize;
             }
         });
+    }
+
+    public String getParentUid(final String uid){
+        String parentUid = mappingTemplate.execute(new JcrCallback<String>() {
+            @Override
+            public String doInJcr(Session session) throws IOException, RepositoryException {
+                Node node = session.getNodeByIdentifier(uid);
+                Node parent = node.getParent();
+                return parent.getIdentifier();
+            }
+        });
+        return parentUid;
     }
 }

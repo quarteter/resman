@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -19,7 +20,7 @@
     <script src="${ctx}/asset/js/jquery.quicksearch.js"></script>
     <script src="${ctx}/asset/js/jNotify.jquery.min.js"></script>
     <script src="${ctx}/asset/js/plugins/validate/jquery.validate.min.js"></script>
-    <script src="${ctx}/asset/js/plugins/uploadify/jquery.uploadify.min.js"></script>
+    <script src="${ctx}/asset/js/plugins/uploadify/jquery.uploadify.js"></script>
     <script src="${ctx}/asset/js/plugins/zTree/jquery.ztree.all-3.5.min.js"></script>
     <script src="${ctx}/asset/js/plugins/cookie/jquery.cookie.js"></script>
     <script src="${ctx}/asset/js/common.js"></script>
@@ -56,6 +57,19 @@
             $.fm.createFileTable();
             $.fm.createUploadMenu();
         });
+        $(function(){
+            if(window.fmConf.func=='classic'){
+                $.fm.createUploadMenu('#btnCourseUpload','btn btn-primary','上传课件');
+                if(window.fmConf.filePath==''){
+                    setTimeout(function(){
+                        $("#btnCourseUpload").uploadify('disable',true);
+                    },1000);
+                }else{
+                    $("#btnCourse li").addClass("disabled");
+                    $("#btnCourse li a").removeAttr("onclick");
+                }
+            }
+        });
     </script>
 
 </head>
@@ -88,6 +102,23 @@
             <c:choose>
                 <c:when test="${menu.id=='btnUpload'}">
                     <div id="${menu.id}"></div>
+                </c:when>
+                <c:when test="${menu.type!=null && menu.type=='dropdown'}">
+                    <c:if test="${fn:length(menu.children)>0}">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="${menu.iconCls}"></span>&nbsp;${menu.name}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" id="${menu.id}">
+                            <c:forEach items="${menu.children}" var="child">
+                                <li id="${child.id}"><a href="javascript:void(0)" onclick="$.fm.${child.action}()">
+                                    <span class="${child.iconCls}"></span>&nbsp;${child.name}</a></li>
+                            </c:forEach>
+                            </ul>
+                        </div>
+
+                    </c:if>
                 </c:when>
                 <c:otherwise>
                     <button id="${menu.id}" type="button" onclick="$.fm.${menu.action}()"

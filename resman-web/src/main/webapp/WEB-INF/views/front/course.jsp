@@ -107,27 +107,28 @@
             </div>
         </div>
         <div class="news_list works_con">
-            <c:forEach begin="${beginIdx}" end="${endIdx}" varStatus="st">
-                <dl>
-                    <dt>
-                    <dt><img src="${ctx}${files[st.current].imgPath}" width="200" height="132"/></dt>
-                    <dd class="news_first_title">
-                        <a href="${ctx}/front/course/play?id=${files[st.current].uuid}">
-                            <c:set value="${files[st.current].name}" var="name"></c:set>
-                            <c:set value="${name.indexOf('.')}" var="idx"></c:set>
-                            <c:set value="${name.substring(0,idx)}" var="n"></c:set>
-                            <<${n}>>
-                        </a>
-                    </dd>
-                    <dd>
+            <c:if test="${endIdx > 0}">
+                <c:forEach begin="${beginIdx}" end="${endIdx}" varStatus="st">
+                    <dl>
+                        <dt>
+                        <dt><img src="${ctx}${files[st.current].imgPath}" width="200" height="132"/></dt>
+                        <dd class="news_first_title">
+                            <a href="${ctx}/front/course/play?uid=${files[st.current].uuid}">
+                                <c:set value="${files[st.current].name}" var="name"></c:set>
+                                <c:set value="${name.indexOf('.')}" var="idx"></c:set>
+                                <c:set value="${name.substring(0,idx)}" var="n"></c:set>
+                                <<${n}>>
+                            </a>
+                        </dd>
+                        <dd>
 
-                    </dd>
+                        </dd>
 
-                    </dt>
+                        </dt>
 
-                </dl>
-            </c:forEach>
-
+                    </dl>
+                </c:forEach>
+            </c:if>
             <div style="clear:both"></div>
 
         </div>
@@ -162,10 +163,12 @@
                     <c:set var="end" value="${curRange*5}"/>
                 </c:otherwise>
             </c:choose>
-            <c:forEach begin="${start}" end="${end}" varStatus="st">
-                <a href="${ctx}/front/course/list?page=${st.current-1}<c:if test="${parent!=null}">&parent=${parent}</c:if>"
-                   <c:if test="${st.current-1 == curPage}">class="curr" </c:if> >${st.current}</a>
-            </c:forEach>
+            <c:if test="${end > 0}">
+                <c:forEach begin="${start}" end="${end}" varStatus="st">
+                    <a href="${ctx}/front/course/list?page=${st.current-1}<c:if test="${parent!=null}">&parent=${parent}</c:if>"
+                       <c:if test="${st.current-1 == curPage}">class="curr" </c:if> >${st.current}</a>
+                </c:forEach>
+            </c:if>
 
             <c:choose>
                 <c:when test="${curPage+1 < totalPage}">
