@@ -66,13 +66,13 @@
     <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
-            <li><a href="/front/index">网站首页</a></li>
-            <li><a href="/front/news">新闻动态</a></li>
-            <li><a href="/front/course">精品课程</a></li>
-            <li><a href="javascript:void(0)">资源库</a></li>
-            <li><a href="javascript:void(0)">成果展示</a></li>
-            <li><a href="/front/teachers" class="nav_show">专家团队</a></li>
-            <li><a href="/front/works">师生作品</a></li>
+            <li><a href="${ctx}/front/index">网站首页</a></li>
+            <li><a href="${ctx}/front/news" >新闻动态</a></li>
+            <li><a href="${ctx}/front/course">精品课程</a></li>
+            <li><a href="${ctx}/front/resources/classic" >资源库</a></li>
+            <li><a href="${ctx}/front/achievements">成果展示</a></li>
+            <li><a href="${ctx}/front/teachers"  class="nav_show">专家团队</a></li>
+            <li><a href="${ctx}/front/wss?type=skillContest">师生作品</a></li>
         </ul>
     </div>
 </div>
@@ -98,7 +98,6 @@
             <ul class="menu">
                 <li class="active" style="margin:0;"><a href="javascript:void(0)">知识堂</a></li>
                 <li><a href="javascript:void(0)">问答</a></li>
-                <li><a href="javascript:void(0)">交流</a></li>
             </ul>
             <div class="con1">
 

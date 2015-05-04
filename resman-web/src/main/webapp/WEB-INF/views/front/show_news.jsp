@@ -64,16 +64,16 @@
 </div>
 
 <div class="header">
-    <div class="logo"><img src="${ctx}/assert/images/logo.jpg" width="222" height="65"/></div>
+    <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
-            <li><a href="javascript:void(0)">网站首页</a></li>
-            <li><a href="javascript:void(0)" class="nav_show">新闻动态</a></li>
-            <li><a href="javascript:void(0)">精品课程</a></li>
-            <li><a href="javascript:void(0)">资源库</a></li>
-            <li><a href="javascript:void(0)">成果展示</a></li>
-            <li><a href="javascript:void(0)">专家团队</a></li>
-            <li><a href="javascript:void(0)">师生作品</a></li>
+            <li><a href="${ctx}/front/index">网站首页</a></li>
+            <li><a href="${ctx}/front/news" class="nav_show">新闻动态</a></li>
+            <li><a href="${ctx}/front/course">精品课程</a></li>
+            <li><a href="${ctx}/front/resources/classic" >资源库</a></li>
+            <li><a href="${ctx}/front/achievements">成果展示</a></li>
+            <li><a href="${ctx}/front/teachers">专家团队</a></li>
+            <li><a href="${ctx}/front/wss?type=skillContest">师生作品</a></li>
         </ul>
     </div>
 </div>
@@ -99,7 +99,6 @@
             <ul class="menu">
                 <li class="active" style="margin:0;"><a href="javascript:void(0)">知识堂</a></li>
                 <li><a href="javascript:void(0)">问答</a></li>
-                <li><a href="javascript:void(0)">交流</a></li>
             </ul>
             <div class="con1">
 
@@ -149,7 +148,7 @@
     <div class="content_right">
         <div class="position">
             <div class="home"><img src="/asset/images/home.png" width="19" height="19"/></div>
-            <div class="position_nav"> 您现在的位置 : 首页 / 新闻动态 / 正文</div>
+            <div class="position_nav"> 您现在的位置 : 首页 / <a href="${ctx}/front/news?type=${type}"> ${toptitle} </a> 正文</div>
         </div>
         <div class="news_list">
             <h1>${news.title}</h1>

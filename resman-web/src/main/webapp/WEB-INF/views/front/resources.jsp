@@ -45,13 +45,13 @@
     <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
-            <li><a href="/front/index">网站首页</a></li>
-            <li><a href="/front/news">新闻动态</a></li>
-            <li><a href="/front/course">精品课程</a></li>
-            <li><a href="/front/resources/classic" class="nav_show">资源库</a></li>
-            <li><a href="javascript:void(0)">成果展示</a></li>
-            <li><a href="/front/teachers">专家团队</a></li>
-            <li><a href="/front/skills">师生作品</a></li>
+            <li><a href="${ctx}/front/index">网站首页</a></li>
+            <li><a href="${ctx}/front/news" >新闻动态</a></li>
+            <li><a href="${ctx}/front/course">精品课程</a></li>
+            <li><a href="${ctx}/front/resources/classic"  class="nav_show" >资源库</a></li>
+            <li><a href="${ctx}/front/achievements">成果展示</a></li>
+            <li><a href="${ctx}/front/teachers">专家团队</a></li>
+            <li><a href="${ctx}/front/wss?type=skillContest">师生作品</a></li>
         </ul>
     </div>
 </div>

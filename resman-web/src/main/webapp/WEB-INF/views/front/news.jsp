@@ -66,13 +66,13 @@
     <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
-            <li><a href="/front/index">网站首页</a></li>
-            <li><a href="/front/news" class="nav_show">新闻动态</a></li>
-            <li><a href="/front/course">精品课程</a></li>
-            <li><a href="javascript:void(0)">资源库</a></li>
-            <li><a href="javascript:void(0)">成果展示</a></li>
-            <li><a href="/front/teachers">专家团队</a></li>
-            <li><a href="/front/works">师生作品</a></li>
+            <li><a href="${ctx}/front/index">网站首页</a></li>
+            <li><a href="${ctx}/front/news" class="nav_show">新闻动态</a></li>
+            <li><a href="${ctx}/front/course">精品课程</a></li>
+            <li><a href="${ctx}/front/resources/classic">资源库</a></li>
+            <li><a href="${ctx}/front/achievements">成果展示</a></li>
+            <li><a href="${ctx}/front/teachers">专家团队</a></li>
+            <li><a href="${ctx}/front/wss">师生作品</a></li>
         </ul>
     </div>
 </div>
@@ -99,8 +99,7 @@
             <ul class="menu">
                 <li class="active" style="margin:0;"><a href="javascript:void(0)">知识堂</a></li>
                 <li><a href="javascript:void(0)">问答</a></li>
-                <li><a href="javascript:void(0)">交流</a></li>
-            </ul>
+             </ul>
             <div class="con1">
 
                 <ul id="knowledgeUL">
@@ -161,7 +160,7 @@
     <div class="content_right">
         <div class="position">
             <div class="home"><img src="/asset/images/home.png" width="19" height="19"/></div>
-            <div class="position_nav"> 您现在的位置 : 首页 / 新闻动态 / 列表</div>
+            <div class="position_nav"> 您现在的位置 : 首页 / ${toptitle} / 列表</div>
         </div>
         <div class="news_list">
             <c:if test="${bannerNews!=null}">

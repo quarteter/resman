@@ -1,16 +1,15 @@
 package com.quartet.resman.web.controller.resman;
 
-import com.quartet.resman.entity.Info;
-import com.quartet.resman.entity.Notice;
-import com.quartet.resman.entity.Question;
-import com.quartet.resman.entity.Result;
+import com.quartet.resman.entity.*;
 import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.repository.NoticeDao;
 import com.quartet.resman.repository.QuestionDao;
 import com.quartet.resman.service.InfoService;
 import com.quartet.resman.service.QuestionService;
 import com.quartet.resman.service.UserService;
+import com.quartet.resman.store.FileService;
 import com.quartet.resman.utils.Constants;
+import com.quartet.resman.web.vo.FileFuncDef;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,6 +48,12 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
+
+    @Autowired
+    private CommonFileController cfController;
+
+    @Autowired
+    private FileService fileService;
 
     //通知
     private final Integer c_notice_count = 6;
@@ -106,6 +111,48 @@ public class IndexController {
         getStrategy(model);
         getNews(model);
         getAchievement(model);
+
+        getClassic(model);
+        getMaterial(model);
+        getDocs(model);
+        getImgs(model);
+
+    }
+
+    /**
+     * 资源-精品课
+     * @param model
+     */
+    private void getClassic( Model model )
+    {
+        getResourceList( model, "classic" , "classicList");
+    }
+
+    /**
+     * 资源-精品教材
+     * @param model
+     */
+    private void getMaterial( Model model )
+    {
+        getResourceList( model, "material" , "materialList");
+    }
+
+    /**
+     * 资源-精品文档
+     * @param model
+     */
+    private void getDocs( Model model )
+    {
+        getResourceList( model, "docs" , "docsList");
+    }
+
+    /**
+     * 资源-经常图库
+     * @param model
+     */
+    private void getImgs( Model model )
+    {
+        getResourceList( model, "imgs" , "imgsList");
     }
 
     /**
@@ -261,4 +308,33 @@ public class IndexController {
         return infoList;
     }
     */
+
+
+    /**
+     * 资源获取公共函数
+     * @param model
+     * @param restype
+     */
+    private void getResourceList(Model model , String restype , String restag )
+    {
+        FileFuncDef def = cfController.getFuncDefByName(restype);
+        String rootPath = cfController.initRoot(def.getRootDir(), def.isRootDirPersonal()) + "//";
+        List<Document> nodes =  fileService.queryFile(rootPath, "", "", "");
+        List<Map<String, Object>> list = new ArrayList();
+        if (nodes != null && nodes.size() > 0) {
+            Map<String, Object> map = null;
+            for (Entry node : nodes) {
+                if (!(node instanceof Document)) {
+                    continue;
+                }
+                map = new HashMap();
+                map.put("uuid", node.getUuid());
+                map.put("name", node.getName());
+                map.put("path", node.getPath());
+                list.add(map);
+            }
+
+        }
+        model.addAttribute(restag , list);
+    }
 }

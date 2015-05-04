@@ -80,7 +80,7 @@ public class FileService {
             filter.addEqualTo("visibility", visibility);
         }
         Query q = qm.createQuery(filter);
-        q.addOrderByAscending("created");
+        q.addOrderByDescending("created");
         return (List<Document>) mappingTemplate.getObjects(q);
     }
 

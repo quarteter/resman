@@ -24,9 +24,8 @@ public class Constants {
     public static final String INFO_TYPE_SWORK="sworks";
     public static final String INFO_TYPE_TWORK="tworks";
     public static final String INFO_TYPE_CONTESTWORK="contest_works";
-    public static final String INFO_TYPE_MAJOR="major";
-    public static final String INFO_TYPE_CONTACT="contact";
     public static final String INFO_TYPE_STRATEGY="strategy";
     public static final String INFO_TYPE_ACHIVEMENT="achievement";
+    public static final String INFO_TYPE_NOTICE="notice";
 
 }

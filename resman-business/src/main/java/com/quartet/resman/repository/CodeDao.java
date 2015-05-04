@@ -12,4 +12,6 @@ import java.util.List;
 public interface CodeDao extends JpaRepository<Code,Long>,JpaSpecificationExecutor<Code>{
 
     public List<Code> findByCategoryOrderBySeqNoAsc(String category);
+
+    public Code findByCategoryAndCode(String category , String code );
 }

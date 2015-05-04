@@ -65,13 +65,13 @@
     <div class="logo"><img src="${ctx}/asset/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
-            <li><a href="javascript:void(0)">网站首页</a></li>
-            <li><a href="javascript:void(0)">新闻动态</a></li>
-            <li><a href="javascript:void(0)">精品课程</a></li>
-            <li><a href="javascript:void(0)">资源库</a></li>
-            <li><a href="javascript:void(0)">成果展示</a></li>
-            <li><a href="javascript:void(0)">专家团队</a></li>
-            <li><a href="javascript:void(0)">师生作品</a></li>
+            <li><a href="${ctx}/front/index">网站首页</a></li>
+            <li><a href="${ctx}/front/news" >新闻动态</a></li>
+            <li><a href="${ctx}/front/course">精品课程</a></li>
+            <li><a href="${ctx}/front/resources/classic" >资源库</a></li>
+            <li><a href="${ctx}/front/achievements" >成果展示</a></li>
+            <li><a href="${ctx}/front/teachers">专家团队</a></li>
+            <li><a href="${ctx}/front/wss?type=skillContest" class="nav_show">师生作品</a></li>
         </ul>
     </div>
 </div>
@@ -94,7 +94,8 @@
         <div class="professional works">
             <h1>师生作品</h1>
             <ul>
-                <li><a href="${ctx}/front/wss?type=skillContest" <c:if test="${type=='skills'}">class="curr"</c:if> >技能大赛</a></li>
+
+                <li><a href="${ctx}/front/wss?type=sworks" <c:if test="${type=='skillContest'}">class="curr"</c:if>>技能大赛</a></li>
                 <li><a href="${ctx}/front/wss?type=sworks" <c:if test="${type=='sworks'}">class="curr"</c:if>>学生作品</a></li>
                 <li><a href="${ctx}/front/wss?type=tworks" <c:if test="${type=='tworks'}">class="curr"</c:if>>老师作品</a></li>
                 <li><a href="${ctx}/front/wss?type=contest_works" <c:if test="${type=='contest_works'}">class="curr"</c:if>>大赛作品</a></li>
@@ -105,7 +106,7 @@
         <div class="position">
             <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
             <div class="position_nav"> 您现在的位置 : 首页 / 师生作品 / <c:choose>
-                <c:when test="${type=='skills'}">
+                <c:when test="${type=='skillContest'}">
                     技能大赛
                 </c:when>
                 <c:when test="${type=='sworks'}">

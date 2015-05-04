@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -15,23 +15,30 @@
     <script language="JavaScript" type="text/javascript">
         function ChangeDiv(divId, divName, zDivCount, obj) {
             for (i = 0; i < 4; i++) {
-                document.getElementById(divName + i).style.display = "none";//将所有的层都隐藏
+                document.getElementById(divName + i).style.display = "none";
+//将所有的层都隐藏 
             }
-            document.getElementById(divName + divId).style.display = "block";//显示当前层
+            document.getElementById(divName + divId).style.display = "block";
+
+
+//显示当前层
             var $len = document.getElementById("title").getElementsByTagName("li").length;
             for (j = 0; j < $len; j++) {
                 if (j == divId) {
-                    document.getElementById("title").getElementsByTagName("li")[j].style.background = "images/bou_1.png";
+                    document.getElementById("title").getElementsByTagName("li")[j].style.background = "/asset/images/bou_1.png";
                     document.getElementById("title").getElementsByTagName("li")[j].style.color = "#ffffff";
                 } else {
-                    document.getElementById("title").getElementsByTagName("li")[j].style.background = "images/bou_1hover.png";
+                    document.getElementById("title").getElementsByTagName("li")[j].style.background = "/asset/images/bou_1hover.png";
                     document.getElementById("title").getElementsByTagName("li")[j].style.color = "#ffffff";
                 }
             }
         }
         $(document).ready(function () {
             $(".selecter li ul").hide();
+
+
         })
+
 
     </script>
 
@@ -56,14 +63,14 @@
 </div>
 
 <div class="header">
-    <div class="logo"><img src="${ctx}/asset/images/logo.jpg" width="222" height="65"/></div>
+    <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
             <li><a href="${ctx}/front/index">网站首页</a></li>
             <li><a href="${ctx}/front/news" >新闻动态</a></li>
-            <li><a href="${ctx}/front/course" class="nav_show">精品课程</a></li>
+            <li><a href="${ctx}/front/course">精品课程</a></li>
             <li><a href="${ctx}/front/resources/classic" >资源库</a></li>
-            <li><a href="${ctx}/front/achievements" >成果展示</a></li>
+            <li><a href="${ctx}/front/achievements" class="nav_show">成果展示</a></li>
             <li><a href="${ctx}/front/teachers">专家团队</a></li>
             <li><a href="${ctx}/front/wss?type=skillContest">师生作品</a></li>
         </ul>
@@ -86,57 +93,85 @@
             });
         </script>
 
-
-        <div class="professional works">
-            <h1>精品课程</h1>
-            <ul>
-                <c:if test="${fn:length(folders) > 0}">
-                    <c:forEach items="${folders}" var="folder">
-                        <li><a href="${ctx}/front/course/list?parent=${folder.uuid}">${folder.name}</a></li>
-                    </c:forEach>
-                </c:if>
+        <div class="students tab">
+            <h1>学生专区</h1>
+            <ul class="menu">
+                <li class="active" style="margin:0;"><a href="javascript:void(0)">知识堂</a></li>
+                <li><a href="javascript:void(0)">问答</a></li>
             </ul>
+            <div class="con1">
+
+                <ul id="knowledgeUL">
+                </ul>
+
+
+            </div>
+            <div class="con2">
+                <ul id="quesUL">
+                </ul>
+
+
+            </div>
+            <div class="con3">
+
+                <ul id="connUL">
+                    <li><a href="#">校财经商贸 "京西杯微课程大智慧——我校组织"微课基 </a></li>
+                    <li><a href="#">名师、传承人进课堂，助力黔西南中职 </a></li>
+                    <li><a href="#">服装专业召开"馆建设研讨会</a></li>
+                    <li><a href="#">我"技能大赛</a></li>
+                    <li><a href="#">微课程大智旗袍传习慧——我校组织"微课基础</a></li>
+                    <li><a href="#">微课程大智慧——我校组织"微课基 </a></li>
+                </ul>
+
+
+            </div>
+            <h2><img src="/asset/images/pic04.jpg" width="214" height="123"/></h2>
+
+        </div>
+
+
+        <div class="professional">
+            <h1>专业简介</h1>
+
+            <p>
+                北京市黄庄职业高中位于石景山区鲁谷东街，是一所面向全国招生的国家级重点职业高中。1981年，在北京市黄庄中学的基础上，创办了北京市第一个服装专业职业高中班，1984年成为独立设校的职业高中，正式更名为"北京市黄庄职业高中"。2006年，石景山区为最大限度地发挥区职教资源优势，对职教
+                职业高中、古城旅游职业学校进行了资源整合，目前已形成学历教育、社会培训、实训经营等分类设置，学历、非学历并举，产学研有机结合，资源全面统筹，多品牌经营，一体化管理的办学格局。
+            </p>
+
+            <h2><a href="#">详细+</a>
+            </h2>
         </div>
 
 
     </div>
     <div class="content_right">
         <div class="position">
-            <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
-            <div class="position_nav"> 您现在的位置 : 首页 / 精品课程 / <c:if test="${parentName!=null}">${parentName} / </c:if>列表
-            </div>
+            <div class="home"><img src="/asset/images/home.png" width="19" height="19"/></div>
+            <div class="position_nav"> 您现在的位置 : 首页 / 成果展示 / 列表</div>
         </div>
-        <div class="news_list works_con">
-            <c:forEach begin="${beginIdx}" end="${endIdx}" varStatus="st">
+        <div class="news_list">
+            <c:if test="${fn:length(infos)>0}">
+                <c:forEach items="${infos}" var="n">
                 <dl>
                     <dt>
-                    <dt><img src="${ctx}${files[st.current].imgPath}" width="200" height="132"/></dt>
-                    <dd class="news_first_title">
-                        <a href="${ctx}/front/course/play?id=${files[st.current].uuid}">
-                            <c:set value="${files[st.current].name}" var="name"></c:set>
-                            <c:set value="${name.indexOf('.')}" var="idx"></c:set>
-                            <c:set value="${name.substring(0,idx)}" var="n"></c:set>
-                            <<${n}>>
-                        </a>
-                    </dd>
+                    <dt><img src="${n.imgPath}" width="200" height="132"/></dt>
+                    <dd class="news_first_title"><a href="${ctx}/front/achievements/${n.id}">${n.title}</a></dd>
                     <dd>
-
+                        ${n.shortContent}
                     </dd>
-
+                    <dd class="news_first_more"><a href="${ctx}/front/achievements/${n.id}">查看详细+</a></dd>
                     </dt>
 
                 </dl>
-            </c:forEach>
-
-            <div style="clear:both"></div>
+                </c:forEach>
+            </c:if>
 
         </div>
         <div class="pages">
-
             <a href="#">共${totalCount}条记录 </a>
             <c:choose>
                 <c:when test="${curPage-1 >= 0}">
-                    <a href="${ctx}/front/course?page=${curPage-1}">上一页</a>
+                    <a href="${ctx}/front/achievements?page=${curPage-1}">上一页</a>
                 </c:when>
                 <c:otherwise>
                     <a href="#">上一页</a>
@@ -153,7 +188,6 @@
                 </c:otherwise>
             </c:choose>
             <c:set var="start" value="${(curRange-1)*5+1}"></c:set>
-
             <c:choose>
                 <c:when test="${curRange*5 >= totalPage}">
                     <c:set var="end" value="${totalPage}"/>
@@ -163,13 +197,12 @@
                 </c:otherwise>
             </c:choose>
             <c:forEach begin="${start}" end="${end}" varStatus="st">
-                <a href="${ctx}/front/course/list?page=${st.current-1}<c:if test="${parent!=null}">&parent=${parent}</c:if>"
-                   <c:if test="${st.current-1 == curPage}">class="curr" </c:if> >${st.current}</a>
+                <a href="${ctx}/front/achievements/?page=${st.current-1}" <c:if test="${st.current-1 == curPage}">class="curr" </c:if> >${st.current}</a>
             </c:forEach>
 
             <c:choose>
                 <c:when test="${curPage+1 < totalPage}">
-                    <a href="${ctx}/front/course/list?page=${curPage+1}">下一页</a>
+                    <a href="${ctx}/front/achievements?page=${curPage+1}">下一页</a>
                 </c:when>
                 <c:otherwise>
                     <a href="#">下一页</a>
@@ -247,7 +280,24 @@
                 }
             });
         </script>
-
+        <script>
+            function createLi(data,url,targetUL){
+                $.each(data,function(idx,val){
+                    var li ='<li><a href="${c}'+ url+'/'+val.id+'">'+val.title+'</a></li>';
+                    $(li).appendTo(targetUL);
+                });
+            }
+            function createStudentAreaData(){
+                $.get("${ctx}/front/studentArea",{},function(data){
+                    createLi(data['knowledge'],"/front/knowledge","#knowledgeUL");
+                    createLi(data['ques'],"/front/ques","#quesUL");
+                    createLi(data['conn'],"/front/conn","#connUL");
+                });
+            }
+            $(document).ready(function(){
+                createStudentAreaData();
+            });
+        </script>
 
     </div>
 </div>

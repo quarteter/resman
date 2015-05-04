@@ -67,20 +67,20 @@ $(document).ready(function(){
  <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65" /></div>
  <div class="nav">
  <ul>
-<li><a href="/front/index" class="nav_show">网站首页</a></li>
-<li><a href="/front/news">新闻动态</a></li>
-<li><a href="/front/course">精品课程</a></li>
-<li><a href="/front/resources/classic">资源库</a></li>
-<li><a href="javascript:void(0)">成果展示</a></li>
-<li><a href="/front/teachers">专家团队</a></li>
-<li><a href="/front/works">师生作品</a></li>
+     <li><a href="${ctx}/front/index"  class="nav_show">网站首页</a></li>
+     <li><a href="${ctx}/front/news" >新闻动态</a></li>
+     <li><a href="${ctx}/front/course">精品课程</a></li>
+     <li><a href="${ctx}/front/resources/classic" >资源库</a></li>
+     <li><a href="${ctx}/front/achievements" >成果展示</a></li>
+     <li><a href="${ctx}/front/teachers">专家团队</a></li>
+     <li><a href="${ctx}/front/wss?type=skillContest">师生作品</a></li>
  </ul>
   </div>
   </div>
  <div class="main_content">
   <div class="content_left">
     <div class="notice">
-     <h1><span><a href="./notices">更多>></a></span>通知公告</h1>
+     <h1><span><a href="${ctx}/front/news?type=notice">更多>></a></span>通知公告</h1>
          <ul>
              <c:forEach items="${notices_list}" var="n">
                  <a href="notices/${n.id}">${n.title} </a>
@@ -123,7 +123,7 @@ $(function () {
   <div class="students tab">
     <h1>学生专区</h1>
   	<ul class="menu">
-		<li class="active" style="margin:0;"><a href="javascript:void(0)">知识堂</a></li>
+		<li class="active" style="margin:0;"><a href="${ctx}/front/news?type=knowledge">知识堂</a></li>
 		<li><a href="javascript:void(0)">问答</a></li>
 <!--		<li><a href="javascript:void(0)">交流</a></li> -->
    	  </ul>
@@ -167,7 +167,7 @@ $(function () {
     		<div id="anvlfteb">
 			<div selec="bbs" class="posbox"> <a href="#">友情链接</a></div>
 		 
-			<div id="seledbox" class="posiabox" style=" display:none;  "><div> 
+			<div id="seledbox" class="posiabox" style=" display:none;  "><div>
   </div>
  </div>
 		
@@ -190,30 +190,30 @@ $(function () {
   <div class="new_data">
    <div class="new ">
     <h3><ul id="tit">
-  <li class="title_show"  id="mod1" onmouseover="$('#listmoretag').attr('href','./news/'); switchmodTag('mod','slidingList','1');this.blur();">新闻动态</li>
-  <li  id="mod2" onmouseover="$('#listmoretag').attr('href','./news/'); switchmodTag('mod','slidingList','2');this.blur();">成果展示</li>
-<li class="float" style="background:none;"><span><a id="listmoretag" href="./news/">更多>></a></span></li>
+  <li class="title_show"  id="mod1" onmouseover="$('#listmoretag').attr('href','${ctx}/front/news'); switchmodTag('mod','slidingList','1');this.blur();">新闻动态</li>
+  <li  id="mod2" onmouseover="$('#listmoretag').attr('href','${ctx}/front/achievements'); switchmodTag('mod','slidingList','2');this.blur();">成果展示</li>
+<li class="float" style="background:none;"><span><a id="listmoretag" href="${ctx}/front/news">更多>></a></span></li>
     </ul> 
       </h3>
     <!--新闻列表-->
         <ul  id="slidingList1">
             <c:if test="${fn:length(news_list)>0}">
-                <h1><a href="./news/${news_list[0].id} ">${news_list[0].title}</a></h1>
+                <h1><a href="${ctx}/front/news/${news_list[0].id} ">${news_list[0].title}</a></h1>
             </c:if>
             <c:if test="${fn:length(news_list)>1}">
                 <c:forEach items="${news_list}" var="n" begin="1">
-                     <li><span>[<fmt:formatDate value="${n.crtdate}" pattern="yyyy-MM-dd"/>  ]</span> <a href="news/${n.id}">${n.title}</a></li>
+                     <li><span>[<fmt:formatDate value="${n.crtdate}" pattern="yyyy-MM-dd"/>  ]</span> <a href="${ctx}/front/${n.id}">${n.title}</a></li>
                 </c:forEach>
             </c:if>
       </ul>
        <!--研究成果-->
 <ul class="slidingList_none" id="slidingList2" >
     <c:if test="${fn:length(achievement_list)>0}">
-        <h1><a href="./news/${achievement_list[0].id} ">${achievement_list[0].title}</a></h1>
+        <h1><a href="${ctx}/front/achievements/${achievement_list[0].id} ">${achievement_list[0].title}</a></h1>
     </c:if>
     <c:if test="${fn:length(achievement_list)>1}">
         <c:forEach items="${achievement_list}" var="n" begin="1">
-            <li><span>[<fmt:formatDate value="${n.crtdate}" pattern="yyyy-MM-dd"/>  ]</span> <a href="news/${n.id}">${n.title}</a></li>
+            <li><span>[<fmt:formatDate value="${n.crtdate}" pattern="yyyy-MM-dd"/>  ]</span> <a href="${ctx}/front/achievements/${n.id}">${n.title}</a></li>
         </c:forEach>
     </c:if>
 
@@ -240,7 +240,7 @@ $(function () {
 
       <c:if test="${fn:length(strategy_list)>0}">
           <c:forEach items="${strategy_list}" var="n">
-              <dt>【攻略】</dt> <dd>  <a href="news/${n.id}">${n.title}</a></dd>
+              <dt>【攻略】</dt> <dd>  <a href="${ctx}/front/news/${n.id}?type=strategy">${n.title}</a></dd>
           </c:forEach>
       </c:if>
 
@@ -473,12 +473,12 @@ $(function(){
 <li ><p>
  <div class="slid">
  <div  class="bout_left">
-  <h2><a href="news/${skill_banner.id}" alt="${skill_banner.title}"><img src="${skill_banner.imgPath}" width="280" height="139" /></a></h2>
+  <h2><a href="wss/${skill_banner.id}?type=skillContest" alt="${skill_banner.title}"><img src="${skill_banner.imgPath}" width="280" height="139" /></a></h2>
   <div style="clear:both"></div>
   <dl>
       <!--skill-->
       <c:forEach items="${sikll_list}" var="n">
-          <dd>  <a href="news/${n.id}">${n.title}</a></dd>
+          <dd>  <a href="wss/${n.id}?type=skillContest">${n.title}</a></dd>
      </c:forEach>
   </dl>
   
@@ -488,8 +488,8 @@ $(function(){
      <c:if test="${fn:length(sikll_hot)>0}">
          <c:forEach items="${sikll_hot}" var="n">
               <dl>
-             <dt><a href="news/${n.id}" class="avatar"><img src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
-             <dd><a href="news/${n.id}">【热门】${n.title}</a></dd>
+             <dt><a href="wss/${n.id}?type=skillContest" class="avatar"><img src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
+             <dd><a href="wss/${n.id}?type=skillContest">【热门】${n.title}</a></dd>
             </dl>
          </c:forEach>
      </c:if>
@@ -529,13 +529,13 @@ $(function(){
 <li><p>
 <div class="slid">
  <div  class="bout_left">
-  <h2><a href="news/${teachergroup_banner.id}"  alt="${teachergroup_banner.title}"><img src="${teachergroup_banner.imgPath}" width="280" height="139"  alt="${skill_banner.title}"/></a></h2>
+  <h2><a href="${ctx}/front/teachers/${teachergroup_banner.id}"  alt="${teachergroup_banner.title}"><img src="${teachergroup_banner.imgPath}" width="280" height="139"  alt="${skill_banner.title}"/></a></h2>
   <dl>
       <dl>
           <!--teachergroup_list-->
     <c:if test="${fn:length(teachergroup_list)>0}">
           <c:forEach items="${teachergroup_list}" var="n">
-              <dd>  <a href="news/${n.id}">${n.title}</a></dd>
+              <dd>  <a href="${ctx}/front/teachers/${n.id}">${n.title}</a></dd>
           </c:forEach>
     </c:if>
       </dl>
@@ -547,8 +547,8 @@ $(function(){
      <c:if test="${fn:length(teachergroup_hot)>0}">
          <c:forEach items="${teachergroup_hot}" var="n">
              <dl>
-             <dt><a href="news/${n.id}" class="avatar"><img src="${n.imgPath}" width="165" height="105" /></a></dt>
-             <dd><a href="news/${n.id}">【热门】${n.title}</a></dd>
+             <dt><a href="${ctx}/front/teachers/${n.id}" class="avatar"><img src="${n.imgPath}" width="165" height="105" /></a></dt>
+             <dd><a href="${ctx}/front/teachers/${n.id}">【热门】${n.title}</a></dd>
              </dl>
          </c:forEach>
      </c:if>
@@ -569,10 +569,10 @@ $(function(){
      */
     function changeMoreLink( idx )
     {
-        var surl = './news/';
-        if( idx == 0 ) surl = './news/';
-        else if( idx == 1 ) surl = './news/';
-        else  surl = './news/';
+        var surl = '${ctx}/front/news?type=skillContest';
+        if( idx == 0 ) surl = '${ctx}/front/news?type=skillContest';
+        else if( idx == 1 ) surl = '${ctx}/front/works';
+        else  surl = '${ctx}/front/news?type=teacherGroup';
         $('#skill_more_link').attr('href', surl);
     }
 

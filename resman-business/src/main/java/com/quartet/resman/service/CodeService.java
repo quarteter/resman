@@ -48,4 +48,9 @@ public class CodeService {
             deleteCode(id);
         }
     }
+
+    public Code getInfoCode(  String _codeType )
+    {
+        return codeDao.findByCategoryAndCode("info",_codeType);
+    }
 }

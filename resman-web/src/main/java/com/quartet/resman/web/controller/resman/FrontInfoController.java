@@ -1,10 +1,13 @@
 package com.quartet.resman.web.controller.resman;
 
+import com.quartet.resman.entity.Code;
 import com.quartet.resman.entity.Info;
+import com.quartet.resman.service.CodeService;
 import com.quartet.resman.service.InfoService;
 import com.quartet.resman.service.QuestionService;
 import com.quartet.resman.utils.Constants;
 import com.quartet.resman.vo.QuestionVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,9 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,25 +40,35 @@ public class FrontInfoController {
     @Autowired
     private QuestionService quesService;
 
+    @Autowired
+    private CodeService codeService;
 
     @RequestMapping(value = "news")
-    public String news(@PageableDefault(size = 20, sort = "crtdate",
+    public String news(@RequestParam(value="type", required=false , defaultValue = Constants.INFO_TYPE_NEWS ) String type  , @PageableDefault(size = 20, sort = "crtdate",
             direction = Sort.Direction.DESC) Pageable page, Model model) {
-        Page<Info> news = infoService.getInfo(Constants.INFO_TYPE_NEWS, true, page);
+        Page<Info> news = null;
+        String infoType = type;
+        // news = infoService.getInfo(Constants.INFO_TYPE_NEWS,true, page);
+        news = infoService.getInfo(infoType,true, page);
         model.addAttribute("news", news.getContent());
         model.addAttribute("curPage", news.getNumber());
         model.addAttribute("totalPage", news.getTotalPages());
         model.addAttribute("totalCount", news.getTotalElements());
-        model.addAttribute("bannerNews", infoService.getFirstBannerInfo(Constants.INFO_TYPE_NEWS));
+        model.addAttribute("toptitle",getInfoCodeTypeName(infoType));
+       // model.addAttribute("bannerNews", infoService.getFirstBannerInfo(Constants.INFO_TYPE_NEWS));
+        model.addAttribute("bannerNews", infoService.getFirstBannerInfo(infoType));
+
         return "front/news";
     }
-
     @RequestMapping(value = "news/{id}")
-    public String newsDetail(@PathVariable(value = "id") Long id, Model model) {
+    public String newsDetail(@RequestParam(value="type", required=false,defaultValue = Constants.INFO_TYPE_NEWS ) String type  ,@PathVariable(value = "id") Long id, Model model) {
         Info info = infoService.getInfoEager(id);
         model.addAttribute("news", info);
-        Info pre = infoService.getPreOrNextInfo(info.getId(), "pre", Constants.INFO_TYPE_NEWS);
-        Info next = infoService.getPreOrNextInfo(info.getId(), "next", Constants.INFO_TYPE_NEWS);
+        String infoType = type;
+       Info pre = infoService.getPreOrNextInfo(info.getId(), "pre",infoType);
+       Info next = infoService.getPreOrNextInfo(info.getId(), "next",infoType);
+     //   Info pre = infoService.getPreOrNextInfo(info.getId(), "pre", Constants.INFO_TYPE_NEWS);
+      //  Info next = infoService.getPreOrNextInfo(info.getId(), "next", Constants.INFO_TYPE_NEWS);
         if (pre != null) {
             model.addAttribute("pre", pre);
         }
@@ -61,6 +76,8 @@ public class FrontInfoController {
             model.addAttribute("next", next);
         }
         infoService.updateInfoReadCount(id);
+        model.addAttribute("type",infoType);
+        model.addAttribute("toptitle",getInfoCodeTypeName(infoType));
         return "front/show_news";
     }
 
@@ -90,6 +107,48 @@ public class FrontInfoController {
         infoService.updateInfoReadCount(id);
         return "front/show_teachers";
     }
+
+
+    @RequestMapping(value = "achievements")
+    public String achievements(@PageableDefault(size = 8, sort = "crtdate",
+            direction = Sort.Direction.DESC) Pageable page, Model model) {
+        Page<Info> infos = infoService.getBannerInfo(Constants.INFO_TYPE_ACHIVEMENT, true, page);
+        model.addAttribute("infos", infos.getContent());
+        model.addAttribute("curPage", infos.getNumber());
+        model.addAttribute("totalPage", infos.getTotalPages());
+        model.addAttribute("totalCount", infos.getTotalElements());
+        return "front/achievements";
+    }
+
+    @RequestMapping(value = "achievements/{id}")
+    public String achievementsDetail(@PathVariable(value = "id") Long id, Model model) {
+        Info info = infoService.getInfoEager(id);
+        model.addAttribute("info", info);
+        Info pre = infoService.getPreOrNextInfo(info.getId(), "pre", Constants.INFO_TYPE_ACHIVEMENT);
+        Info next = infoService.getPreOrNextInfo(info.getId(), "next", Constants.INFO_TYPE_ACHIVEMENT);
+        if (pre != null) {
+            model.addAttribute("pre", pre);
+        }
+        if (next != null) {
+            model.addAttribute("next", next);
+        }
+        infoService.updateInfoReadCount(id);
+        return "front/show_achievements";
+    }
+
+    @RequestMapping(value = "knowledge/{id}")
+    public String showKnowledge(@PathVariable(value = "id") Long idl , HttpServletRequest request ) {
+        String baseUrl =  request.getContextPath();
+        return "redirect:"+ baseUrl +"/front/news/" + idl + "?type=knowledge";
+    }
+
+    @RequestMapping(value = "knowledge")
+    public String knowledges( HttpServletRequest request ) {
+        String baseUrl =  request.getContextPath();
+        return "redirect:" + baseUrl + "/front/news?type=knowledge";
+     // return "redirect:./news?type=knowledge";
+    }
+
 
     @RequestMapping(value = "studentArea")
     @ResponseBody
@@ -163,4 +222,14 @@ public class FrontInfoController {
         }
         return "front/show_major_contact";
     }
+
+    public String getInfoCodeTypeName( String _type )
+    {
+        String name = "";
+        Code code = codeService.getInfoCode( _type );
+        if( code != null )
+            name = code.getName();
+        return name;
+    }
+
 }
