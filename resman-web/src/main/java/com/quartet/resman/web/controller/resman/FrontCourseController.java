@@ -2,6 +2,7 @@ package com.quartet.resman.web.controller.resman;
 
 import com.quartet.resman.entity.*;
 import com.quartet.resman.service.CourseService;
+import com.quartet.resman.service.ResCommentService;
 import com.quartet.resman.service.ResCountService;
 import com.quartet.resman.store.FileService;
 import com.quartet.resman.store.FolderService;
@@ -32,6 +33,8 @@ public class FrontCourseController {
     private CourseService courseService;
     @Autowired
     private ResCountService countService;
+    @Autowired
+    private ResCommentService commentService;
 
     @RequestMapping("/list")
     public String list(String parent, @PageableDefault(size = pageSize) Pageable page, Model model) {

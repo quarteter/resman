@@ -63,7 +63,7 @@
 </div>
 
 <div class="header">
-    <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65"/></div>
+    <div class="logo"><img src="${ctx}/asset/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
             <li><a href="${ctx}/front/index">网站首页</a></li>
@@ -138,7 +138,7 @@
 
 
             </div>
-            <h2><img src="/asset/images/pic04.jpg" width="214" height="123"/></h2>
+            <h2><img src="${ctx}/asset/images/pic04.jpg" width="214" height="123"/></h2>
 
         </div>
 
@@ -159,7 +159,7 @@
     </div>
     <div class="content_right">
         <div class="position">
-            <div class="home"><img src="/asset/images/home.png" width="19" height="19"/></div>
+            <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
             <div class="position_nav"> 您现在的位置 : 首页 / ${toptitle} / 列表</div>
         </div>
         <div class="news_list">
