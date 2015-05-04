@@ -42,10 +42,9 @@ insert into s_codes (id,category,code,name,seqNo) VALUES(4,"info","teacherGroup"
 insert into s_codes (id,category,code,name,seqNo) VALUES(5,"info","sworks","学生作品",5);
 insert into s_codes (id,category,code,name,seqNo) VALUES(6,"info","tworks","老师作品",6);
 insert into s_codes (id,category,code,name,seqNo) VALUES(7,"info","contest_works","大赛作品",7);
-insert into s_codes (id,category,code,name,seqNo) VALUES(8,"info","major","专业介绍",8);
-insert into s_codes (id,category,code,name,seqNo) VALUES(9,"info","contact","联系我们",9);
 insert into s_codes (id,category,code,name,seqNo) VALUES(10,"info","strategy","攻略展示",10);
-insert into s_codes (id,category,code,name,seqNo) VALUES(11,"info","achievement","成果展示",11);
+insert into s_codes (id,category,code,name,seqNo) VALUES(11,"info","achievement","成果展示",8);
+insert into s_codes (id,category,code,name,seqNo) VALUES(14,"info","notice","通知公告",9);
 -- ----------------------------
 -- Table structure for s_funcs
 -- ----------------------------

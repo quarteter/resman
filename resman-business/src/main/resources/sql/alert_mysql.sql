@@ -111,7 +111,7 @@ INSERT INTO `s_funcs` VALUES (2102, 1, '教师空间', 2100, 10, '/res/common/pe
 INSERT INTO `s_funcs` VALUES (2103, 1, '精品素材', 2100, 15, '/res/common/material/list', '', NULL);
 INSERT INTO `s_funcs` VALUES (2104, 1, '精品文档', 2100, 20, '/res/common/docs/list', '', NULL);
 INSERT INTO `s_funcs` VALUES (2105, 1, '经常图库', 2100, 25, '/res/common/imgs/list', '', NULL);
-INSERT INTO `s_funcs` VALUES (2106, 1, '公告管理', 2100, 30, '/res/notice/pageList', '', NULL);
+--INSERT INTO `s_funcs` VALUES (2106, 1, '公告管理', 2100, 30, '/res/notice/pageList', '', NULL);
 INSERT INTO `s_funcs` VALUES (2107, 1, '信息发布', 2100, 35, '/info/list', '', NULL);
 
 INSERT INTO `s_role_func` VALUES (4, 2100);
@@ -120,9 +120,12 @@ INSERT INTO `s_role_func` VALUES (4, 2102);
 INSERT INTO `s_role_func` VALUES (4, 2103);
 INSERT INTO `s_role_func` VALUES (4, 2104);
 INSERT INTO `s_role_func` VALUES (4, 2105);
-INSERT INTO `s_role_func` VALUES (4, 2106);
+--INSERT INTO `s_role_func` VALUES (4, 2106);
 INSERT INTO `s_role_func` VALUES (4, 2107);
 
+
+delete from s_role_func where roleid = 4 and funcid = 2106;
+delete from s_funcs where id = 2106;
 -- ----------------------------
 -- 2015/3/24 作业 添加、问答视图
 -- ----------------------------
@@ -215,15 +218,19 @@ CREATE VIEW `v_homework` AS
 
 
 
-insert into s_codes (id,category,code,name,seqNo) VALUES(1,"info","news","新闻",1);
+insert into s_codes (id,category,code,name,seqNo) VALUES(1,"info","news","新闻动态",1);
 insert into s_codes (id,category,code,name,seqNo) VALUES(2,"info","knowledge","知识堂",2);
 insert into s_codes (id,category,code,name,seqNo) VALUES(3,"info","skillContest","技能大赛",3);
 insert into s_codes (id,category,code,name,seqNo) VALUES(4,"info","teacherGroup","师资队伍",4);
 insert into s_codes (id,category,code,name,seqNo) VALUES(5,"info","sworks","学生作品",5);
 insert into s_codes (id,category,code,name,seqNo) VALUES(6,"info","tworks","老师作品",6);
 insert into s_codes (id,category,code,name,seqNo) VALUES(7,"info","contest_works","大赛作品",7);
-insert into s_codes (id,category,code,name,seqNo) VALUES(8,"info","major","专业介绍",8);
-insert into s_codes (id,category,code,name,seqNo) VALUES(9,"info","contact","联系我们",9);
+insert into s_codes (id,category,code,name,seqNo) VALUES(10,"info","strategy","攻略展示",10);
+insert into s_codes (id,category,code,name,seqNo) VALUES(11,"info","achievement","成果展示",8);
+insert into s_codes (id,category,code,name,seqNo) VALUES(14,"info","notice","通知公告",9);
+
+delete from s_codes where id = 8;
+delete from s_codes where id = 9;
 
 --添加新表，记录资源的预览次数和下载次数，2015-04-23
 DROP TABLE IF EXISTS `r_res_count`;
