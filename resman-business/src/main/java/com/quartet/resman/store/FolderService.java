@@ -48,6 +48,11 @@ public class FolderService {
         mappingTemplate.save();
     }
 
+    public void updateFolder(Folder folder){
+        mappingTemplate.update(folder);
+        mappingTemplate.save();
+    }
+
     public void deleteFolder(String path) {
         boolean exist = mappingTemplate.itemExists(path);
         if (exist) {

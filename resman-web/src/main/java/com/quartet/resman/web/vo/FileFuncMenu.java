@@ -1,5 +1,7 @@
 package com.quartet.resman.web.vo;
 
+import java.util.List;
+
 /**
  * @author: lcheng
  * @date: 2015/2/24
@@ -10,6 +12,8 @@ public class FileFuncMenu {
     private String name;
     private String action;
     private String iconCls;
+    private String type;
+    private List<FileFuncMenu> children;
 
     public String getId() {
         return id;
@@ -41,5 +45,21 @@ public class FileFuncMenu {
 
     public void setIconCls(String iconCls) {
         this.iconCls = iconCls;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<FileFuncMenu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<FileFuncMenu> children) {
+        this.children = children;
     }
 }

@@ -41,23 +41,27 @@
                 clickToSelect: true
             });
         },
-        createUploadMenu: function () {
-            var btnUpload = $('#btnUpload');
+        createUploadMenu: function (btnId,btnCls,btnTxt) {
+            var btnUpload = (btnId && btnId !='') ? $(btnId) : $('#btnUpload'),
+                btnClsStr = (btnCls && btnCls!='') ? btnCls : 'btn btn-primary',
+                btnTxtStr = (btnTxt && btnTxt!='') ? btnTxt : '上传文件';
             if (btnUpload) {
                 var conf = {
                     height: 34,
                     width: 100,
-                    buttonClass: 'btn btn-primary',
+                    buttonClass: btnClsStr,
                     removeTimeout: 0,
                     'fileSizeLimit' : '100MB',
+                    'preventCaching' : false,
                     swf: window.fmConf.ctxPath+'/asset/js/plugins/uploadify/uploadify.swf',
                     uploader: window.fmConf.ctxPath+'/res/common/'+window.fmConf.func+'/upload',
                     fileObjName: 'fileData',
-                    buttonText: '<span class="fa fa-upload"></span>&nbsp;上传文件',
+                    buttonText: '<span class="fa fa-upload"></span>&nbsp;'+btnTxtStr,
                     queueID: 'fileQueue',
                     formData: {path: window.fmConf.filePath},
                     onInit:function(){
-                        $("#btnUpload-button").css("line-height","");
+                        var upbtn = (btnId && btnId !='') ? btnId :"#btnUpload";
+                        $(upbtn+"-button").css("line-height","");
                     },
                     onQueueComplete: function (queueData) {
                         $('#fileList').bootstrapTable('refresh');
@@ -66,8 +70,8 @@
                 if(window.fmConf.allowFileExts && window.fmConf.allowFileExts!=""){
                     conf.fileTypeExts = window.fmConf.allowFileExts;
                 }
-                $('#btnUpload').uploadify(conf);
-
+                //$('#btnUpload').uploadify(conf);
+                btnUpload.uploadify(conf);
             }
         },
         createFolder: function () {
@@ -109,6 +113,25 @@
                 });
             }
         },
+        createDocCourse:function(){
+            window.location.href = window.fmConf.ctxPath +"/res/course/addDocCourse";
+        },
+        editDocCourse:function(){
+            var sel = $("#fileList").bootstrapTable('getSelections');
+            if (sel.length > 0) {
+                var docUid = sel[0].uuid,type = sel[0].type;
+                if(type=='0'){
+                    window.location.href = window.fmConf.ctxPath +"/res/course/editDocCourse?uid="+docUid;
+                } else{
+                    alert("请选择需要修改的课程!");
+                }
+            }else{
+                alert("请选择需要修改的课程!");
+            }
+        },
+        uploadDocCourse:function(){
+            $.fm.createUploadMenu('#btnUploadCourse','btn','上传课件');
+        },
         deleteFile:function(){
             var sel = $("#fileList").bootstrapTable('getSelections');
             if (sel.length > 0) {
@@ -147,7 +170,7 @@
         },
         clickCrumbs: function (path) {
             path = encodeURI(path);
-            path = encodeURI(path);
+            //path = encodeURI(path);
             window.location.href = window.fmConf.ctxPath + "/res/common/" + window.fmConf.func + "/list?path=" + path;
         },
         _createDownloadFrame:function(dlUrl, triggerDelay, cleaningDelay){
@@ -210,28 +233,7 @@
                 var href = window.fmConf.ctxPath+"/res/document/download?uuid="+sel[0].uuid;
                 //window.open(href, null, 'height=250, width=400, top=50,left=50, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
                 window.location.href = href;
-                //var frame = $('<iframe style="display: none;" class="multi-download-frame"></iframe>');
-                //frame.attr('src',href);
-                //$('body').append(frame);
-                //setTimeout(function(){
-                //    console.log(sel[0].uuid+":"+$.cookie(sel[0].uuid));
-                //},3000);
 
-                //$.each(sel,function(idx,el){
-                //    var href = window.fmConf.ctxPath+"/res/document/download?uuid="+el.uuid;
-                //    $.fm._createDownloadFrame(href,100*idx,1000);
-                //});
-
-                //var toDownload = new Array();
-                //for(var i=0;i<sel.length;i++){
-                //    if(sel[i].type=='1'){
-                //        toDownload.push(sel[i].uuid);
-                //    }
-                //}
-                //if(toDownload.length>0){
-                //    $.fm._downloadFile(toDownload[0]);
-                //    $.fm._downloadManager(toDownload);
-                //}
             } else {
                 tipNotify("请先选择资源");
             }

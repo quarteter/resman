@@ -28,12 +28,6 @@
         "name": "删除",
         "iconCls": "fa fa-trash",
         "action": "deleteFile"
-      },
-      {
-        "id": "btnShare",
-        "name": "分享",
-        "iconCls": "fa fa-share-alt",
-        "action": "share"
       }
     ],
     "moreMenus": [
@@ -63,15 +57,29 @@
     "allowFileExts": "*.avi;*.flv;*.mp4",
     "menus": [
       {
-        "id": "btnUpload",
-        "name": "上传文件",
+        "id": "btnCourseUpload",
+        "name": "上传课件",
         "action": ""
       },
       {
-        "id": "btnCreateFolder",
-        "name": "新建文件夹",
+        "id":"btnCourse",
+        "name":"课程",
         "iconCls": "fa fa-folder-o",
-        "action": "createFolder"
+        "type":"dropdown",
+        "children":[
+          {
+            "id": "btnCreateCourse",
+            "name": "创建课程",
+            "iconCls": "fa fa-folder-o",
+            "action": "createDocCourse"
+          },
+          {
+            "id": "btnEditCourse",
+            "name": "编辑课程",
+            "iconCls": "fa fa-pencil-square-o",
+            "action": "editDocCourse"
+          }
+        ]
       },
       {
         "id": "btnDownload",
@@ -84,12 +92,6 @@
         "name": "删除",
         "iconCls": "fa fa-trash",
         "action": "deleteFile"
-      },
-      {
-        "id": "btnShare",
-        "name": "分享",
-        "iconCls": "fa fa-share-alt",
-        "action": "share"
       },
       {
         "id": "btnRename",
@@ -145,12 +147,6 @@
         "name": "删除",
         "iconCls": "fa fa-trash",
         "action": "deleteFile"
-      },
-      {
-        "id": "btnShare",
-        "name": "分享",
-        "iconCls": "fa fa-share-alt",
-        "action": "share"
       }
     ],
     "moreMenus": [
