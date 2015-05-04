@@ -81,7 +81,7 @@ INSERT INTO `s_funcs` VALUES ('2102', '1', '教师空间', '2100', '10', '/res/c
 INSERT INTO `s_funcs` VALUES ('2103', '1', '精品素材', '2100', '15', '/res/common/material/list', '', 'fa fa-asterisk');
 INSERT INTO `s_funcs` VALUES ('2104', '1', '精品文档', '2100', '20', '/res/common/docs/list', '', 'fa fa-book');
 INSERT INTO `s_funcs` VALUES ('2105', '1', '经常图库', '2100', '25', '/res/common/imgs/list', '', 'fa fa-picture-o');
-INSERT INTO `s_funcs` VALUES ('2106', '1', '公告管理', '2100', '30', '/res/notice/pageList', '', 'fa fa-info-circle');
+--INSERT INTO `s_funcs` VALUES ('2106', '1', '公告管理', '2100', '30', '/res/notice/pageList', '', 'fa fa-info-circle');
 INSERT INTO `s_funcs` VALUES ('2107', '1', '信息发布', '2100', '35', '/info/list', '', 'fa fa-newspaper-o');
 
 -- ----------------------------
@@ -184,8 +184,14 @@ INSERT INTO `s_role_func` VALUES ('4', '2102');
 INSERT INTO `s_role_func` VALUES ('4', '2103');
 INSERT INTO `s_role_func` VALUES ('4', '2104');
 INSERT INTO `s_role_func` VALUES ('4', '2105');
-INSERT INTO `s_role_func` VALUES ('4', '2106');
+--INSERT INTO `s_role_func` VALUES ('4', '2106');
 INSERT INTO `s_role_func` VALUES ('4', '2107');
+
+
+
+delete from s_role_func where roleid = 4 and funcid = 2106;
+delete from s_funcs where id = 2106;
+
 
 -- ----------------------------
 -- Table structure for s_role_permission
