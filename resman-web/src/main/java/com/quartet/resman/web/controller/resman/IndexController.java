@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,7 +93,8 @@ public class IndexController {
         return "front/index";
     }
 
-    @RequestMapping(value = "getUserInfo" , method = RequestMethod.POST )
+    @RequestMapping(value = "getUserInfo" , method = {RequestMethod.POST,RequestMethod.GET} )
+    @ResponseBody
     public ShiroUser getUserInfo ( ) {
         ShiroUser usr = userService.getCurrentUser();
         return usr;

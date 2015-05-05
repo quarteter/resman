@@ -90,21 +90,38 @@ $(document).ready(function(){
   <div class="login">
   <h1> <a href="#"><img src="/asset/images/login_01.jpg" width="240" height="137" /></a></h1>
    <ul>
-    <li><a href="javascript:void(0)" onclick="LoginIn(true);" class="a1">个人中心</a></li>
-    <li><a href="#" class="a2">我的资源</a></li>
-    <li><a href="#" class="a3">个人资料</a></li>
-    <li><a href="#" class="a4">我的课程</a></li>
-    <li><a href="#" class="a5">作业管理</a></li>
-    <li><a href="javascript:void(0)" onclick="LoginOut();"  class="a6">退出登录</a></li>
-        
-        
-<!--            <li><a href="#"><img src="images/ioc_1.png"   onmouseover="this.src='images/ioc_1hover.png'" onmouseout="this.src='images/ioc_1.png'"/>个人中心</a></li>
-    <li><a href="#"><img src="images/ioc_2.png"   onmouseover="this.src='images/ioc_2hover.png'" onmouseout="this.src='images/ioc_2.png'"/>我的资源</a></li>
-    <li><a href="#"><img src="images/ioc_3.png"   onmouseover="this.src='images/ioc_3hover.png'" onmouseout="this.src='images/ioc_3.png'"/>个人资料</a></li>
-    <li><a href="#"><img src="images/ioc_4.png"   onmouseover="this.src='images/ioc_4hover.png'" onmouseout="this.src='images/ioc_4.png'"/>我的课程</a></li>
-    <li><a href="#"><img src="images/ioc_5.png"   onmouseover="this.src='images/ioc_5hover.png'" onmouseout="this.src='images/ioc_5.png'"/>作业管理</a></li>
-    <li><a href="#"><img src="images/ioc_6.png"   onmouseover="this.src='images/ioc_6hover.png'" onmouseout="this.src='images/ioc_6.png'"/>退出登录</a></li>  
--->    
+       <!--个人中心登录前-->
+       <div id="loginlayer">
+           <form name="LoginForm" id="LoginForm">
+                <li class="user"  >
+                   用户名 <input id = "user" name = "user" type="text"  />
+                </li>
+                 <li class="psw" >
+                   密&nbsp;&nbsp;&nbsp; 码 <input  name="pass" id="pass" type="password" />
+                 </li>
+                  <li class="sub"  >
+                    <input type="submit" id="btnLogin" value="登 录"/>
+                 </li>
+           </form>
+       </div>
+
+       <!--个人中心登录后-->
+     <div id="studentlayer">
+         <div class="login_message"><a href="#" class="a1">欢迎您 <span name="logintip" >  </span> 登录</a></div>
+
+         <li><a href="#" class="a5">作业管理</a></li>
+         <li><a href="#" class="a4">我的问答</a></li>
+         <li><a href="#" class="a6" name="btnLogOut">退出登录</a></li>
+     </div>
+
+       <!-- 教师登录后-->
+       <div id="teacherlayer">
+           <div class="login_message"><a href="#" class="a1">欢迎您 <span name="logintip">  </span>登录</a></div>
+           <li><a href="${ctx}/main" class="a5" target="_blank">后台管理</a></li>
+           <li><a href="#" class="a6" name="btnLogOut">退出登录</a></li>
+        </div>
+
+
    </ul>
   </div>
  <script type="text/javascript">
@@ -358,30 +375,7 @@ $(function () {
   </dl>
   
     </div>
- <div class="bout_right">
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
-   <dl>
-    <dt><a href="#" class="avatar"><img src="/asset/images/pic2.jpg" width="165" height="105" /></a></dt>
-    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-   
-   </dl>
- 
- 
- </div>
+ <div class="bout_right"></div>
   </div>
   </li>
 <li class="bout_none"  >
@@ -624,7 +618,7 @@ $(function(){
             async : false,
             success : function(data){
                 // data = eval("(" + data + ")");
-                if( onSuccess != null && onSuccess != undefined )
+                if( onSuccess != null  && onSuccess != undefined )
                 {
                     onSuccess( data );
                 }
@@ -636,25 +630,29 @@ $(function(){
     /**
     *登录动作
      */
-      function LoginIn( bLogAction )
+      function LoginIn()
       {
-          var userInfo = null;
           var user = $("#user").val();
           var pass = $("#pass").val();
           syncPost("${ctx}/login",{username:user,password:pass} );
+
+      }
+
+      function checkLoginStatus(bLogAction)
+      {
+          var userInfo = null;
           syncPost("${ctx}/front/getUserInfo",null,
                   function( data )
                   {
                       userInfo = data;
                   }
           );
-
           showLoginPage( userInfo );
-
           //未登录或者登录失败,并且点击登录按钮
-          if( userInfo == null &&  bLogAction == true )
+          if( (userInfo == null || userInfo == "" ) &&  bLogAction == true )
           {
-                alert('登陆失败,用户名或密码不正确!');
+              alert('登陆失败,用户名或密码不正确!');
+
           }
       }
 
@@ -664,53 +662,70 @@ $(function(){
       function LoginOut()
       {
          syncPost("${ctx}/logout" );
-         showLogoutPage();
+         loginLayer_init();
       }
 
-        /**
-        *主页左侧显示未登录DIV
-         */
-      function showLogoutPage()
-      {
+    function loginLayer_init()
+    {
+        $("#loginlayer").show();
+        $("#studentlayer").hide();
+        $("#teacherlayer").hide();
+    }
 
-      }
+    function loginLayer_student(  )
+    {
+        $("#loginlayer").hide();
+        $("#studentlayer").show();
+        $("#teacherlayer").hide();
+    }
 
-        /*
-        *主页左侧登录页面切换
-        * */
+    function loginLayer_teacher(  )
+    {
+        $("#loginlayer").hide();
+        $("#studentlayer").hide();
+        $("#teacherlayer").show();
+    }
+
+    function loginLayer_showlogintip( userInfo )
+    {
+        $("span[name=logintip]").text( userInfo.userName + " (" + userInfo.roleName + ") " );
+     }
+
+/*
+*主页左侧登录页面切换
+* */
       function showLoginPage(userInfo )
       {
           //未登录，显示登录框
-         if( userInfo == null )
-         {
+         loginLayer_init();
 
-         }
-         //管理员
-         else if( userInfo.roleId == 4 )
-         {
 
+         //管理员或者老师
+         if( userInfo.roleId == 4 )
+         {
+             loginLayer_teacher();
+             loginLayer_showlogintip(userInfo);
          }
          //学生
          else if( userInfo.roleId == 6 )
          {
-
-         }
-         else
-         {
-             alert( '用户权限分配错误或未分配权限');
+             loginLayer_student();
+             loginLayer_showlogintip(userInfo);
          }
     }
 
     function bindLoginAction() {
         $("#btnLogin").on("click", function () {
             if ($("#LoginForm").valid()) {
-                    LoginIn( true );
+                    LoginIn(  );
+                    checkLoginStatus(true);
             }
+            return false;
         });
     }
 
     function bindLogoutAction() {
-        $("#btnLogout").on("click", function () {
+        $("a[name=btnLogOut]").on("click", function () {
             LoginOut();
         });
     }
@@ -732,11 +747,14 @@ $(function(){
             });
 }
 
+
     $(document).ready(function(){
-/*     addValidator();
-        LoginIn( false );
+        loginLayer_init();
+        addValidator();
+        LoginIn();
+        checkLoginStatus(false);
         bindLoginAction();
-        bindLogoutAction();*/
+        bindLogoutAction();
     });
 </script>
 
