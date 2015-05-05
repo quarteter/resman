@@ -13,6 +13,8 @@ import java.util.List;
  * Created by XWANG on 2015/3/22.
  */
 public interface CommentDao  extends JpaRepository<Comment, Long>, JpaSpecificationExecutor<Comment> {
-    public Page<Comment> findByResourceidAndType(Long resourceid,Comment.CommentType type, Pageable page);
-    public List<Comment> findByResourceidAndType(Long resourceid,Comment.CommentType type );
+    public Page<Comment> findByResourceidAndType(String resourceid,Comment.CommentType type, Pageable page);
+    public List<Comment> findByResourceidAndType(String resourceid,Comment.CommentType type );
+
+    public Page<Comment> findByResourceid(String resourceid,Pageable page);
 }

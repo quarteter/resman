@@ -40,7 +40,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private  Long resourceid;
+    private  String resourceid;
 
     @Enumerated
     private CommentType type;
@@ -82,11 +82,11 @@ public class Comment {
         return id;
     }
 
-    public Long getResourceid() {
+    public String getResourceid() {
         return resourceid;
     }
 
-    public void setResourceid(Long resourceid) {
+    public void setResourceid(String resourceid) {
         this.resourceid = resourceid;
     }
 

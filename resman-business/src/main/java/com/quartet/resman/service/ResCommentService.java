@@ -17,7 +17,7 @@ public class ResCommentService {
     private ResCommentDao resCommentDao;
 
     public Page<ResComment> getResComments(String resId, Pageable page) {
-        return resCommentDao.findByResId(resId, page);
+        return resCommentDao.findByResIdOrderByCrtdateDesc(resId, page);
     }
 
     public void addComment(ResComment resComment) {

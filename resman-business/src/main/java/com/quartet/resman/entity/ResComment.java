@@ -26,8 +26,6 @@ public class ResComment {
 
     private String title;
     private String state;
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
     private String content;
 
     private String resId;

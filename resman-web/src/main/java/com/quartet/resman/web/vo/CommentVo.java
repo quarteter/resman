@@ -7,11 +7,13 @@ public class CommentVo {
 
     private Long id;
 
-    private  Long resourceid;
+    private  String resourceid;
 
     private String type;
 
     private Long crtuser;
+
+    private String crtuserName;
 
     private Date crtdate;
 
@@ -25,11 +27,11 @@ public class CommentVo {
         this.id = id;
     }
 
-    public Long getResourceid() {
+    public String getResourceid() {
         return resourceid;
     }
 
-    public void setResourceid(Long resourceid) {
+    public void setResourceid(String resourceid) {
         this.resourceid = resourceid;
     }
 
@@ -63,5 +65,13 @@ public class CommentVo {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getCrtuserName() {
+        return crtuserName;
+    }
+
+    public void setCrtuserName(String crtuserName) {
+        this.crtuserName = crtuserName;
     }
 }

@@ -92,7 +92,7 @@
             <ul>
                 <c:if test="${fn:length(folders) > 0}">
                     <c:forEach items="${folders}" var="folder">
-                        <li><a href="${ctx}/front/course/list?parent=${folder.uuid}">${folder.name}</a></li>
+                        <li><a href="${ctx}/front/course/list?parent=${folder.uuid}" <c:if test="${parentUid==folder.uuid}">class="curr" </c:if> >${folder.name}</a></li>
                     </c:forEach>
                 </c:if>
             </ul>
@@ -103,7 +103,7 @@
     <div class="content_right">
         <div class="position">
             <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
-            <div class="position_nav"> 您现在的位置 : 首页 / 精品课程 / <c:if test="${parentName!=null}">${parentName} / </c:if>列表
+            <div class="position_nav"> 您现在的位置 : 首页 / 精品课程 / <c:if test="${parentName!=null}">${parentName} </c:if>
             </div>
         </div>
         <div class="news_list works_con">

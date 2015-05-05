@@ -121,7 +121,7 @@
                     </c:if>
                 </c:when>
                 <c:otherwise>
-                    <button id="${menu.id}" type="button" onclick="$.fm.${menu.action}()"
+                    <button id="${menu.id}" type="button" <c:if test="${menu.action!=null && menu.action!=''}">onclick="$.fm.${menu.action}()"</c:if>
                             class="btn btn-default"><span class="${menu.iconCls}"></span>&nbsp;${menu.name}</button>
                 </c:otherwise>
             </c:choose>

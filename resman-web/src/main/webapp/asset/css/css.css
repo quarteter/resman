@@ -244,11 +244,30 @@ input{vertical-align:middle;font-family:"微软雅黑",Georgia, "Times New Roman
 .fooder{ line-height:30px; height:60px; padding-top:30px; text-align:center; font-size:12px; color:#252424; background:#f0f0f0;}
 .fooder1 { height:10px;background: url(../images/fooder.jpg) no-repeat top center #95599f; margin-top:10px;}
 
+/*用户登录 2014.4.27添加*/
+.login .user,.login .psw,login .sub{height:40px;clear:both;width:198px;}
+.user input,.psw input{width:140px;height:28px;border:1px solid #dcd9ef;}
+.sub {padding-top:10px;padding-left:50px;width:148px;}
+.sub input{ width:92px;height:39px; background:url(../images/sub.png); color:#fff;border:none;font-size:16px;}
+.login .login_message {clear:both;height:35px;line-height:35px; text-align:center;}
+
+.login .login_message span{color:red;}
+.banner{width:742px;height:250px; background:url(../images/pic_bj.jpg);padding-top:5px;padding-left:5px;}
 
 
 
-
-
+/* 首页 focus */
+#focus {width:732px; height:240px; overflow:hidden; position:relative;}
+#focus ul {height:380px; position:absolute;}
+#focus ul li {float:left; width:732px; height:244px; overflow:hidden; position:relative; background:#000;}
+#focus ul li div {position:absolute; overflow:hidden;}
+#focus .btnBg {position:absolute; width:732px; height:20px; left:0; bottom:0; background:#000;}
+#focus .btn {position:absolute; width:712px; height:10px; padding:5px 10px; right:0; bottom:0; text-align:right;}
+#focus .btn span {display:inline-block; _display:inline; _zoom:1; width:25px; height:10px; _font-size:0; margin-left:5px; cursor:pointer; background:#fff;}
+#focus .btn span.on {background:#fff;}
+#focus .preNext {width:45px; height:100px; position:absolute; top:90px; background:  url(../images/sprite.png) no-repeat 0 0; cursor:pointer;}
+#focus .pre {left:0;}
+#focus .next {right:0; background-position:right top;}
 
 
 
