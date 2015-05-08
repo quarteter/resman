@@ -47,7 +47,7 @@ public class SysUser {
     @Enumerated
     private State state;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinTable(name = "s_user_role",joinColumns = @JoinColumn(name = "sysUserId"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles = new HashSet<>();

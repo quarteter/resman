@@ -35,7 +35,7 @@
                     "passWd":{
                         required:true,
                         minlength:6,
-                        maxlength:32
+                        maxlength:50
                     }
                 }
             });
@@ -145,6 +145,7 @@
                 </div>
                 <%--<input type="hidden" id="sysUserId" name="sysUserId" value="${user.sysUserId}"/>--%>
                 <input type="hidden" id="id" name="id" value="${user.id}"/>
+                <input type="hidden" id="state" name="state" value="${sysUser.state}"/>
             </div>
             <div class="form-group" id="sysUserNameDiv">
                 <label class="col-sm-2 control-label" for="sysName">用户名</label>

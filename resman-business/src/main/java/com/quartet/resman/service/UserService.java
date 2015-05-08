@@ -156,12 +156,24 @@ public class UserService {
     }
 
     private void encryptPassword(SysUser user) {
-        if (StringUtils.isEmpty(user.getSalt())) {
-            String hexSalt = Digests.generateHexSalt(SALT_SIZE);
-            user.setSalt(hexSalt);
+        if (user.getId()!=null){
+            SysUser sysUser = sysUserDao.findOne(user.getId());
+            user.setRoles(sysUser.getRoles());
+            if (StringUtils.isEmpty(user.getSalt())){
+                user.setSalt(sysUser.getSalt());
+            }
+            if (!sysUser.getPassWd().equals(user.getPassWd())){
+                byte[] pwdBytes = Digests.sha1(user.getPassWd().getBytes(), sysUser.getSalt().getBytes());
+                user.setPassWd(Encodes.encodeHex(pwdBytes));
+            }
+        }else{
+            if (StringUtils.isEmpty(user.getSalt())) {
+                String hexSalt = Digests.generateHexSalt(SALT_SIZE);
+                user.setSalt(hexSalt);
+            }
+            byte[] pwdBytes = Digests.sha1(user.getPassWd().getBytes(), user.getSalt().getBytes());
+            user.setPassWd(Encodes.encodeHex(pwdBytes));
         }
-        byte[] pwdBytes = Digests.sha1(user.getPassWd().getBytes(), user.getSalt().getBytes());
-        user.setPassWd(Encodes.encodeHex(pwdBytes));
     }
 
     /**
