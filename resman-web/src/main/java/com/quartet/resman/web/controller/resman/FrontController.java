@@ -98,6 +98,7 @@ public class FrontController {
             model.addAttribute("resList", list);
         }
         model.addAttribute("func", func);
+        model.addAttribute("search", search);
         return "front/resources";
     }
 

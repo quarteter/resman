@@ -148,7 +148,7 @@
     <div class="content_right">
         <div class="position">
             <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
-            <div class="position_nav"> 您现在的位置 : 首页 / <a href="${ctx}/front/news?type=${type}"> ${toptitle} </a> 正文</div>
+            <div class="position_nav"> 您现在的位置 : 首页 / <a href="${ctx}/front/news?type=${type}"> ${toptitle} </a> / 正文</div>
         </div>
         <div class="news_list">
             <h1>${news.title}</h1>

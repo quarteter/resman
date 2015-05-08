@@ -87,6 +87,9 @@ public class IndexController {
     //新闻
     private final Integer c_news_count = 7;
 
+    //banner
+    private final Integer c_banners_count = 5;
+
     @RequestMapping(value = "home")
     public String index (Model model) {
         init(model);
@@ -119,6 +122,17 @@ public class IndexController {
         getDocs(model);
         getImgs(model);
 
+        getBanners(model);
+
+    }
+
+    private void getBanners(Model model)
+    {
+        Pageable page = null;
+        Sort sort =  new Sort(Sort.Direction.DESC, "id");
+        page =  new PageRequest(0, c_banners_count ,sort );
+        List<Info> infoList  = infoService.getBannerInfo(true,page).getContent();
+        model.addAttribute("bannerinfo_list",infoList);
     }
 
     /**
@@ -272,7 +286,7 @@ public class IndexController {
     }
 
 
-    private List<Info> getInfoPublist(  String type , Integer count , boolean bHot ,boolean banner )
+    private List<Info> getInfoPublist(  String type , Integer count , boolean bHot ,boolean hasImage  )
     {
         Pageable page = null;
         Page<Info> infoList = null;
@@ -281,14 +295,16 @@ public class IndexController {
             sort.and(  new Sort(Sort.Direction.DESC, "readCount") );
         }
         page =  new PageRequest(0, count ,sort );
-        if( banner )
-            infoList = infoService.getBannerInfo(type, true, page);
+        if( hasImage )
+            infoList = infoService.getImageInfo(type, true, page);
+           // infoList = infoService.getBannerInfo(type, true, page);
         else
             infoList = infoService.getInfo(type, true, page);
         List<Info> list = new ArrayList<Info>();
         list.addAll( infoList.getContent() );
         return list;
     }
+
 
 
     /**

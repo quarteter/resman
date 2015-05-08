@@ -99,7 +99,6 @@
             <ul class="menu">
                 <li class="active" style="margin:0;"><a href="javascript:void(0)">知识堂</a></li>
                 <li><a href="javascript:void(0)">问答</a></li>
-                <li><a href="javascript:void(0)">交流</a></li>
             </ul>
             <div class="con1">
 

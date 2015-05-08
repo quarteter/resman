@@ -55,6 +55,22 @@ public class InfoService {
         return infoDao.findAll(DynamicSpecifications.bySearchFilter(filters, Info.class), page);
     }
 
+    public Page<Info> getBannerInfo(boolean publish,Pageable page){
+        List<SearchFilter> filters = new ArrayList();
+        SearchFilter f2 = new SearchFilter("publish", SearchFilter.Operator.EQ,publish);
+        SearchFilter f3 = new SearchFilter("bannerNews", SearchFilter.Operator.EQ,true);
+        filters.add(f2);
+        filters.add(f3);
+        return infoDao.findAll(DynamicSpecifications.bySearchFilter(filters, Info.class), page);
+    }
+
+    public Page<Info> getImageInfo(String type,boolean publish,Pageable page){
+          return infoDao.findByTypeAndPublishHasImage( type ,publish ,page );
+    }
+
+
+
+
     public Info getFirstBannerInfo(String type){
         Pageable p = new PageRequest(0,1,new Sort(Sort.Direction.DESC,"crtdate"));
         Page<Info> page = getBannerInfo(type, true, p);

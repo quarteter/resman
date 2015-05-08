@@ -15,7 +15,8 @@
 <script src="${ctx}/asset/js/topanv.js" type="text/javascript" ></script>
 <script src="${ctx}/asset/js/plugins/validate/jquery.validate.min.js"></script>
 <script src="${ctx}/asset/js/plugins/validate/messages_zh.min.js"></script>
-<script language="JavaScript" type="text/javascript"> 
+ <script src="${ctx}/asset/js/plugins/validate/messages_zh.min.js"></script>
+<script language="JavaScript" type="text/javascript">
 function ChangeDiv(divId,divName,zDivCount,obj) 
 { 
 for(i=0;i<4;i++) 
@@ -203,7 +204,17 @@ $(function () {
  
   </div>
  <div class="content_right">
-  <div class="banner"><img src="/asset/images/pic.jpg" width="747" height="256" /></div>
+
+ <div class="banner">
+     <div id="focus">
+         <ul>
+             <c:forEach items="${bannerinfo_list}" var="n">
+                 <li><a href="news/${n.id}?type=${n.type}"  ><img src="${n.imgPath}" /></a></li>
+             </c:forEach>
+         </ul>
+     </div>
+ </div>
+
   <div class="new_data">
    <div class="new ">
     <h3><ul id="tit">
@@ -241,16 +252,26 @@ $(function () {
   <div class="data">
     <h1>资料库</h1>
    <div class="search">
-  <input name="" type="text" class="infor_text" value="站内搜索" onblur="if (value ==''){value='站内搜索'}" onclick="if(this.value=='站内搜索')this.value=''"/><input name="" type="button" value=" " class="infor_button"/> 
+  <input id="resourcesearchvalue" type="text" class="infor_text" value="站内搜索" onblur="if (value ==''){value='站内搜索'}" onclick="if(this.value=='站内搜索')this.value=''"/><input name="resourcesearch" id="resourcesearch" type="button" value=" " class="infor_button"/>
  </div>
   <ul>
-   <li><a href="#">精品课资源</a></li>
+      <li>
+      资源类型： </li>
+      <select id="resourcetype" style="width: 140px;">
+          <option value ="resources/classic">精品课程</option>
+          <option value ="resources/material">精品素材</option>
+          <option value="resources/docs">精品文档</option>
+          <option value="resources/imgs">经常图库</option>
+      </select>
+
+      <!--
+      <li><a href="#">精品课资源</a></li>
    <li><a href="#">图库资源</a></li>
    <li><a href="#">课件资源</a></li>
    <li><a href="#">素材资源</a></li>
    <li><a href="#">文档资源</a></li>
    <li><a href="#">其他资源</a></li>
-   
+   -->
   </ul> 
   <div style="clear:both"></div>
   <dl>
@@ -493,12 +514,21 @@ $(function(){
 <li  ><p>
 <div class="slid">
  <div  class="bout_left">
-  <h2><a href="news/${stworks_banner.id}"  alt="${skill_banner.title}" > <img src="${stworks_banner.imgPath}" width="280" height="139" /></a></h2>
+  <h2><a href="${ctx}/front/wss/${stworks_banner.id}?type=${stworks_banner.type}"  alt="${stworks_banner.title}" > <img src="${stworks_banner.imgPath}" width="280" height="139" /></a></h2>
   <dl>
       <!--stworks_list-->
     <c:if test="${fn:length(stworks_list)>0}">
       <c:forEach items="${stworks_list}" var="n">
-          <dd>  <a href="news/${n.id}">${n.title}</a></dd>
+                  <c:choose>
+                      <c:when test="${n.type=='sworks'}">
+                          <dd>  <a href="${ctx}/front/wss/${n.id}?type=sworks">${n.title}</a></dd>
+                      </c:when>
+                      <c:otherwise>
+                          <dd>  <a href="${ctx}/front/wss/${n.id}?type=tworks">${n.title}</a></dd>
+                      </c:otherwise>
+                  </c:choose>
+
+
       </c:forEach>
     </c:if>
   </dl>
@@ -509,8 +539,17 @@ $(function(){
      <c:if test="${fn:length(stworks_hot)>0}">
          <c:forEach items="${stworks_hot}" var="n">
              <dl>
-                 <dt><a href="news/${n.id}" class="avatar"><img src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
-                 <dd><a href="news/${n.id}">【热门】${n.title}</a></dd>
+
+                 <c:choose>
+                     <c:when test="${n.type=='sworks'}">
+                         <dt><a href="${ctx}/front/wss/${n.id}?type=sworks" class="avatar"><img src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
+                         <dd><a href="${ctx}/front/wss/${n.id}?type=sworks">【热门】${n.title}</a></dd>
+                     </c:when>
+                     <c:otherwise>
+                         <dt><a href="${ctx}/front/wss/${n.id}?type=tworks" class="avatar"><img src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
+                         <dd><a href="${ctx}/front/wss/${n.id}?type=tworks">【热门】${n.title}</a></dd>
+                     </c:otherwise>
+                 </c:choose>
              </dl>
          </c:forEach>
      </c:if>
@@ -563,9 +602,9 @@ $(function(){
      */
     function changeMoreLink( idx )
     {
-        var surl = '${ctx}/front/news?type=skillContest';
-        if( idx == 0 ) surl = '${ctx}/front/news?type=skillContest';
-        else if( idx == 1 ) surl = '${ctx}/front/works';
+        var surl = '${ctx}/front/wss?type=skillContest';
+        if( idx == 0 ) surl = '${ctx}/front/wss?type=skillContest';
+        else if( idx == 1 ) surl = '${ctx}/front/wss?type=sworks';
         else  surl = '${ctx}/front/news?type=teacherGroup';
         $('#skill_more_link').attr('href', surl);
     }
@@ -607,7 +646,77 @@ $(function(){
 		});
 	  }
 
+
+    topBanner();
 });
+
+   function topBanner()
+   {
+       var sWidth = $("#focus").width(); //获取焦点图的宽度（显示面积）
+       var len = $("#focus ul li").length; //获取焦点图个数
+       var index = 0;
+       var picTimer;
+
+       //以下代码添加数字按钮和按钮后的半透明条，还有上一页、下一页两个按钮
+       var btn = "<div class='btnBg'></div><div class='btn'>";
+       for(var i=0; i < len; i++) {
+           btn += "<span></span>";
+       }
+       btn += "</div><div class='preNext pre'></div><div class='preNext next'></div>";
+       $("#focus").append(btn);
+       $("#focus .btnBg").css("opacity",0.5);
+
+       //为小按钮添加鼠标滑入事件，以显示相应的内容
+       $("#focus .btn span").css("opacity",0.4).mouseenter(function() {
+           index = $("#focus .btn span").index(this);
+           showPics(index);
+       }).eq(0).trigger("mouseenter");
+
+       //上一页、下一页按钮透明度处理
+       $("#focus .preNext").css("opacity",0.2).hover(function() {
+           $(this).stop(true,false).animate({"opacity":"0.5"},300);
+       },function() {
+           $(this).stop(true,false).animate({"opacity":"0.2"},300);
+       });
+
+       //上一页按钮
+       $("#focus .pre").click(function() {
+           index -= 1;
+           if(index == -1) {index = len - 1;}
+           showPics(index);
+       });
+
+       //下一页按钮
+       $("#focus .next").click(function() {
+           index += 1;
+           if(index == len) {index = 0;}
+           showPics(index);
+       });
+
+       //本例为左右滚动，即所有li元素都是在同一排向左浮动，所以这里需要计算出外围ul元素的宽度
+       $("#focus ul").css("width",sWidth * (len));
+
+       //鼠标滑上焦点图时停止自动播放，滑出时开始自动播放
+       $("#focus").hover(function() {
+           clearInterval(picTimer);
+       },function() {
+           picTimer = setInterval(function() {
+               showPics(index);
+               index++;
+               if(index == len) {index = 0;}
+           },4000); //此4000代表自动播放的间隔，单位：毫秒
+       }).trigger("mouseleave");
+
+       //显示图片函数，根据接收的index值显示相应的内容
+       function showPics(index) { //普通切换
+           var nowLeft = -index*sWidth; //根据index值计算ul元素的left值
+           $("#focus ul").stop(true,false).animate({"left":nowLeft},300); //通过animate()调整ul元素滚动到计算出的position
+           //$("#focus .btn span").removeClass("on").eq(index).addClass("on"); //为当前的按钮切换到选中的效果
+           $("#focus .btn span").stop(true,false).animate({"opacity":"0.4"},300).eq(index).stop(true,false).animate({"opacity":"1"},300); //为当前的按钮切换到选中的效果
+       }
+   }
+
+
     //sync post
     function syncPost( url , data , onSuccess )
     {
@@ -626,7 +735,23 @@ $(function(){
         });
     }
 
+     function checkLoginValid()
+     {
+         var user = $("#user").val();
+         var pass = $("#pass").val();
+         if( user == null  || user == "" )
+         {
+             alert("用户名不能为空！");
+             return false;
+         }
 
+         if( pass == null  || pass == "" )
+         {
+             alert("密码不能为空！");
+             return false;
+         }
+         return true;
+     }
     /**
     *登录动作
      */
@@ -716,8 +841,10 @@ $(function(){
 
     function bindLoginAction() {
         $("#btnLogin").on("click", function () {
-            if ($("#LoginForm").valid()) {
-                    LoginIn(  );
+            //if ($("#LoginForm").valid())
+            if( checkLoginValid() )
+            {
+                    LoginIn();
                     checkLoginStatus(true);
             }
             return false;
@@ -746,16 +873,37 @@ $(function(){
                 }
             });
 }
+    function bindResourceSearchAction()
+    {
+        $("#resourcesearch").on("click", function () {
+            var sval = $("#resourcesearchvalue").val();
+
+            if( sval == "" || sval == "站内搜索" ||sval == null )
+            {
+                alert("请输入搜索内容！");
+                return;
+            }
+            var url =  $("#resourcetype").val() + "?search=" + sval;
+            window.open( url ,'资源管理');
+
+        });
+    }
+
 
 
     $(document).ready(function(){
         loginLayer_init();
-        addValidator();
+       // addValidator();
         LoginIn();
         checkLoginStatus(false);
         bindLoginAction();
         bindLogoutAction();
+
+        bindResourceSearchAction();
     });
+
+
+
 </script>
 
     

@@ -19,6 +19,10 @@ public interface InfoDao extends JpaRepository<Info, Long>,JpaSpecificationExecu
 
     public Page<Info> findByTypeAndPublish(String type, boolean publish, Pageable page);
 
+
+    @Query("from Info t  where t.type=?1 and t.publish = ?2 and t.imgPath is not null and t.imgPath <> ''")
+    public Page<Info> findByTypeAndPublishHasImage(String type, boolean publish, Pageable page);
+
     @Query("update Info i set i.publish= ?2 where i.id=?1")
     @Modifying
     public void updateInfoPublishState(Long id,boolean publish);

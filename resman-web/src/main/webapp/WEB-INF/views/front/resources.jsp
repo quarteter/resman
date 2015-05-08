@@ -63,7 +63,7 @@
     <div class="resources_search">
         <div class="resources_search_left">
             <form action="/front/resources/${func}">
-                资源检索 <input id="search_resource" name="search" type="text" class="search_text" value="请输入资源名称"/><input type="submit" value="搜索"
+                资源检索 <input id="search_resource" name="search" type="text" class="search_text" value="${search}"/><input type="submit" value="搜索"
                                                                                             class="search_button"/>
             </form>
         </div>
