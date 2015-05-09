@@ -93,7 +93,7 @@ public class IndexController {
     @RequestMapping(value = "home")
     public String index (Model model) {
         init(model);
-        return "front/index";
+        return "front/index_new";
     }
 
     @RequestMapping(value = "getUserInfo" , method = {RequestMethod.POST,RequestMethod.GET} )
@@ -131,7 +131,7 @@ public class IndexController {
         Pageable page = null;
         Sort sort =  new Sort(Sort.Direction.DESC, "id");
         page =  new PageRequest(0, c_banners_count ,sort );
-        List<Info> infoList  = infoService.getBannerInfo(true,page).getContent();
+        List<Info> infoList  = infoService.getBannerInfo(Constants.INFO_TYPE_NEWS,true,page).getContent();
         model.addAttribute("bannerinfo_list",infoList);
     }
 
@@ -178,7 +178,8 @@ public class IndexController {
     private void getNotice( Model model )
     {
         Pageable page =new PageRequest(0, c_notice_count , new Sort(Sort.Direction.DESC , "id")  );
-        Page<Notice> notices = noticeDao.findByState("1", page );
+        //Page<Notice> notices = noticeDao.findByState("1", page );
+        Page<Info> notices = infoService.getInfo(Constants.INFO_TYPE_NOTICE,true,page);
         model.addAttribute("notices_list", notices.getContent());
     }
 

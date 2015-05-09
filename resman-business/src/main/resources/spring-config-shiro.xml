@@ -15,17 +15,17 @@
 
     <bean id="authc" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
         <property name="loginUrl" value="/login"/>
-        <property name="successUrl" value="/main" />
+        <property name="successUrl" value="/front/index" />
     </bean>
     <bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter">
-        <property name="redirectUrl" value="/login"/>
+        <property name="redirectUrl" value="/front/index"/>
     </bean>
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/login"/>
-        <property name="successUrl" value="/main"/>
-        <property name="unauthorizedUrl" value="/login"/>
+        <property name="loginUrl" value="/front/index"/>
+        <property name="successUrl" value="/front/index"/>
+        <property name="unauthorizedUrl" value="/front/index"/>
         <property name="filterChainDefinitions">
             <value>
                 /asset/** = anon
