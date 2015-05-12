@@ -116,12 +116,16 @@
                     BootstrapDialog.alert("该用户还不是系统用户，请为其初始化系统用户操作!");
                 }
             });
+            $("#btnUserImport").on("click",function(){
+                window.location.href = "${ctx}/sys/user/import"
+            });
         }
         $(document).ready(function () {
             $("#userList").createBootstrapTable({
                 url: "${ctx}/sys/user/query",
                 cudBtn: true,
-                btns: [{id: "btnUserRole", name: "用户角色", iconCls: "fa fa-user", rowSelectAware: true},]
+                btns: [{id: "btnUserRole", name: "用户角色", iconCls: "fa fa-user", rowSelectAware: true},
+                    {id: "btnUserImport", name: "导入用户", iconCls: "fa fa-sign-in", rowSelectAware: false},]
             });
             bindToolBtnEvent();
         });

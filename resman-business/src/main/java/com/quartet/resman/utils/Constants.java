@@ -5,6 +5,8 @@ package com.quartet.resman.utils;
  */
 public class Constants {
 
+    public static final String DEF_PASSWD = "1qa2ws";
+
     public static final String FORMAT_DATE = "yyyy-MM-dd HH:mm:ss";
     public static final String NS_RESMAN ="http://www.quarteter.com/resman";
 
@@ -27,5 +29,8 @@ public class Constants {
     public static final String INFO_TYPE_STRATEGY="strategy";
     public static final String INFO_TYPE_ACHIVEMENT="achievement";
     public static final String INFO_TYPE_NOTICE="notice";
+
+    public static final String ROLE_TEACHER = "teacher";
+    public static final String ROLE_STUDENT = "student";
 
 }

@@ -6,6 +6,8 @@ import com.quartet.resman.entity.Result;
 import com.quartet.resman.entity.Role;
 import com.quartet.resman.entity.SysUser;
 import com.quartet.resman.entity.User;
+import com.quartet.resman.excel.ExcelDataParser;
+import com.quartet.resman.excel.UserDataParser;
 import com.quartet.resman.service.RoleService;
 import com.quartet.resman.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -20,8 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -168,5 +177,54 @@ public class UserController {
             r = new Result(false, "");
         }
         return r;
+    }
+
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
+    public String importUserData(){
+        return "system/user-import";
+    }
+
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
+    public String importUserData(String userType,MultipartFile file){
+        ExcelDataParser<User> parser = new UserDataParser(userType);
+        try{
+            List<User> users = parser.parseData(file.getInputStream());
+            userService.addDefaultUser(users);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return "redirect:/sys/user/list";
+    }
+
+    @RequestMapping(value="/tempFile")
+    public void tempFileDownload(String type,HttpServletRequest request,HttpServletResponse response){
+        String rootPath = request.getSession().getServletContext().getRealPath("/WEB-INF");
+        String filePath = "",fileName ="";
+        if (type.equals("student")){
+            fileName ="学生_模板.xlsx";
+            filePath = "/doc/学生_模板.xlsx";
+        }else if (type.equals("teacher")){
+            fileName ="老师_模板.xlsx";
+            filePath = "/doc/老师_模板.xlsx";
+        }
+        String tempFilePath = rootPath+filePath;
+        try {
+            response.reset();
+            fileName = new String(fileName.getBytes(),"ISO8859-1");
+            response.addHeader("Content-Disposition","attachment; filename="+fileName );
+            response.setContentType("application/octet-stream");
+            FileInputStream fis = new FileInputStream(new File(tempFilePath));
+            int fileSize = 1024;
+            byte[] buffer = new byte[fileSize];
+            int read = -1;
+            OutputStream os = response.getOutputStream();
+            while((read = fis.read(buffer))>0){
+                os.write(buffer,0,read);
+                os.flush();
+            }
+            fis.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

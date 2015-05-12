@@ -138,6 +138,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${version.poi}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${version.poi}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.openoffice</groupId>
             <artifactId>juh</artifactId>
             <version>${openoffice.version}</version>

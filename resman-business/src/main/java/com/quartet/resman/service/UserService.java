@@ -10,6 +10,7 @@ import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.repository.RoleDao;
 import com.quartet.resman.repository.SysUserDao;
 import com.quartet.resman.repository.UserDao;
+import com.quartet.resman.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,29 @@ public class UserService {
         if (sysUid != null) {
             user.setId(sysUid);
             userDao.save(user);
+        }
+    }
+
+    public void addDefaultUser(List<User> users) {
+        for (User user : users) {
+            User.Type ut = user.getUserType();
+            if (ut == User.Type.Student) {
+                SysUser sysUser = new SysUser(user.getStudentNo(), user.getStudentNo());
+                if (StringUtils.isEmpty(sysUser.getEmail())) {
+                    sysUser.setEmail("system@mail.com");
+                }
+                List<Role> roles = roleDao.findByRole(Constants.ROLE_STUDENT);
+                sysUser.getRoles().addAll(roles);
+                addSysUser(sysUser, user);
+            } else if (ut == User.Type.Teacher) {
+                SysUser sysUser = new SysUser(user.getName(), Constants.DEF_PASSWD);
+                if (StringUtils.isEmpty(sysUser.getEmail())) {
+                    sysUser.setEmail("system@mail.com");
+                }
+                List<Role> roles = roleDao.findByRole(Constants.ROLE_TEACHER);
+                sysUser.getRoles().addAll(roles);
+                addSysUser(sysUser, user);
+            }
         }
     }
 
@@ -156,17 +180,17 @@ public class UserService {
     }
 
     private void encryptPassword(SysUser user) {
-        if (user.getId()!=null){
+        if (user.getId() != null) {
             SysUser sysUser = sysUserDao.findOne(user.getId());
             user.setRoles(sysUser.getRoles());
-            if (StringUtils.isEmpty(user.getSalt())){
+            if (StringUtils.isEmpty(user.getSalt())) {
                 user.setSalt(sysUser.getSalt());
             }
-            if (!sysUser.getPassWd().equals(user.getPassWd())){
+            if (!sysUser.getPassWd().equals(user.getPassWd())) {
                 byte[] pwdBytes = Digests.sha1(user.getPassWd().getBytes(), sysUser.getSalt().getBytes());
                 user.setPassWd(Encodes.encodeHex(pwdBytes));
             }
-        }else{
+        } else {
             if (StringUtils.isEmpty(user.getSalt())) {
                 String hexSalt = Digests.generateHexSalt(SALT_SIZE);
                 user.setSalt(hexSalt);
