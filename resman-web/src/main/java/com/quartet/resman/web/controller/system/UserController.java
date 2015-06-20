@@ -8,6 +8,7 @@ import com.quartet.resman.entity.SysUser;
 import com.quartet.resman.entity.User;
 import com.quartet.resman.excel.ExcelDataParser;
 import com.quartet.resman.excel.UserDataParser;
+import com.quartet.resman.rbac.ShiroUser;
 import com.quartet.resman.service.RoleService;
 import com.quartet.resman.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -56,6 +57,17 @@ public class UserController {
         Page<User> users = userService.getUser(page);
         mv.addObject("users", users);
         mv.addObject("totalPages", users.getTotalPages());
+        return mv;
+    }
+
+    @RequestMapping(value="/info",method = RequestMethod.GET)
+    public ModelAndView userInfo(){
+        ModelAndView mv = new ModelAndView("");
+        ShiroUser shiroUser = userService.getCurrentUser();
+        if(shiroUser!=null){
+            User user = userService.getUser(shiroUser.getId());
+            mv.addObject("user",user);
+        }
         return mv;
     }
 

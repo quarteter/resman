@@ -48,6 +48,7 @@ public class User {
     private String major;  //专业
 
     //Teacher的属性
+    private String college;
     private String empNo; //工号
     private String title; //职称
 
@@ -173,5 +174,13 @@ public class User {
 
     public void setTelNum(String telNum) {
         this.telNum = telNum;
+    }
+
+    public String getCollege() {
+        return college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
     }
 }
