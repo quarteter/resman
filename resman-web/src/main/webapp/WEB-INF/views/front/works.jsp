@@ -59,7 +59,7 @@ $(document).ready(function(){
 </div>
 
 <div class="header">
- <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65" /></div>
+ <div class="logo"><img src="${ctx}/asset/images/logo.jpg" width="222" height="65" /></div>
  <div class="nav">
  <ul>
      <li><a href="${ctx}/front/index">网站首页</a></li>
@@ -112,7 +112,7 @@ $(function () {
    <div class="news_list works_con">
        <dl>
            <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dt><img src="${ctx}/asset/images/news_pic.png" width="200" height="132" /></dt>
                 <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
                  
@@ -123,7 +123,7 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dt><img src="${ctx}/asset/images/news_pic.png" width="200" height="132" /></dt>
                 <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
                  
@@ -134,7 +134,7 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dt><img src="${ctx}/asset/images/news_pic.png" width="200" height="132" /></dt>
                 <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
                  
@@ -144,7 +144,7 @@ $(function () {
            
        </dl><dl>
            <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dt><img src="${ctx}/asset/images/news_pic.png" width="200" height="132" /></dt>
                 <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
                  
@@ -155,7 +155,7 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dt><img src="${ctx}/asset/images/news_pic.png" width="200" height="132" /></dt>
                 <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
                  
@@ -166,7 +166,7 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dt><img src="${ctx}/asset/images/news_pic.png" width="200" height="132" /></dt>
                 <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
                  
@@ -176,7 +176,7 @@ $(function () {
            
        </dl><dl>
            <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dt><img src="${ctx}/asset/images/news_pic.png" width="200" height="132" /></dt>
                 <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
                  
@@ -187,7 +187,7 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dt><img src="${ctx}/asset/images/news_pic.png" width="200" height="132" /></dt>
                 <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
                  
@@ -198,7 +198,7 @@ $(function () {
        </dl>
 	   <dl>
            <dt>
-                <dt><img src="/asset/images/news_pic.png" width="200" height="132" /></dt>
+                <dt><img src="${ctx}/asset/images/news_pic.png" width="200" height="132" /></dt>
                 <dd class="news_first_title"> <a href="#">王老师</a></dd>
                 <dd>
                  

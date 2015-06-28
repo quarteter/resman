@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>北京市黄庄职业高中：：动漫与游戏专业</title>
-<link href="/asset/css/css.css" rel="stylesheet" type="text/css" />
+<link href="${ctx}/asset/css/css.css" rel="stylesheet" type="text/css" />
 
 <script src="${ctx}/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="${ctx}/asset/js/jquery.carouFredSel-6.0.4-packed.js" type="text/javascript"></script>

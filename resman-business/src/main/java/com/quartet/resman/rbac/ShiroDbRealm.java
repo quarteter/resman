@@ -2,6 +2,7 @@ package com.quartet.resman.rbac;
 
 import com.quartet.resman.entity.Role;
 import com.quartet.resman.entity.SysUser;
+import com.quartet.resman.entity.User;
 import com.quartet.resman.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
@@ -42,8 +43,10 @@ public class ShiroDbRealm extends AuthorizingRealm {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String sysName = upToken.getUsername();
         SysUser sysUser = userService.getSysUser(sysName);
+        User user = userService.getUser(sysUser.getId());
         if (sysUser != null) {
             ShiroUser shiroUser = new ShiroUser(sysUser.getId(), sysUser.getSysName());
+            shiroUser.setRealName(user.getName());
             Role role = getFirstRole( sysUser.getRoles() );
             if( role != null )
             {

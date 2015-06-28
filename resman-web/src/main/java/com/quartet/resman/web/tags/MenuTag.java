@@ -8,7 +8,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,14 +35,16 @@ public class MenuTag extends SimpleTagSupport {
 //        List<Func> funcs = SysUtils.getBean("userService", UserService.class)
 //                .getSysUserFunc(5L);
         List<FuncVo> vos = denormalize(funcs);
+        PageContext pc = (PageContext)getJspContext();
+        String ctx = ((HttpServletRequest)(pc.getRequest())).getContextPath();
         StringBuilder sb = new StringBuilder();
         sb.append("<ul class='sidebar-menu'>");
-        generateMenu(sb,vos);
+        generateMenu(sb,vos,ctx);
         sb.append("</ul>");
         getJspContext().getOut().write(sb.toString());
     }
 
-    private void generateMenu(StringBuilder sb, List<FuncVo> vos) {
+    private void generateMenu(StringBuilder sb, List<FuncVo> vos,String ctx) {
         for (FuncVo vo : vos) {
             int childSize = vo.getChildren().size();
             if (childSize>0){
@@ -50,7 +54,7 @@ public class MenuTag extends SimpleTagSupport {
             }
             sb.append("<a href='");
             if (vo.getUrl()!=null){
-                sb.append(vo.getUrl() + "'>");
+                sb.append(ctx +vo.getUrl() + "'>");
             }else{
                 sb.append("#'>");
             }
@@ -67,7 +71,7 @@ public class MenuTag extends SimpleTagSupport {
             sb.append("</a>");
             if (childSize>0) {
                 sb.append("<ul class='treeview-menu'>");
-                generateMenu(sb, vo.getChildren());
+                generateMenu(sb, vo.getChildren(),ctx);
                 sb.append("</ul>");
             }
             sb.append("</li>");

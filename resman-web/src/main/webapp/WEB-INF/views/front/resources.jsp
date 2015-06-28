@@ -5,19 +5,19 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>北京市黄庄职业高中：：动漫与游戏专业</title>
-    <link href="/asset/css/css.css" rel="stylesheet" type="text/css"/>
-    <link href="/asset/css/news.css" rel="stylesheet" type="text/css"/>
+    <link href="${ctx}/asset/css/css.css" rel="stylesheet" type="text/css"/>
+    <link href="${ctx}/asset/css/news.css" rel="stylesheet" type="text/css"/>
 
-    <script src="/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
-    <script src="/asset/js/jquery.carouFredSel-6.0.4-packed.js" type="text/javascript"></script>
-    <script type="text/javascript" src="/asset/js/topanv.js"></script>
+    <script src="${ctx}/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="${ctx}/asset/js/jquery.carouFredSel-6.0.4-packed.js" type="text/javascript"></script>
+    <script type="text/javascript" src="${ctx}/asset/js/topanv.js"></script>
     <script src="${ctx}/asset/js/plugins/bsdialog/bootstrap-dialog.js"></script>
     <script src="${ctx}/asset/js/plugins/template/jsrender.min.js"></script>
-    <script type="text/javascript" src="/asset/js/plugins/lhgDialog/lhgdialog.min.js"></script>
+    <script type="text/javascript" src="${ctx}/asset/js/plugins/lhgDialog/lhgdialog.min.js"></script>
     <script>
         $(function(){
             $("#tit li").click(function(){
-                window.location.href="/front/resources/"+$(this).attr('id');
+                window.location.href="${ctx}/front/resources/"+$(this).attr('id');
             });
 
             $("#${func}").attr('class', 'on');
@@ -42,7 +42,7 @@
 </div>
 
 <div class="header">
-    <div class="logo"><img src="/asset/images/logo.jpg" width="222" height="65"/></div>
+    <div class="logo"><img src="${ctx}/asset/images/logo.jpg" width="222" height="65"/></div>
     <div class="nav">
         <ul>
             <li><a href="${ctx}/front/index">网站首页</a></li>
@@ -57,12 +57,12 @@
 </div>
 <div class="main_content resources">
     <div class="position">
-        <div class="home"><img src="/asset/images/home.png" width="19" height="19"/></div>
+        <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
         <div class="position_nav"> 您现在的位置 : 首页 / 资源库 / 列表</div>
     </div>
     <div class="resources_search">
         <div class="resources_search_left">
-            <form action="/front/resources/${func}">
+            <form action="${ctx}/front/resources/${func}">
                 资源检索 <input id="search_resource" name="search" type="text" class="search_text" value="${search}"/><input type="submit" value="搜索"
                                                                                             class="search_button"/>
             </form>
@@ -97,7 +97,7 @@
                             <td class="ta">${res.modifyDate}</td>
                             <td class="ta">${res.type}</td>
                             <td class="ta">${res.downCount}</td>
-                            <td class="ta"><a  href="javascript:void(0)" onclick="viewFile('${res.uuid}','${res.name}')">预览</a> <a href="/res/document/download?uuid=${res.uuid}">下载</a></td>
+                            <td class="ta"><a  href="javascript:void(0)" onclick="viewFile('${res.uuid}','${res.name}')">预览</a> <a href="${ctx}/res/document/download?uuid=${res.uuid}">下载</a></td>
                         </tr>
                     </c:forEach>
                 </table>

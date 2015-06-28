@@ -139,7 +139,7 @@ public class FrontInfoController {
     @RequestMapping(value = "knowledge/{id}")
     public String showKnowledge(@PathVariable(value = "id") Long idl , HttpServletRequest request ) {
         String baseUrl =  request.getContextPath();
-        return "redirect:"+ baseUrl +"/front/news/" + idl + "?type=knowledge";
+        return "forward:" +"/front/news/" + idl + "?type=knowledge";
     }
 
     @RequestMapping(value = "knowledge")

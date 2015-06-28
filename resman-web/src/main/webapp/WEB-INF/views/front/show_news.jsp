@@ -230,7 +230,7 @@
         <script>
             function createLi(data,url,targetUL){
                 $.each(data,function(idx,val){
-                    var li ='<li><a href="${c}'+ url+'/'+val.id+'">'+val.title+'</a></li>';
+                    var li ='<li><a href="${ctx}'+ url+'/'+val.id+'">'+val.title+'</a></li>';
                     $(li).appendTo(targetUL);
                 });
             }

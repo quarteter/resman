@@ -60,7 +60,9 @@
                 $(".pingluns dl").remove();
                 $(html).insertBefore("#paginator");
                 if (recreatePaginator) {
-                    createPaginator(1, data.totalPages);
+                    if(data.totalPage>=1){
+                        createPaginator(1, data.totalPages);
+                    }
                 }
             });
         }
@@ -79,7 +81,9 @@
                     getCommentAndRender(page - 1, false);
                 }
             }
-            $('#paginator').bootstrapPaginator(options);
+            if(totalPage>0 && curPage<=totalPage){
+                $('#paginator').bootstrapPaginator(options);
+            }
         }
         function bindPublishEvent() {
             $("#commentForm").validate({

@@ -143,7 +143,7 @@
             <c:if test="${bannerNews!=null}">
                 <dl>
                     <dt>
-                    <dt><img src="${bannerNews.imgPath}" width="200" height="132"/></dt>
+                    <dt><img src="${ctx}${bannerNews.imgPath}" width="200" height="132"/></dt>
                     <dd class="news_first_title"><a href="${ctx}/front/news/${bannerNews.id}">${bannerNews.title}</a></dd>
                     <dd>
                         ${bannerNews.shortContent}
@@ -280,15 +280,15 @@
         <script>
             function createLi(data,url,targetUL){
                 $.each(data,function(idx,val){
-                    var li ='<li><a href="${c}'+ url+'/'+val.id+'">'+val.title+'</a></li>';
+                    var li ='<li><a href="'+ url+'/'+val.id+'">'+val.title+'</a></li>';
                     $(li).appendTo(targetUL);
                 });
             }
             function createStudentAreaData(){
                 $.get("${ctx}/front/studentArea",{},function(data){
-                    createLi(data['knowledge'],"/front/knowledge","#knowledgeUL");
-                    createLi(data['ques'],"/front/ques","#quesUL");
-                    createLi(data['conn'],"/front/conn","#connUL");
+                    createLi(data['knowledge'],"${ctx}/front/knowledge","#knowledgeUL");
+                    createLi(data['ques'],"${ctx}/front/ques","#quesUL");
+                    createLi(data['conn'],"${ctx}/front/conn","#connUL");
                 });
             }
             $(document).ready(function(){

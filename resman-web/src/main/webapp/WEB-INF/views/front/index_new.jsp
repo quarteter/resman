@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>北京市黄庄职业高中：：动漫与游戏专业</title>
-    <link href="/asset/css/css.css" rel="stylesheet" type="text/css"/>
+    <link href="${ctx}/asset/css/css.css" rel="stylesheet" type="text/css"/>
 
     <script src="${ctx}/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="${ctx}/asset/js/jquery.carouFredSel-6.0.4-packed.js" type="text/javascript"></script>
@@ -106,7 +106,7 @@
                 <!--个人中心登录后-->
                 <shiro:authenticated>
                     <shiro:hasRole name="student">
-                        <div class="login_message"><a href="#" class="a1">欢迎您 <span> wangsanir </span>(学生) 登录</a></div>
+                        <div class="login_message"><a href="#" class="a1">欢迎您 <shiro:principal property="userName"/> </span>(学生) 登录</a></div>
 
                         <li><a href="#" class="a5">作业管理</a></li>
                         <li><a href="#" class="a4">我的问答</a></li>
@@ -115,7 +115,7 @@
                     </shiro:hasRole>
                     
                     <shiro:hasAnyRoles name="admin,teacher">
-                        <div class="login_message"><a href="#" class="a1">欢迎您 <span name="logintip">  </span>登录</a></div>
+                        <div class="login_message"><a href="#" class="a1">欢迎您 <span name="logintip"><shiro:principal property="userName"/></span>登录</a></div>
                         <li><a href="${ctx}/main" class="a5" target="_blank">后台管理</a></li>
                         <li><a href="${ctx}/logout" class="a6" name="btnLogOut">退出登录</a></li>
                     </shiro:hasAnyRoles>
@@ -175,7 +175,7 @@
           </div>
           -->
 
-            <h2><img src="/asset/images/pic04.jpg" width="214" height="123"/></h2>
+            <h2><img src="${ctx}/asset/images/pic04.jpg" width="214" height="123"/></h2>
 
         </div>
         <div class="link">
@@ -201,7 +201,7 @@
             <div id="focus">
                 <ul>
                     <c:forEach items="${bannerinfo_list}" var="n">
-                        <li><a href="news/${n.id}?type=${n.type}"><img src="${n.imgPath}"/></a></li>
+                        <li><a href="${ctx}/news/${n.id}?type=${n.type}"><img src="${ctx}${n.imgPath}"/></a></li>
                     </c:forEach>
                 </ul>
             </div>
@@ -293,7 +293,7 @@
 
 
                 </dl>
-                <h2><img src="/asset/images/pic03.jpg" width="218" height="90"/></h2>
+                <h2><img src="${ctx}/asset/images/pic03.jpg" width="218" height="90"/></h2>
             </div>
 
 
@@ -314,7 +314,7 @@
                     <li style="display:block;">
                         <div class="slid">
                             <div class="bout_left">
-                                <h2><img src="/asset/images/pic01.jpg" width="280" height="139"/></h2>
+                                <h2><img src="${ctx}/asset/images/pic01.jpg" width="280" height="139"/></h2>
 
                                 <h3><a href="#">资料</a><a href="#">资讯</a><a href="#">攻略</a><a href="#">视频</a><a href="#">动漫</a><a
                                         href="#">萌妹</a><a href="#">囧图</a></h3>
@@ -330,25 +330,25 @@
                             </div>
                             <div class="bout_right">
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic02.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic02.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic02.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic02.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic02.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
 
@@ -361,7 +361,7 @@
                     <li class="bout_none">
                         <div class="slid">
                             <div class="bout_left">
-                                <h2><img src="/asset/images/pic01.jpg" width="280" height="139"/></h2>
+                                <h2><img src="${ctx}/asset/images/pic01.jpg" width="280" height="139"/></h2>
 
                                 <h3><a href="#">资料</a><a href="#">资讯</a><a href="#">攻略</a><a href="#">视频</a><a href="#">动漫</a><a
                                         href="#">萌妹</a><a href="#">囧图</a></h3>
@@ -377,25 +377,25 @@
                             </div>
                             <div class="bout_right">
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic1.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic1.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic1.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【热门】 </a></dd>
 
                                 </dl>
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic1.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic1.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
 
@@ -408,7 +408,7 @@
                     <li class="bout_none">
                         <div class="slid">
                             <div class="bout_left">
-                                <h2><img src="/asset/images/pic01.jpg" width="280" height="139"/></h2>
+                                <h2><img src="${ctx}/asset/images/pic01.jpg" width="280" height="139"/></h2>
 
                                 <h3><a href="#">资料</a><a href="#">资讯</a><a href="#">攻略</a><a href="#">视频</a><a href="#">动漫</a><a
                                         href="#">萌妹</a><a href="#">囧图</a></h3>
@@ -428,7 +428,7 @@
                     <li class="bout_none">
                         <div class="slid">
                             <div class="bout_left">
-                                <h2><img src="/asset/images/pic01.jpg" width="280" height="139"/></h2>
+                                <h2><img src="${ctx}/asset/images/pic01.jpg" width="280" height="139"/></h2>
 
                                 <h3><a href="#">资料</a><a href="#">资讯</a><a href="#">攻略</a><a href="#">视频</a><a href="#">动漫</a><a
                                         href="#">萌妹</a><a href="#">囧图</a></h3>
@@ -444,25 +444,25 @@
                             </div>
                             <div class="bout_right">
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic3.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic3.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【 刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic3.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【 民拳刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
-                                    <dt><a href="#" class="avatar"><img src="/asset/images/pic3.jpg" width="165"
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
                                                                         height="105"/></a></dt>
                                     <dd><a href="#">【热门 刃加点推荐</a></dd>
 
@@ -524,7 +524,7 @@
                         <div class="slid">
                             <div class="bout_left">
                                 <h2><a href="wss/${skill_banner.id}?type=skillContest" alt="${skill_banner.title}"><img
-                                        src="${skill_banner.imgPath}" width="280" height="139"/></a></h2>
+                                        src="${ctx}${skill_banner.imgPath}" width="280" height="139"/></a></h2>
 
                                 <div style="clear:both"></div>
                                 <dl>
@@ -541,7 +541,7 @@
                                     <c:forEach items="${sikll_hot}" var="n">
                                         <dl>
                                             <dt><a href="wss/${n.id}?type=skillContest" class="avatar"><img
-                                                    src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a>
+                                                    src="${ctx}${n.imgPath}" width="165" height="105" alt="${n.title}"/></a>
                                             </dt>
                                             <dd><a href="wss/${n.id}?type=skillContest">【热门】${n.title}</a></dd>
                                         </dl>
@@ -556,7 +556,7 @@
                         <div class="slid">
                             <div class="bout_left">
                                 <h2><a href="${ctx}/front/wss/${stworks_banner.id}?type=${stworks_banner.type}"
-                                       alt="${stworks_banner.title}"> <img src="${stworks_banner.imgPath}" width="280"
+                                       alt="${stworks_banner.title}"> <img src="${ctx}${stworks_banner.imgPath}" width="280"
                                                                            height="139"/></a></h2>
                                 <dl>
                                     <!--stworks_list-->
@@ -588,7 +588,7 @@
                                             <c:choose>
                                                 <c:when test="${n.type=='sworks'}">
                                                     <dt><a href="${ctx}/front/wss/${n.id}?type=sworks"
-                                                           class="avatar"><img src="${n.imgPath}" width="165"
+                                                           class="avatar"><img src="${ctx}${n.imgPath}" width="165"
                                                                                height="105" alt="${n.title}"/></a></dt>
                                                     <dd>
                                                         <a href="${ctx}/front/wss/${n.id}?type=sworks">【热门】${n.title}</a>
@@ -596,7 +596,7 @@
                                                 </c:when>
                                                 <c:otherwise>
                                                     <dt><a href="${ctx}/front/wss/${n.id}?type=tworks"
-                                                           class="avatar"><img src="${n.imgPath}" width="165"
+                                                           class="avatar"><img src="${ctx}${n.imgPath}" width="165"
                                                                                height="105" alt="${n.title}"/></a></dt>
                                                     <dd>
                                                         <a href="${ctx}/front/wss/${n.id}?type=tworks">【热门】${n.title}</a>
@@ -617,7 +617,7 @@
                         <div class="slid">
                             <div class="bout_left">
                                 <h2><a href="${ctx}/front/teachers/${teachergroup_banner.id}"
-                                       alt="${teachergroup_banner.title}"><img src="${teachergroup_banner.imgPath}"
+                                       alt="${teachergroup_banner.title}"><img src="${ctx}${teachergroup_banner.imgPath}"
                                                                                width="280" height="139"
                                                                                alt="${skill_banner.title}"/></a></h2>
                                 <dl>
@@ -638,7 +638,7 @@
                                     <c:forEach items="${teachergroup_hot}" var="n">
                                         <dl>
                                             <dt><a href="${ctx}/front/teachers/${n.id}" class="avatar"><img
-                                                    src="${n.imgPath}" width="165" height="105"/></a></dt>
+                                                    src="${ctx}${n.imgPath}" width="165" height="105"/></a></dt>
                                             <dd><a href="${ctx}/front/teachers/${n.id}">【热门】${n.title}</a></dd>
                                         </dl>
                                     </c:forEach>
@@ -935,16 +935,16 @@
             }
 
 
-            //      $(document).ready(function(){
-            //        loginLayer_init();
-            //        // addValidator();
-            //        LoginIn();
-            //        checkLoginStatus(false);
-            //        bindLoginAction();
-            //        bindLogoutAction();
-            //
-            //        bindResourceSearchAction();
-            //      });
+                  $(document).ready(function(){
+//                    loginLayer_init();
+//                    // addValidator();
+//                    LoginIn();
+//                    checkLoginStatus(false);
+//                    bindLoginAction();
+//                    bindLogoutAction();
+
+                    bindResourceSearchAction();
+                  });
 
 
         </script>
