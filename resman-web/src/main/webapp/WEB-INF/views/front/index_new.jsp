@@ -108,7 +108,7 @@
                     <shiro:hasRole name="student">
                         <div class="login_message"><a href="#" class="a1">欢迎您 <shiro:principal property="userName"/> </span>(学生) 登录</a></div>
 
-                        <li><a href="#" class="a5">作业管理</a></li>
+                        <li><a href="${ctx}/front/homework" class="a5">作业管理</a></li>
                         <li><a href="#" class="a4">我的问答</a></li>
 
                         <li><a href="${ctx}/logout" class="a6">退出登录</a></li>

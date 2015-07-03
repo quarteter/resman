@@ -242,3 +242,43 @@ CREATE TABLE `r_res_count` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 
+--modify by xwang 20150723
+
+drop table r_hk_records;
+
+CREATE TABLE `r_hk_records` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `docUid` varchar(60) DEFAULT NULL,
+  `fileName` varchar(120) DEFAULT NULL,
+  `hkId` bigint(20) DEFAULT NULL,
+  `path` varchar(120) DEFAULT NULL,
+  `score` float DEFAULT NULL,
+  `submitDate` datetime DEFAULT NULL,
+  `submitter` varchar(255) DEFAULT NULL,
+  `submitterId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+DROP VIEW IF EXISTS `v_homework`;
+
+CREATE VIEW `v_homework` AS
+     select
+        `hb`.`id` AS `id`,
+        `hb`.`docUid` AS `docUid`,
+        `hb`.`fileName` AS `fileName`,
+        `hb`.`hkId` AS `hkId`,
+        `hb`.`path` AS `path`,
+        `hb`.`score` AS `score`,
+        `hb`.`submitDate` AS `submitDate`,
+        `hb`.`submitter` AS `submitter`,
+        `hb`.`submitterId` AS `submitterId`,
+        `ha`.`name` AS `name`,
+        `ha`.`classNo` AS `classNo`
+    from
+        (`r_home_works` `ha`
+        join `r_hk_records` `hb`)
+    where
+        (`ha`.`id` = `hb`.`hkId`)
+    order by `hb`.`id` desc;
+
+

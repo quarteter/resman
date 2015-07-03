@@ -25,7 +25,7 @@ public class HomeWorkRecord {
     @Column(length = 120)
     private String fileName;
 
-    private float score;
+    private Float score;
 
     @Column(length = 120)
     private String path;
@@ -89,11 +89,11 @@ public class HomeWorkRecord {
         this.fileName = fileName;
     }
 
-    public float getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 

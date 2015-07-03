@@ -142,6 +142,11 @@ public class HWController {
         ShiroUser user = userService.getCurrentUser();
         User u = userService.getUser(user.getId());
         HomeWork hw = hwDao.findOne(hwId);
+        String reDirectUrl =  "forward:../../../front/homework/" + hwId.toString() ;
+        if( user == null || hw == null )
+        {
+            return reDirectUrl ;
+        }
         String fileName = file.getOriginalFilename();
         try{
             InputStream in = file.getInputStream();
@@ -157,6 +162,8 @@ public class HWController {
             doc.setMimeType(mimeType);
             fileService.addFile(doc);
             IOUtils.closeQuietly(in);
+            //清楚之前上传的作业
+            hwRecordDao.deleteByHkIdAndSubmitterId(hw.getId() ,user.getId() );
 
             HomeWorkRecord record = new HomeWorkRecord();
             record.setDocUid(doc.getUuid());
@@ -170,7 +177,7 @@ public class HWController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "dddd";
+        return reDirectUrl ;
     }
 
     @RequestMapping(value = "/record/score",method = RequestMethod.POST)

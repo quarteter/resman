@@ -18,6 +18,10 @@ public interface HWRecordDao extends JpaRepository<HomeWorkRecord,Long> {
     void deleteHomeworkRecords(Long hwid);
 
     @Modifying
+    @Query(value = "delete from HomeWorkRecord r where r.hkId = ?1 and r.submitterId = ?2 ")
+    void deleteByHkIdAndSubmitterId(Long hwid , Long submitterId );
+
+    @Modifying
     @Transactional
     @Query(value = "update HomeWorkRecord r set r.score=?2 where r.id = ?1")
     void updateScore(Long id,float score);
@@ -25,4 +29,6 @@ public interface HWRecordDao extends JpaRepository<HomeWorkRecord,Long> {
     List<HomeWorkRecord> findByHkIdAndSubmitterLike(Long hkId,String submitter);
 
     List<HomeWorkRecord> findByHkId(Long hkId);
+
+    HomeWorkRecord findByHkIdAndSubmitterId(Long hkId , Long submitterId );
 }

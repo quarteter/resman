@@ -1,10 +1,9 @@
 package com.quartet.resman.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -15,24 +14,28 @@ import java.util.Date;
 public class HomeWorkVo {
     @Id
     private Long id;
+    private Long hkId;
+
+    private Long submitterId;
+    private String submitter;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date submitDate;
+
+    @Column(length = 120)
+    private String fileName;
+
+    private Float score;
+
+    @Column(length = 120)
+    private String path;
+
+    @Column(length = 60)
+    private String docUid;
 
     private String name;
 
-    private String description;
-
-    private String coursename;
-
-    private String coursedesc;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date starttime;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date endtime;
-
-    private Long categoryid;
-
-    private String categoryname;
+    private String classNo;
 
     public Long getId() {
         return id;
@@ -40,6 +43,70 @@ public class HomeWorkVo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getHkId() {
+        return hkId;
+    }
+
+    public void setHkId(Long hkId) {
+        this.hkId = hkId;
+    }
+
+    public Long getSubmitterId() {
+        return submitterId;
+    }
+
+    public void setSubmitterId(Long submitterId) {
+        this.submitterId = submitterId;
+    }
+
+    public String getSubmitter() {
+        return submitter;
+    }
+
+    public void setSubmitter(String submitter) {
+        this.submitter = submitter;
+    }
+
+    public Date getSubmitDate() {
+        return submitDate;
+    }
+
+    public void setSubmitDate(Date submitDate) {
+        this.submitDate = submitDate;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public Float getScore() {
+        return score;
+    }
+
+    public void setScore(Float score) {
+        this.score = score;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getDocUid() {
+        return docUid;
+    }
+
+    public void setDocUid(String docUid) {
+        this.docUid = docUid;
     }
 
     public String getName() {
@@ -50,59 +117,11 @@ public class HomeWorkVo {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getClassNo() {
+        return classNo;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCoursename() {
-        return coursename;
-    }
-
-    public void setCoursename(String coursename) {
-        this.coursename = coursename;
-    }
-
-    public String getCoursedesc() {
-        return coursedesc;
-    }
-
-    public void setCoursedesc(String coursedesc) {
-        this.coursedesc = coursedesc;
-    }
-
-    public Date getStarttime() {
-        return starttime;
-    }
-
-    public void setStarttime(Date starttime) {
-        this.starttime = starttime;
-    }
-
-    public Date getEndtime() {
-        return endtime;
-    }
-
-    public void setEndtime(Date endtime) {
-        this.endtime = endtime;
-    }
-
-    public Long getCategoryid() {
-        return categoryid;
-    }
-
-    public void setCategoryid(Long categoryid) {
-        this.categoryid = categoryid;
-    }
-
-    public String getCategoryname() {
-        return categoryname;
-    }
-
-    public void setCategoryname(String categoryname) {
-        this.categoryname = categoryname;
+    public void setClassNo(String classNo) {
+        this.classNo = classNo;
     }
 }
