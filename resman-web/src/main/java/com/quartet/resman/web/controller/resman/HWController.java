@@ -10,6 +10,7 @@ import com.quartet.resman.service.HomeWorkService;
 import com.quartet.resman.service.UserService;
 import com.quartet.resman.store.FileService;
 import com.quartet.resman.store.FolderService;
+import com.quartet.resman.utils.Constants;
 import com.quartet.resman.utils.FileUtils;
 import com.quartet.resman.utils.Types;
 import org.apache.commons.io.IOUtils;
@@ -133,7 +134,7 @@ public class HWController {
         }else{
             records = hwRecordDao.findByHkId(hkId);
         }
-        result.put("rows",records);
+        result.put("rows", records);
         return result;
     }
 
@@ -149,6 +150,8 @@ public class HWController {
         }
         String fileName = file.getOriginalFilename();
         try{
+            checkHomeworkDir(user.getUserName());
+
             InputStream in = file.getInputStream();
             String filePath = "/hw/"+hw.getName();
             String mimeType = FileUtils.getFileExtension(fileName).toLowerCase();
@@ -201,5 +204,13 @@ public class HWController {
             result = new Result(false,"");
         }
         return result;
+    }
+
+    private void checkHomeworkDir(String userName){
+        Folder folder = folderService.getFolder(Constants.REP_HW);
+        if (folder==null){
+            folder = new Folder(Constants.REP_HW,userName,Types.Folders.Homework.getValue());
+            folderService.addFolder(folder);
+        }
     }
 }
