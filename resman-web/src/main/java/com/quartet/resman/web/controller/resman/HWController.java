@@ -163,8 +163,17 @@ public class HWController {
             fileService.addFile(doc);
             IOUtils.closeQuietly(in);
             //清楚之前上传的作业
-            hwRecordDao.deleteByHkIdAndSubmitterId(hw.getId() ,user.getId() );
-
+            HomeWorkRecord oldRecord = hwRecordDao.findByHkIdAndSubmitterId(hw.getId() ,user.getId());
+            if( oldRecord != null ) {
+                hwRecordDao.deleteByHkIdAndSubmitterId(hw.getId(), user.getId());
+                if( !StringUtils.isEmpty( oldRecord.getDocUid() ) )
+                {
+                    Document oldDoc = fileService.getFileInfoByUUID( oldRecord.getDocUid() );
+                    if (oldDoc != null) {
+                        fileService.deleteFile(oldDoc.getPath());
+                    }
+                }
+            }
             HomeWorkRecord record = new HomeWorkRecord();
             record.setDocUid(doc.getUuid());
             record.setHkId(hwId);
