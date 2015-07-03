@@ -2,6 +2,7 @@ package com.quartet.resman.service;
 
 import com.quartet.resman.core.persistence.DynamicSpecifications;
 import com.quartet.resman.core.persistence.SearchFilter;
+import com.quartet.resman.entity.HomeWork;
 import com.quartet.resman.entity.Info;
 import com.quartet.resman.repository.HWRecordDao;
 import com.quartet.resman.repository.HomeWorkDao;
@@ -38,7 +39,7 @@ public class HomeWorkService {
     }
 
 
-    public HomeWorkVo getPreOrNextInfo(Long id,String dire){
+    public HomeWork getPreOrNextInfo(Long id,String dire){
         List<SearchFilter> filters = new ArrayList();
         SearchFilter f1 = null;
         if(dire.equalsIgnoreCase("pre")){
@@ -52,8 +53,8 @@ public class HomeWorkService {
        // filters.add(f2);
        // filters.add(f3);
         Pageable p = new PageRequest(0,1);
-        Page<HomeWorkVo> data = hwVODao.findAll(DynamicSpecifications.bySearchFilter(filters, HomeWorkVo.class), p);
-        List<HomeWorkVo> list = data.getContent();
+        Page<HomeWork> data = hwDao.findAll(DynamicSpecifications.bySearchFilter(filters, HomeWork.class), p);
+        List<HomeWork> list = data.getContent();
         if(list!=null && list.size()>0){
             return list.get(0);
         }
