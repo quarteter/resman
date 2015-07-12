@@ -438,8 +438,9 @@ public class CommonFileController {
     public String initRoot(String rootDir, boolean dirPersonal) {
         Folder rootFolder = folderService.getFolder(rootDir);
         ShiroUser user = userService.getCurrentUser();
+        String createBy = user!=null ? user.getUserName() : "";
         if (rootFolder == null) {
-            rootFolder = new Folder(rootDir, user.getUserName(), "0", "a", Types.Folders.Generic.getValue());
+            rootFolder = new Folder(rootDir, createBy, "0", "a", Types.Folders.Generic.getValue());
             folderService.addFolder(rootFolder);
         }
         if (!dirPersonal)
