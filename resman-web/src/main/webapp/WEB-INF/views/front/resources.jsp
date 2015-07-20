@@ -30,7 +30,7 @@
         function viewFile(uuid, name){
             $.dialog({
                 title:name,
-                content:'url:/res/document/view?uuid='+uuid,
+                content:'url:${ctx}/res/document/view?uuid='+uuid,
                 padding: 0
             });
         }

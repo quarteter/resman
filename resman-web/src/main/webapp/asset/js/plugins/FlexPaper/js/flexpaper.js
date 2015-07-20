@@ -57,8 +57,9 @@ window.FlexPaperViewerEmbedding = window.$f = function(id, args) {
     _localeDirectory 	= (config.localeDirectory!=null?config.localeDirectory:"locale/");
     if(_SWFFile!=null && _SWFFile.indexOf("{" )==0 && _SWFFile.indexOf("[*," ) > 0 && _SWFFile.indexOf("]" ) > 0){_SWFFile = escape(_SWFFile);} // split file fix
 
+    var ctx = (window.ctx) ?  window.ctx :"";
     window[instance] = flashembed(id, {
-        src						    : "/asset/js/plugins/FlexPaper/FlexPaperViewer.swf",
+        src						    : ctx+"/asset/js/plugins/FlexPaper/FlexPaperViewer.swf",
         version					    : [10, 0],
         expressInstall			    : "js/expressinstall.swf",
         wmode					    : _WMode

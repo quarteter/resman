@@ -7,6 +7,9 @@
 <head>
     <title>附件查看</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/asset/js/plugins/FlexPaper/css/flexpaper.css"/>
+    <scirpt>
+        window.ctx = "${ctx}";
+    </scirpt>
     <script type="text/javascript" src="${ctx}/asset/js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="${ctx}/asset/js/plugins/FlexPaper/js/flexpaper.js"></script>
     <script type="text/javascript" src="${ctx}/asset/js/plugins/FlexPaper/js/flexpaper_handlers.js"></script>
