@@ -3,6 +3,7 @@ package com.quartet.resman.store;
 import com.quartet.resman.entity.Document;
 import com.quartet.resman.entity.Entry;
 import com.quartet.resman.entity.Folder;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.ocm.exception.JcrMappingException;
 import org.apache.jackrabbit.ocm.manager.ObjectContentManager;
 import org.apache.jackrabbit.ocm.query.Filter;
@@ -24,7 +25,9 @@ import javax.jcr.Session;
 import javax.jcr.query.QueryResult;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -183,6 +186,46 @@ public class FolderService {
                         }
                     }
                 }
+                return result;
+            }
+        });
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String,Object> getChildren(final String path,final String nameLike,final long from,final long size){
+        return mappingTemplate.execute(new JcrCallback<Map<String,Object>>() {
+            @Override
+            public Map<String,Object> doInJcr(Session session) throws IOException, RepositoryException {
+                String tempPath = path;
+                if(!path.startsWith("/")){
+                    tempPath = "/"+path;
+                }
+
+                javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
+                StringBuilder sqlsb = new StringBuilder();
+                sqlsb.append("SELECT * FROM [rm:entry] AS f WHERE ISCHILDNODE(f,'");
+                sqlsb.append(tempPath+"') ");
+                if (StringUtils.isNotEmpty(nameLike)){
+                    sqlsb.append("AND LOCALNAME(f) LIKE '%"+nameLike+"%' ");
+                }
+                javax.jcr.query.Query query = qm.createQuery(sqlsb.toString(),javax.jcr.query.Query.JCR_SQL2);
+                long total = query.execute().getNodes().getSize();
+
+                query = qm.createQuery(sqlsb.toString(),javax.jcr.query.Query.JCR_SQL2);
+                query.setOffset(from);
+                query.setLimit(size);
+
+                Map<String,Object> result = new HashMap<>();
+                List<Entry> rows = new ArrayList<>();
+
+                QueryResult nodeResult = query.execute();
+                for (NodeIterator it = nodeResult.getNodes(); it.hasNext(); ) {
+                    Node n = it.nextNode();
+                    Entry entry = NodeMapper.mapEntry(n);
+                    rows.add(entry);
+                }
+                result.put("total",total);
+                result.put("rows",rows);
                 return result;
             }
         });

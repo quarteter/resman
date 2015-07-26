@@ -1,6 +1,7 @@
 package com.quartet.resman.store;
 
 import com.quartet.resman.entity.Document;
+import com.quartet.resman.entity.Entry;
 import com.quartet.resman.entity.Folder;
 import com.quartet.resman.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +27,10 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -83,6 +87,46 @@ public class FileService {
         Query q = qm.createQuery(filter);
         q.addOrderByDescending("created");
         return (List<Document>) mappingTemplate.getObjects(q);
+    }
+
+    public Map<String,Object> queryFile(final String parentPath,final String nameLike,
+                                        final long from,final long size){
+        return mappingTemplate.execute(new JcrCallback<Map<String,Object>>() {
+            @Override
+            public Map<String, Object> doInJcr(Session session) throws IOException, RepositoryException {
+                String tempPath = parentPath;
+                if(!parentPath.startsWith("/")){
+                    tempPath = "/"+parentPath;
+                }
+
+                javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
+                StringBuilder sqlsb = new StringBuilder();
+                sqlsb.append("SELECT * FROM [rm:file] AS f WHERE ISCHILDNODE(f,'");
+                sqlsb.append(tempPath+"') ");
+                if (StringUtils.isNotEmpty(nameLike)){
+                    sqlsb.append("AND LOCALNAME(f) LIKE '%"+nameLike+"%' ");
+                }
+                javax.jcr.query.Query query = qm.createQuery(sqlsb.toString(),javax.jcr.query.Query.JCR_SQL2);
+                long total = query.execute().getNodes().getSize();
+
+                query = qm.createQuery(sqlsb.toString(),javax.jcr.query.Query.JCR_SQL2);
+                query.setOffset(from);
+                query.setLimit(size);
+
+                Map<String,Object> result = new HashMap<>();
+                List<Entry> rows = new ArrayList<>();
+
+                QueryResult nodeResult = query.execute();
+                for (NodeIterator it = nodeResult.getNodes(); it.hasNext(); ) {
+                    Node n = it.nextNode();
+                    Entry entry = NodeMapper.mapEntry(n);
+                    rows.add(entry);
+                }
+                result.put("total",total);
+                result.put("rows",rows);
+                return result;
+            }
+        });
     }
 
     public void deleteFile(String filePath) {

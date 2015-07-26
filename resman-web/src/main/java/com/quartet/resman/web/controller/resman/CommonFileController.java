@@ -90,17 +90,23 @@ public class CommonFileController {
 
     @RequestMapping("/query")
     @ResponseBody
-    public List<Map<String, Object>> query(@PathVariable String func, String searchText, String path) {
+    public Map<String,Object> query(@PathVariable String func, String search,
+                                    String path,long limit,long offset ) {
         FileFuncDef def = getFuncDefByName(func);
         String rootPath = initRoot(def.getRootDir(), def.isRootDirPersonal());
         String queryPath = rootPath;
         if (StringUtils.isNotEmpty(path))
             queryPath += path;
-        List<Entry> nodes = folderService.getChildren(queryPath);
+
+        Map<String,Object> data = folderService.getChildren(queryPath,search,offset,limit);
+
+//        List<Entry> nodes = folderService.getChildren(queryPath);
+        List<Entry> nodes = (List<Entry>)data.get("rows");
+
         List<Map<String, Object>> list = new ArrayList();
         List<Map<String, Object>> fileList = new ArrayList();
         if (nodes == null || nodes.size() == 0)
-            return list;
+            return data;
         Map<String, Object> map = null;
         for (Entry node : nodes) {
             map = new HashMap();
@@ -129,7 +135,10 @@ public class CommonFileController {
             }
         }
         list.addAll(fileList);
-        return list;
+        data.put("rows",list);
+
+//        return list;
+        return data;
     }
 
     @RequestMapping("/addFolder")

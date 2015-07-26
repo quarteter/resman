@@ -29,11 +29,17 @@
         },
         createFileTable: function () {
             $(window.fmConf.tabId).bootstrapTable({
+                contentType: "application/x-www-form-urlencoded",
                 url: window.fmConf.ctxPath + '/res/common/' + window.fmConf.func + '/query',
                 queryParams: function (params) {
                     params.path = window.fmConf.filePath;
                     return params;
                 },
+                pageList:"[10, 20, 50, 100]",
+                pagination:true,
+                sidePagination: "server",
+                pageSize: 10,
+                method: "POST",
                 search: true,
                 showRefresh: true,
                 showColumns: true,
