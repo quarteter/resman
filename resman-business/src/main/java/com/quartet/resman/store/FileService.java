@@ -101,7 +101,7 @@ public class FileService {
 
                 javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
                 StringBuilder sqlsb = new StringBuilder();
-                sqlsb.append("SELECT * FROM [rm:file] AS f WHERE ISCHILDNODE(f,'");
+                sqlsb.append("SELECT * FROM [rm:file] AS f WHERE ISDESCENDANTNODE(f,'");
                 sqlsb.append(tempPath+"') ");
                 if (StringUtils.isNotEmpty(nameLike)){
                     sqlsb.append("AND LOCALNAME(f) LIKE '%"+nameLike+"%' ");
