@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.Format;
@@ -42,6 +43,9 @@ public class FrontController {
     private FileService fileService;
 
     @Autowired
+    private FolderService folderService;
+
+    @Autowired
     private ResCountService resCountService;
 
     @RequestMapping(value = "index")
@@ -60,45 +64,75 @@ public class FrontController {
     }
 
     @RequestMapping(value = "resources/{func}")
-    public String resources(@PathVariable(value = "func") String func, String search, Model model) {
+    public String resources(@PathVariable(value = "func") String func, String search, String path, @RequestParam(defaultValue = "0") int page,  Model model) {
         FileFuncDef def = cfController.getFuncDefByName(func);
-        String rootPath = cfController.initRoot(def.getRootDir(), def.isRootDirPersonal()) + "//";
-        List<Document> nodes =  fileService.queryFile(rootPath, search, "", "");
+        String rootPath = cfController.initRoot(def.getRootDir(), def.isRootDirPersonal()) + "/";
+
+        String queryPath = rootPath;
+        if (StringUtils.isNotEmpty(path))
+            queryPath += path;
+
+        Map<String,Object> data = folderService.getChildren(queryPath,search,page * 10 ,10);
+
+        //List<Document> nodes =  fileService.queryFile(rootPath, search, "", "");
+        List<Object> nodes = (List<Object>)data.get("rows");
         List<Map<String, Object>> list = new ArrayList();
         if (nodes != null && nodes.size() > 0) {
             Map<String, Object> map = null;
-            for (Entry node : nodes) {
+            for (Object node : nodes) {
                 map = new HashMap();
-                map.put("uuid", node.getUuid());
-                map.put("name", node.getName());
-                map.put("path", node.getPath());
-                map.put("modifyDate", formatDate(node.getCreated()));
-                map.put("author", node.getCreateBy());
-                if (!(node instanceof Document)) {
-                    continue;
+                if(node instanceof Folder){
+                    Folder folder = (Folder)node;
+                    map.put("uuid", folder.getUuid());
+                    map.put("name", folder.getName());
+                    map.put("path", folder.getPath());
+                    map.put("modifyDate", "-");
+                    map.put("author", "-");
+                    map.put("size","-");
+                    map.put("downCount","-");
+                    map.put("type", "目录");
                 }
-                Document document = (Document) node;
-                String size = "0";
-                long docSize = document.getSize();
-                if (docSize > 1073741824) {
-                    size = String.format("%10.2f", docSize / 1073741824.0) + " GB";
-                } else if (docSize > 1048576) {
-                    size = String.format("%10.2f", docSize / 1048576.0) + " MB";
-                } else {
-                    size = docSize / 1024 + " KB";
-                }
-                map.put("type", document.getMimeType());
-                map.put("size", size);
+                else if (node instanceof Document){
+                    Document doc = (Document)node;
+                    map.put("uuid", doc.getUuid());
+                    map.put("name", doc.getName());
+                    map.put("path", doc.getPath());
+                    map.put("modifyDate", formatDate(doc.getCreated()));
+                    map.put("author", doc.getCreateBy());
+                    map.put("type", doc.getMimeType());
 
-                ResCount resCount = resCountService.getResCount(node.getUuid());
-                map.put("downCount", resCount.getDownCount());
+                    String size = "0";
+                    long docSize = doc.getSize();
+                    if (docSize > 1073741824) {
+                        size = String.format("%10.2f", docSize / 1073741824.0) + " GB";
+                    } else if (docSize > 1048576) {
+                        size = String.format("%10.2f", docSize / 1048576.0) + " MB";
+                    } else {
+                        size = docSize / 1024 + " KB";
+                    }
+                    map.put("size", size);
+
+                    ResCount resCount = resCountService.getResCount(doc.getUuid());
+                    map.put("downCount", resCount.getDownCount());
+                }
 
                 list.add(map);
             }
-            model.addAttribute("resList", list);
+
         }
+
+        model.addAttribute("resList", list);
         model.addAttribute("func", func);
+        model.addAttribute("funcName", def.getTitle());
         model.addAttribute("search", search);
+        model.addAttribute("total", data.get("total"));
+        model.addAttribute("curPage", page);
+        model.addAttribute("path", path);
+        int total = Integer.valueOf(data.get("total").toString());
+        int totalPage = 0;
+        if(total > 0)
+            totalPage = total / 10 + 1;
+        model.addAttribute("totalPage", totalPage);
         return "front/resources";
     }
 
