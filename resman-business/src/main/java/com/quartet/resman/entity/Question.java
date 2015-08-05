@@ -34,7 +34,8 @@ public class Question {
 
     private String state;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="quesId")
     @JsonIgnore
     private List<Answer> answers = new ArrayList<Answer>();
 

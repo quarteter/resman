@@ -27,10 +27,21 @@ public class Answer {
 
     private String content;
 
-    @ManyToOne
+    public Long getQuesId() {
+        return quesId;
+    }
+
+    public void setQuesId(Long quesId) {
+        this.quesId = quesId;
+    }
+
+    private Long quesId;
+
+    /*
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="quesId")
     private Question question;
-
+    */
     public Answer() {
 
     }
@@ -54,18 +65,22 @@ public class Answer {
         return crtuser;
     }
 
+    /*
     public void setQuestion(Question question) {
         this.question = question;
     }
+
+    public Question getQuestion() {
+        return question;
+    }
+    */
 
     public Date getCrtdate() {
 
         return crtdate;
     }
 
-    public Question getQuestion() {
-        return question;
-    }
+
 
     public void setCrtdate(Date crtdate) {
         this.crtdate = crtdate;

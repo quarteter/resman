@@ -12,14 +12,13 @@ import com.quartet.resman.vo.QuestionVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -43,6 +42,10 @@ public class QuestionController {
     @Resource
     private AnswerDao answerDao;
 
+    /**
+     * 管理员查看
+     * @return
+     */
     @RequestMapping("list")
     public String listQuestion() {
         return "resman/question-list";
@@ -80,7 +83,7 @@ public class QuestionController {
             SearchFilter filter = new SearchFilter("title", SearchFilter.Operator.LIKE, searchText);
             filters.add(filter);
         }
-        Specification spec = DynamicSpecifications.bySearchFilter(filters, Notice.class);
+        Specification spec = DynamicSpecifications.bySearchFilter(filters, QuestionVo.class);
         questionPage = questionService.getAllQuestionVo(spec, page);
         Map<String, Object> map = new HashMap<>();
         map.put("rows", questionPage.getContent());
@@ -211,6 +214,25 @@ public class QuestionController {
         return r;
     }
 
+    public Result checkAuth(Long opItemUserID )
+    {
+        Result r = new Result();
+        ShiroUser user = userService.getCurrentUser();
+        if( user == null )
+        {
+            r.setSuccess(false);
+            r.setMsg("用户未登录，请先登录系统！");
+            return r;
+        }
+
+        if( user.getId() != opItemUserID && user.getRoleId()  != 1L )
+        {
+            r.setSuccess(false);
+            r.setMsg("只能删除属于自己的数据！");
+            return r;
+        }
+        return r;
+    }
     //以下是问题回答相关接口
     /**
      * 删除问题回答
@@ -227,6 +249,17 @@ public class QuestionController {
             r.setMsg("删除问题回答是主键不能为空！");
             return r;
         }
+        Answer answer = questionService.getAnswer(aid);
+
+        if (aid == null) {
+            r.setSuccess(false);
+            r.setMsg("删除问题回答是主键不能为空！");
+            return r;
+        }
+        r = checkAuth(answer.getCrtuser().getId());
+        if( !r.isSuccess() )
+            return r;
+
         try {
             questionService.deleteAnswer(aid);
         } catch (Throwable t) {
@@ -238,6 +271,15 @@ public class QuestionController {
     }
 
 
+    @RequestMapping(value = "/updateAnswerPage")
+    public String updateAnswerPage(  Long aid , Long page , Model model )
+    {
+        if( page == null ) page = 0L;
+        Answer answer = questionService.getAnswer(aid);
+        model.addAttribute("answer" ,answer );
+        model.addAttribute("page", page );
+        return "resman/question-answer-edit";
+    }
     /**
      * 对回答行修改
      *
@@ -246,9 +288,8 @@ public class QuestionController {
      */
     @RequestMapping(value = "/updateAnswer")
     @ResponseBody
-    public Result updateAnswer( Answer vo) {
+    public Result updateAnswer( Answer vo ,Long page ) {
         Result result = new Result();
-        ShiroUser user = userService.getCurrentUser();
         Answer answer = answerDao.findOne(vo.getId());
         if( answer == null )
         {
@@ -257,11 +298,9 @@ public class QuestionController {
             result.setSuccess(false);
             return result;
         }
-        if (answer.getCrtuser().getId() !=  user.getId() ) {
-            result.setSuccess(false);
-            result.setMsg("只能修改自己发布的回答！");
+        result =  checkAuth(answer.getCrtuser().getId());
+        if( !result.isSuccess() )
             return result;
-        }
         answer.setCrtdate(new Date());
         answer.setContent(vo.getContent());
         answerDao.save(answer);
@@ -273,18 +312,19 @@ public class QuestionController {
      * 添加回答
      *
      * @param qid 问题ID
-     * @param  vo
      * @return
      */
     @RequestMapping(value = "/addAnswer")
-    @ResponseBody
-    public Result addAnswer(Long qid , Answer vo) {
-        Result result = new Result();
+    public String addAnswer(Long qid , Long page , Answer answer ) {
+        if( page == null )
+            page = 0L;
+        String retPage = String.format("redirect:teacher/view/%d?page=%d",qid,page);
         ShiroUser user = userService.getCurrentUser();
-        vo.setCrtdate(new Date());
-        vo.setCrtuser(userDao.findOne(user.getId()));
-        questionService.addAnswer( qid , vo );
-        return result;
+        answer.setCrtdate(new Date());
+        answer.setCrtuser(userDao.findOne(user.getId()));
+        answer.setQuesId(qid);
+        questionService.addAnswer(answer);
+        return retPage;
     }
 
 
@@ -309,5 +349,72 @@ public class QuestionController {
         map.put("total", answerPage.getTotalElements() );
         return map;
     }
+
+
+    /**
+     * 教师查看所有问题列表
+     * @return
+     */
+    @RequestMapping("teacher/list")
+    public String teacherListQuestion() {
+        return "resman/question-teacher-list";
+    }
+
+
+    @RequestMapping("teacher/view/{id}")
+    public ModelAndView teacherViewQuestion(@PathVariable("id") Long id,
+                             @PageableDefault(size = 20,sort = {"crtdate"}, direction = Sort.Direction.DESC) Pageable page) {
+        ModelAndView mv = new ModelAndView("resman/question-teacher-view");
+        QuestionVo question = questionService.getQuestionVo(id);
+        mv.addObject("question",question);
+        Long userid = 0L;
+        ShiroUser user = userService.getCurrentUser();
+        if( user != null )
+            userid = user.getId();
+        Page<Answer> answerList = questionService.findAnswersByQuestion(id,page);
+        mv.addObject("answer", answerList.getContent());
+        mv.addObject("totalPages", answerList.getTotalPages());
+        mv.addObject("curPage", answerList.getNumber());
+        mv.addObject("user",userid);
+        return mv;
+    }
+
+
+
+    /**
+     * 教师查看自己回答过的问题列表
+     * @return
+     */
+    @RequestMapping("teacher/myAnswerList")
+    public String teacherListMyAnswerQuestion() {
+        return "resman/question-teacher-mylist";
+    }
+
+
+
+    @RequestMapping(value = "teacher/queryMyAnswerList")
+    @ResponseBody
+    public Map<String, Object> queryMyAnswerQuestion(String searchText, @PageableDefault Pageable page) {
+        Page<Question> questionPage = null;
+        ShiroUser user = userService.getCurrentUser();
+        questionPage = questionService.findQuestionByAnswerUser( user.getId() , page );
+        /*
+        if (StringUtils.isNotEmpty(searchText)) {
+            SearchFilter filter = new SearchFilter("title", SearchFilter.Operator.LIKE, searchText);
+            List<SearchFilter> filters = new ArrayList<>(1);
+            filters.add(filter);
+            Specification spec = DynamicSpecifications.bySearchFilter(filters, Question.class);
+            questionPage = questionService.findQuestionByAnswerUser( user.getId() , page );
+        } else {
+            questionPage = questionService.findQuestionByAnswerUser( user.getId() , page );
+        }*/
+        Map<String, Object> map = new HashMap<>();
+        map.put("rows", questionPage.getContent());
+        map.put("total", questionPage.getTotalElements());
+        return map;
+    }
+
+
+
 
 }

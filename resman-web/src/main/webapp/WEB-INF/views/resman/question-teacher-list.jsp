@@ -30,50 +30,6 @@
         function bindToolBtnEvent() {
 
 
-            $("#btnDel").on("click", function (e) {
-                var sel = $("#questionList").bootstrapTable('getSelections');
-                if (sel.length > 0) {
-                    BootstrapDialog.confirm('确认要删除吗?', function (result) {
-                        if (result) {
-                            var ids = "";
-                            for (var i = 0; i < sel.length; i++) {
-                                ids = ids + sel[i].id + ",";
-                            }
-                            $.post("${ctx}/res/question/delete", {
-                                ids: ids
-                            }, function (data) {
-                                if (data.success) {
-                                    window.location.href = "${ctx}/res/question/list"
-                                } else {
-                                    tipError("删除数据失败！");
-                                }
-                            });
-                        } else {
-                        }
-                    });
-
-                }
-            });
-
-            $("#btnAudit").on("click", function (e) {
-                var sel = $("#questionList").bootstrapTable('getSelections');
-                if (sel.length > 0) {
-                    var uid = sel[0].id;
-                    if( sel[0].state == '1' )
-                    {
-                        alert("该记录已经审核，不需要重复审核！");
-                        return;
-                    }
-                    $.post("${ctx}/res/question/audit/" + uid, null, function (data) {
-                        if (data.success) {
-                            alert("审核成功！");
-                            window.location.href = "${ctx}/res/question/list";
-                        } else {
-                            alert(data.msg);
-                        }
-                    });
-                }
-            });
 
         }
         $(document).ready(function () {
@@ -81,8 +37,7 @@
                 url: "${ctx}/res/question/query",
                 cudBtn: false,
                 btns: [
-                    {id: "btnAudit", name: "审核", iconCls: "fa fa-user", rowSelectAware: true},
-                    {id: "btnDel", name: "删除", iconCls: "fa fa-user", rowSelectAware: true}
+
                 ]
             });
             bindToolBtnEvent();
@@ -98,7 +53,7 @@
         }
 
         function nameFormatter(value, row) {
-             return  ' <a href="${ctx}/res/question/view/'+row.id+'">' + value;
+             return  ' <a href="${ctx}/res/question/teacher/view/'+row.id+'">' + value;
         }
 
     </script>
@@ -123,7 +78,6 @@
                 <th data-field="title" data-align="center" data-formatter="nameFormatter">标题</th>
                 <th data-field="username" data-align="center">发布者</th>
                 <th data-field="crtdate" data-align="center">发布时间</th>
-                <th data-field="state" data-align="center"  data-formatter="stateFormatter">发布状态</th>
                 <th data-field="rescount" data-align="center">回复数量</th>
             </tr>
             </thead>

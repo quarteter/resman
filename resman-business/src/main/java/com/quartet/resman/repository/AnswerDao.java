@@ -14,10 +14,10 @@ import java.util.List;
  * Date: 15-1-14
  */
 public interface AnswerDao extends JpaRepository<Answer, Long> {
-    @Query("from Answer t where t.question.id = ?1")
+    @Query("from Answer t where t.quesId = ?1")
     public List<Answer> findByQuestion(Long courseId);
 
-    @Query("from Answer t where t.question.id = ?1")
+    @Query("from Answer t where t.quesId = ?1")
     public Page<Answer> findByQuestion(Long courseId,Pageable page);
 
 }
