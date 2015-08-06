@@ -80,22 +80,24 @@ public class FrontHomeWorkController {
         boolean isUploadHomework = false;
         boolean isScore = false;
         HomeWorkRecord item = homeWorkRecordDao.findByHkIdAndSubmitterId(id , user.getId() );
+        String score = "还未评分";
         if( item != null )
         {
             isUploadHomework = true;
-            isScore = true;
             model.addAttribute("uuid", item.getDocUid());
             model.addAttribute("filename", item.getFileName() );
-            String score = "还未评分";
-            if( item.getScore() != null )
+
+            if( item.getScore() != null)
             {
                 score = item.getScore().toString();
+                isScore = true;
             }
             model.addAttribute("score", score );
         }
 
         model.addAttribute("isUploadHomework", isUploadHomework);
         model.addAttribute("isScore", isScore);
+        model.addAttribute("score", score);
         return "front/show_homework";
     }
 

@@ -81,7 +81,7 @@
                 url: "${ctx}/res/question/query",
                 cudBtn: false,
                 btns: [
-                    {id: "btnAudit", name: "审核", iconCls: "fa fa-user", rowSelectAware: true},
+                   /* {id: "btnAudit", name: "审核", iconCls: "fa fa-user", rowSelectAware: true},*/
                     {id: "btnDel", name: "删除", iconCls: "fa fa-user", rowSelectAware: true}
                 ]
             });
@@ -123,7 +123,7 @@
                 <th data-field="title" data-align="center" data-formatter="nameFormatter">标题</th>
                 <th data-field="username" data-align="center">发布者</th>
                 <th data-field="crtdate" data-align="center">发布时间</th>
-                <th data-field="state" data-align="center"  data-formatter="stateFormatter">发布状态</th>
+              <!--  <th data-field="state" data-align="center"  data-formatter="stateFormatter">发布状态</th>-->
                 <th data-field="rescount" data-align="center">回复数量</th>
             </tr>
             </thead>

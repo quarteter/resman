@@ -76,6 +76,7 @@
                 </div>
             </div>
 
+            <!--
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="title">状态</label>
 
@@ -84,7 +85,7 @@
                 </div>
 
             </div>
-
+             -->
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="title">发布者</label>
 

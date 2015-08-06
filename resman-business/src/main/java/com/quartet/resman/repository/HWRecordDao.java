@@ -14,12 +14,14 @@ import java.util.List;
 public interface HWRecordDao extends JpaRepository<HomeWorkRecord,Long> {
 
     @Modifying
+    @Transactional
     @Query(value = "delete from HomeWorkRecord r where r.hkId = ?1")
     void deleteHomeworkRecords(Long hwid);
 
     @Modifying
+    @Transactional
     @Query(value = "delete from HomeWorkRecord r where r.hkId = ?1 and r.submitterId = ?2 ")
-    void deleteByHkIdAndSubmitterId(Long hwid , Long submitterId );
+    void deleteHomeWorkByIdAndSubmitterId(Long hwid, Long submitterId);
 
     @Modifying
     @Transactional

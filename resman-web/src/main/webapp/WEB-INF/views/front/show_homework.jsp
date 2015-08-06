@@ -182,59 +182,55 @@
             <div class="date">发布时间：<fmt:formatDate value="${homework.publishDate}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
             </div>
 
-            <div class="news_content">
-                作业名称：${homework.name}
-            </div>
 
-            <div class="news_content">
-                起始时间：<fmt:formatDate value="${homework.dateFrom}" pattern="yyyy-MM-dd"></fmt:formatDate>
-            </div>
-
-            <div class="news_content">
-               结束时间：<fmt:formatDate value="${homework.dateTo}" pattern="yyyy-MM-dd"></fmt:formatDate>
-            </div>
+                <li>作业名称：${homework.name}</li>
 
 
-            <div class="news_content">
-               作业备注：${homework.notes}
-            </div>
+
+                <li> 起始时间：<fmt:formatDate value="${homework.dateFrom}" pattern="yyyy-MM-dd"></fmt:formatDate></li>
+
+
+
+                <li>结束时间：<fmt:formatDate value="${homework.dateTo}" pattern="yyyy-MM-dd"></fmt:formatDate></li>
+
+
+
+                <li>作业备注：${homework.notes}</li>
+
 
 
                 <c:choose>
                     <c:when test="${isUploadHomework == true}">
-                        <div class="news_content">
-                            上传状态：<B>已经上传</B>
-                        </div>
-                        <div class="news_content">
-                            作业分数：<B>${score}</B>
-                        </div>
-                        <div class="news_content">
-                            作业下载：<a target="_blank" href="${ctx}/res/document/download?uuid=${uuid}">${filename}</a>
-                        </div>
+
+                        <li>上传状态：<B>已经上传</B></li>
+                        <li>作业分数：<B>${score}</B></li>
+                        <li>作业下载：<a target="_blank" href="${ctx}/res/document/download?uuid=${uuid}">${filename}</a></li>
                     </c:when>
                     <c:otherwise>
-                        <div class="news_content">
-                            上传状态：<B>没有提交</B>
-                        </div>
+
+                            <li>上传状态：<B>没有提交</B></li>
+
                     </c:otherwise>
                 </c:choose>
-            <div class="news_content">
+
                 <form name="uploadhomework" id="uploadhomework" method="post"  action="${ctx}/res/hw/records/submit" enctype="multipart/form-data">
-                    选择作业：<input type="file" name = "file" id="file">
-                    <input type="submit" id="submithomework"  value="提交作业">
+                    <c:if test="${!isScore }">
+                        <li> 选择作业：<input type="file" name = "file" id="file">   </li>
+                        <li align="center"><input type="submit" id="submithomework"  value="提交作业">  </li>
+                    </c:if>
                     <input type="hidden" name="hwId" id="hwId" value="${homework.id}">
                 </form>
-            </div>
+
 
             </div>
 
 
             <ul class="relevant">
                 <c:if test="${pre!=null}">
-                    <li><strong>上一篇:</strong><a href="${ctx}/front/homework/${pre.id}">${pre.name}</a></li>
+                    <li><strong>上一篇:</strong>&nbsp;<a href="${ctx}/front/homework/${pre.id}">${pre.name}</a></li>
                 </c:if>
                 <c:if test="${next!=null}">
-                    <li><strong>下一篇:</strong><a href="${ctx}/front/homework/${next.id}">${next.name}</a></li>
+                    <li><strong>下一篇:</strong>&nbsp;<a href="${ctx}/front/homework/${next.id}">${next.name}</a></li>
                 </c:if>
             </ul>
         </div>

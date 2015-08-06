@@ -129,7 +129,7 @@ public class QuestionController {
         ShiroUser user = userService.getCurrentUser();
 
         question = new Question();
-        question.setState("0");
+        question.setState("1");
         question.setCrtdate(new Date());
         question.setCrtuser( userDao.getOne( user.getId() ) );
         question.setTitle(vo.getTitle());
@@ -394,7 +394,7 @@ public class QuestionController {
 
     @RequestMapping(value = "teacher/queryMyAnswerList")
     @ResponseBody
-    public Map<String, Object> queryMyAnswerQuestion(String searchText, @PageableDefault Pageable page) {
+    public Map<String, Object> queryMyAnswerQuestion(String searchText,  @PageableDefault(size = 20,sort = {"crtdate"}, direction = Sort.Direction.DESC) Pageable page) {
         Page<Question> questionPage = null;
         ShiroUser user = userService.getCurrentUser();
         questionPage = questionService.findQuestionByAnswerUser( user.getId() , page );

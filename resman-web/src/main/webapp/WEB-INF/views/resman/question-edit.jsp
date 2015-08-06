@@ -75,14 +75,14 @@
                     <input id="title" class="form-control" name="title" value = "${question.title}"/>
                 </div>
             </div>
-
+        <!--
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="title">状态</label>
 
                 <div class="col-sm-4">
                     <input id="state" class="form-control" name="state" disabled value = "${question.state}"/>
                 </div>
-
+        -->
             </div>
 
             <div class="form-group">

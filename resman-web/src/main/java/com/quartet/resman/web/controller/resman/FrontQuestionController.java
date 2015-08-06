@@ -69,12 +69,16 @@ public class FrontQuestionController {
         {
             return false;
         }
-        if(question.getState().isEmpty() ||
-                 question.getState().compareTo("0") == 0
-                )
+        if( question.getRescount() == 0  )
         {
             return true;
         }
+      /*  if(question.getState().isEmpty() ||
+                question.getState().compareTo("0") == 0
+                )
+        {
+            return true;
+        }*/
         return false;
     }
 
@@ -146,7 +150,7 @@ public class FrontQuestionController {
         {
             return "redirect:add";
         }
-        vo.setState("0");
+        vo.setState("1");
         vo.setAnswers(new ArrayList<Answer>());
         vo.setCrtdate(new Date());
         vo.setCrtuser( userService.getUser(user.getId()));

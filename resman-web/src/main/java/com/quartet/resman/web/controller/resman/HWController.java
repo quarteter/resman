@@ -143,7 +143,7 @@ public class HWController {
         ShiroUser user = userService.getCurrentUser();
         User u = userService.getUser(user.getId());
         HomeWork hw = hwDao.findOne(hwId);
-        String reDirectUrl =  "forward:../../../front/homework/" + hwId.toString() ;
+        String reDirectUrl =  "redirect:../../../front/homework/" + hwId.toString() ;
         if( user == null || hw == null )
         {
             return reDirectUrl ;
@@ -160,15 +160,10 @@ public class HWController {
                 f = new Folder(filePath,user.getUserName(),Types.Folders.Homework.getValue());
                 folderService.addFolder(f);
             }
-            filePath = filePath+"/"+fileName;
-            Document doc = new Document(filePath + fileName, user.getUserName(), new FileStream(in), file.getSize());
-            doc.setMimeType(mimeType);
-            fileService.addFile(doc);
-            IOUtils.closeQuietly(in);
+
             //清楚之前上传的作业
             HomeWorkRecord oldRecord = hwRecordDao.findByHkIdAndSubmitterId(hw.getId() ,user.getId());
             if( oldRecord != null ) {
-                hwRecordDao.deleteByHkIdAndSubmitterId(hw.getId(), user.getId());
                 if( !StringUtils.isEmpty( oldRecord.getDocUid() ) )
                 {
                     Document oldDoc = fileService.getFileInfoByUUID( oldRecord.getDocUid() );
@@ -176,7 +171,16 @@ public class HWController {
                         fileService.deleteFile(oldDoc.getPath());
                     }
                 }
+                hwRecordDao.deleteHomeWorkByIdAndSubmitterId(hw.getId(), user.getId());
             }
+
+
+            filePath = filePath+"/"+fileName;
+            Document doc = new Document(filePath, user.getUserName(), new FileStream(in), file.getSize());
+            doc.setMimeType(mimeType);
+            fileService.addFile(doc);
+            IOUtils.closeQuietly(in);
+
             HomeWorkRecord record = new HomeWorkRecord();
             record.setDocUid(doc.getUuid());
             record.setHkId(hwId);

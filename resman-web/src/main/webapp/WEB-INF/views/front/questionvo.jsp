@@ -148,7 +148,7 @@
            <ul>
                 <c:if test="${fn:length(question)>0}">
                     <c:forEach items="${question}" var="n">
-                        <li><span><fmt:formatDate value="${n.crtdate}" pattern="yyyy-MM-dd"></fmt:formatDate></span> · <a href="${ctx}/front/ques/${n.id}">${n.title}(回复数：<b>${n.rescount}</b>)</a></li>
+                        <li><span><fmt:formatDate value="${n.crtdate}" pattern="yyyy-MM-dd"></fmt:formatDate></span> · <a href="${ctx}/front/ques/${n.id}">${n.title}(回复数：<b>${n.rescount}</b>)&nbsp;&nbsp;</a></li>
                     </c:forEach>
                 </c:if>
 
