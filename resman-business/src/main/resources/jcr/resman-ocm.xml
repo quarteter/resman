@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jackrabbit-ocm PUBLIC "-//The Apache Software Foundation//DTD Repository//EN" "http://jackrabbit.apache.org/dtd/jackrabbit-ocm-1.5.dtd">
+<!--<!DOCTYPE jackrabbit-ocm PUBLIC "-//The Apache Software Foundation//DTD Repository//EN" "http://jackrabbit.apache.org/dtd/jackrabbit-ocm-1.5.dtd">-->
+<!DOCTYPE jackrabbit-ocm SYSTEM "jackrabbit-ocm-1.5.dtd">
 <jackrabbit-ocm>
     <class-descriptor className="com.quartet.resman.entity.Entry" jcrType="rm:entry" jcrSuperTypes="nt:hierarchyNode" discriminator="false">
         <field-descriptor fieldName="path" path="true" jcrName="path"/>
