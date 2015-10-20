@@ -61,18 +61,18 @@ public class FrontCourseController {
 //        List<Document> files = folderService.getChildrenFiles(parentPath);
 
         List<Folder> folders = folderService.getChildrenFolders(Constants.REP_JPK);
-        List<Document> files =new ArrayList<>();
-        if (StringUtils.isNotEmpty(parent)){
+        List<Document> files = new ArrayList<>();
+        if (StringUtils.isNotEmpty(parent)) {
             Folder parentFolder = folderService.getFolderByUUID(parent);
             files = folderService.getChildrenFiles(parentFolder.getPath());
             model.addAttribute("parentName", parentFolder.getName());
-            model.addAttribute("parentUid",parent);
-        }else{
-            if(folders.size()>0){
+            model.addAttribute("parentUid", parent);
+        } else {
+            if (folders.size() > 0) {
                 Folder parentFolder = folders.get(0);
                 files = folderService.getChildrenFiles(parentFolder.getPath());
                 model.addAttribute("parentName", parentFolder.getName());
-                model.addAttribute("parentUid",parentFolder.getUuid());
+                model.addAttribute("parentUid", parentFolder.getUuid());
             }
         }
 
@@ -95,27 +95,27 @@ public class FrontCourseController {
     public String play(String uid, Model model) {
         if (StringUtils.isNotEmpty(uid)) {
             Document doc = fileService.getFileInfoByUUID(uid);
-            if (doc!=null){
+            if (doc != null) {
                 String parentUid = fileService.getParentUid(doc.getUuid());
                 DocCourse course = courseService.getDocCourseByUid(parentUid);
-                model.addAttribute("doc",doc);
-                model.addAttribute("videoServer",config.getVideoServer());
+                model.addAttribute("doc", doc);
+                model.addAttribute("videoServer", config.getVideoServer());
                 String docName = doc.getName();
                 int idx = docName.lastIndexOf(".");
-                docName = idx!=-1 ? docName.substring(0,idx) : docName;
-                model.addAttribute("docName",docName);
+                docName = idx != -1 ? docName.substring(0, idx) : docName;
+                model.addAttribute("docName", docName);
                 model.addAttribute("course", course);
 
 //                Page<ResComment> comments = commentService.getResComments(uid,new PageRequest(0,5));
-                Page<Comment> comments = commentDao.findByResourceid(uid,new PageRequest(0,5,new Sort(Sort.Direction.DESC,"crtdate")));
-                model.addAttribute("comments",comments.getContent());
-                model.addAttribute("totalPage",comments.getTotalPages());
+                Page<Comment> comments = commentDao.findByResourceid(uid, new PageRequest(0, 5, new Sort(Sort.Direction.DESC, "crtdate")));
+                model.addAttribute("comments", comments.getContent());
+                model.addAttribute("totalPage", comments.getTotalPages());
 
                 ResCount count = countService.getResCount(uid);
-                if (count!=null){
-                    model.addAttribute("viewCount",count.getViewCount());
-                }else{
-                    model.addAttribute("viewCount",1);
+                if (count != null) {
+                    model.addAttribute("viewCount", count.getViewCount());
+                } else {
+                    model.addAttribute("viewCount", 1);
                 }
 
                 countService.addViewCount(uid);
@@ -126,8 +126,8 @@ public class FrontCourseController {
 
     @RequestMapping("/comments")
     @ResponseBody
-    public Page<ResComment> getResComment(String uid, @PageableDefault(size = 5)Pageable page){
-        Page<ResComment> result = commentService.getResComments(uid,page);
+    public Page<ResComment> getResComment(String uid, @PageableDefault(size = 5) Pageable page) {
+        Page<ResComment> result = commentService.getResComments(uid, page);
         return result;
     }
 }
