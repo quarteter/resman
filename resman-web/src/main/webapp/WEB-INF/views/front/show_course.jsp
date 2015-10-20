@@ -228,7 +228,7 @@
                 </div>
             </div>
         </div>
-        <div class="video_right">
+        <div class="video_right" style="word-break:break-all">
             <h1 class="course_name"> 《${course.name}》</h1>
 
             <h1>讲师：${course.teacher}</h1>
