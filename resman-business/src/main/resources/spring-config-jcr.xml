@@ -12,7 +12,7 @@
 
     <bean id="repository" class="org.springframework.extensions.jcr.jackrabbit.RepositoryFactoryBean">
         <property name="configuration" value="classpath:jcr/jackrabbit-repo.xml"></property>
-        <property name="homeDir" value="file:E:\\jackrabbit"/>
+        <property name="homeDir" value="file:D:\\resman\\openkm\\jackrabbit"/>
     </bean>
 
     <bean id="jcrSessionFactory" class="org.springframework.extensions.jcr.jackrabbit.ocm.OcmJackrabbitSessionFactory">

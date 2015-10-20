@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="news_list works_con">
-            <c:if test="${endIdx > 0}">
+            <c:if test="${endIdx >= 0}">
                 <c:forEach begin="${beginIdx}" end="${endIdx}" varStatus="st">
                     <dl>
                         <dt>
