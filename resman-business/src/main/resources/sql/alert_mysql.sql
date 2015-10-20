@@ -110,7 +110,7 @@ INSERT INTO `s_funcs` VALUES (2101, 1, '精品课程', 2100, 5, '/res/common/cla
 INSERT INTO `s_funcs` VALUES (2102, 1, '教师空间', 2100, 10, '/res/common/personal/list', '', NULL);
 INSERT INTO `s_funcs` VALUES (2103, 1, '精品素材', 2100, 15, '/res/common/material/list', '', NULL);
 INSERT INTO `s_funcs` VALUES (2104, 1, '精品文档', 2100, 20, '/res/common/docs/list', '', NULL);
-INSERT INTO `s_funcs` VALUES (2105, 1, '经常图库', 2100, 25, '/res/common/imgs/list', '', NULL);
+INSERT INTO `s_funcs` VALUES (2105, 1, '精品图库', 2100, 25, '/res/common/imgs/list', '', NULL);
 --INSERT INTO `s_funcs` VALUES (2106, 1, '公告管理', 2100, 30, '/res/notice/pageList', '', NULL);
 INSERT INTO `s_funcs` VALUES (2107, 1, '信息发布', 2100, 35, '/info/list', '', NULL);
 

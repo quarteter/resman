@@ -163,7 +163,7 @@ public class IndexController {
     }
 
     /**
-     * 资源-经常图库
+     * 资源-精品图库
      * @param model
      */
     private void getImgs( Model model )

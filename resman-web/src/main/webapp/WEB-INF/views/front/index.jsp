@@ -255,7 +255,7 @@ $(function () {
           <option value ="resources/classic">精品课程</option>
           <option value ="resources/material">精品素材</option>
           <option value="resources/docs">精品文档</option>
-          <option value="resources/imgs">经常图库</option>
+          <option value="resources/imgs">精品图库</option>
       </select>
 
       <!--
@@ -290,7 +290,7 @@ $(function () {
   <li class="on"   style="margin-left:25px;">精品课程 </li>
 <li > 精品素材 </li>
 <li> 精品文档 </li>
-<li> 经常图库 </li>
+<li> 精品图库 </li>
 	 </ul>                                                               
  <div style="clear:both"></div>
  </h1>

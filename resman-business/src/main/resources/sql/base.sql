@@ -80,7 +80,7 @@ INSERT INTO `s_funcs` VALUES ('2101', '1', '精品课程', '2100', '5', '/res/co
 INSERT INTO `s_funcs` VALUES ('2102', '1', '教师空间', '2100', '10', '/res/common/personal/list', '', 'fa fa-th-large');
 INSERT INTO `s_funcs` VALUES ('2103', '1', '精品素材', '2100', '15', '/res/common/material/list', '', 'fa fa-asterisk');
 INSERT INTO `s_funcs` VALUES ('2104', '1', '精品文档', '2100', '20', '/res/common/docs/list', '', 'fa fa-book');
-INSERT INTO `s_funcs` VALUES ('2105', '1', '经常图库', '2100', '25', '/res/common/imgs/list', '', 'fa fa-picture-o');
+INSERT INTO `s_funcs` VALUES ('2105', '1', '精品图库', '2100', '25', '/res/common/imgs/list', '', 'fa fa-picture-o');
 --INSERT INTO `s_funcs` VALUES ('2106', '1', '公告管理', '2100', '30', '/res/notice/pageList', '', 'fa fa-info-circle');
 INSERT INTO `s_funcs` VALUES ('2107', '1', '信息发布', '2100', '35', '/info/list', '', 'fa fa-newspaper-o');
 

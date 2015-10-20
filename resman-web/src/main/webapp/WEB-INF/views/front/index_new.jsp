@@ -26,10 +26,10 @@
             var $len = document.getElementById("title").getElementsByTagName("li").length;
             for (j = 0; j < $len; j++) {
                 if (j == divId) {
-                    document.getElementById("title").getElementsByTagName("li")[j].style.background = "images/bou_1.png";
+                    document.getElementById("title").getElementsByTagName("li")[j].style.background = "${ctx}/asset/images/bou_1.png";
                     document.getElementById("title").getElementsByTagName("li")[j].style.color = "#ffffff";
                 } else {
-                    document.getElementById("title").getElementsByTagName("li")[j].style.background = "images/bou_1hover.png";
+                    document.getElementById("title").getElementsByTagName("li")[j].style.background = "${ctx}/asset/images/bou_1hover.png";
                     document.getElementById("title").getElementsByTagName("li")[j].style.color = "#ffffff";
                 }
             }
@@ -81,7 +81,7 @@
             <h1><span><a href="${ctx}/front/news?type=notice">更多>></a></span>通知公告</h1>
             <ul>
                 <c:forEach items="${notices_list}" var="n">
-                   <li><a href="${ctx}/front/news/${n.id}?type=notice">${n.title} </a></li>
+                    <li><a href="${ctx}/front/news/${n.id}?type=notice">${n.title} </a></li>
                 </c:forEach>
             </ul>
         </div>
@@ -106,16 +106,18 @@
                 <!--个人中心登录后-->
                 <shiro:authenticated>
                     <shiro:hasRole name="student">
-                        <div class="login_message"><a href="#" class="a1">欢迎您 <shiro:principal property="userName"/> </span>(学生) 登录</a></div>
+                        <div class="login_message"><a href="#" class="a1">欢迎您 <shiro:principal
+                                property="userName"/> </span>(学生) 登录</a></div>
 
                         <li><a href="${ctx}/front/homework" class="a5">作业管理</a></li>
                         <li><a href="${ctx}/front/myquestion" class="a4">我的问答</a></li>
                         <li><a href="${ctx}/front/question/add" class="a4">问答提问</a></li>
                         <li><a href="${ctx}/logout" class="a6">退出登录</a></li>
                     </shiro:hasRole>
-                    
+
                     <shiro:hasAnyRoles name="admin,teacher">
-                        <div class="login_message"><a href="#" class="a1">欢迎您 <span name="logintip"><shiro:principal property="userName"/></span>登录</a></div>
+                        <div class="login_message"><a href="#" class="a1">欢迎您 <span name="logintip"><shiro:principal
+                                property="userName"/></span>登录</a></div>
                         <li><a href="${ctx}/main" class="a5" target="_blank">后台管理</a></li>
                         <li><a href="${ctx}/logout" class="a6" name="btnLogOut">退出登录</a></li>
                     </shiro:hasAnyRoles>
@@ -154,7 +156,7 @@
             <div class="con2">
                 <ul>
                     <c:forEach items="${question_list}" var="n">
-                        <li><a href="news/${n.id}">${n.title}</a></li>
+                        <li><a href="ques/${n.id}">${n.title}</a></li>
                     </c:forEach>
                 </ul>
             </div>
@@ -269,28 +271,17 @@
                         <option value="resources/classic">精品课程</option>
                         <option value="resources/material">精品素材</option>
                         <option value="resources/docs">精品文档</option>
-                        <option value="resources/imgs">经常图库</option>
+                        <option value="resources/imgs">精品图库</option>
                     </select>
-
-                    <!--
-                    <li><a href="#">精品课资源</a></li>
-                 <li><a href="#">图库资源</a></li>
-                 <li><a href="#">课件资源</a></li>
-                 <li><a href="#">素材资源</a></li>
-                 <li><a href="#">文档资源</a></li>
-                 <li><a href="#">其他资源</a></li>
-                 -->
                 </ul>
                 <div style="clear:both"></div>
                 <dl>
-
                     <c:if test="${fn:length(strategy_list)>0}">
                         <c:forEach items="${strategy_list}" var="n">
                             <dt>【攻略】</dt>
                             <dd><a href="${ctx}/front/news/${n.id}?type=strategy">${n.title}</a></dd>
                         </c:forEach>
                     </c:if>
-
 
                 </dl>
                 <h2><img src="${ctx}/asset/images/pic03.jpg" width="218" height="90"/></h2>
@@ -305,7 +296,7 @@
                     <li class="on" style="margin-left:25px;">精品课程</li>
                     <li> 精品素材</li>
                     <li> 精品文档</li>
-                    <li> 经常图库</li>
+                    <li> 精品图库</li>
                 </ul>
                 <div style="clear:both"></div>
             </h1>
@@ -360,46 +351,89 @@
                     </li>
                     <li class="bout_none">
                         <div class="slid">
-                            <div class="bout_left">
-                                <h2><img src="${ctx}/asset/images/pic01.jpg" width="280" height="139"/></h2>
 
-                                <h3><a href="#">资料</a><a href="#">资讯</a><a href="#">攻略</a><a href="#">视频</a><a href="#">动漫</a><a
-                                        href="#">萌妹</a><a href="#">囧图</a></h3>
 
-                                <div style="clear:both"></div>
-                                <dl>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                </dl>
+                            <div class="tables">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="thead">资源名称</td>
+                                        <td class="thead">发布者</td>
+                                        <td class="thead">发布时间</td>
+                                        <td class="thead">资源类型</td>
+                                        <td class="thead">操作</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
+                                        <td class="ta">管理员</td>
+                                        <td class="ta">2014-05-08</td>
+                                        <td class="ta">图片</td>
+                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr class="tb">
+                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
+                                        <td class="tb">管理员</td>
+                                        <td class="tb">2014-05-08</td>
+                                        <td class="tb">附件</td>
+                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
+                                        <td class="ta">管理员</td>
+                                        <td class="ta">2014-05-08</td>
+                                        <td class="ta">图片</td>
+                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr class="tb">
+                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
+                                        <td class="tb">管理员</td>
+                                        <td class="tb">2014-05-08</td>
+                                        <td class="tb">附件</td>
+                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
+                                        <td class="ta">管理员</td>
+                                        <td class="ta">2014-05-08</td>
+                                        <td class="ta">图片</td>
+                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr class="tb">
+                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
+                                        <td class="tb">管理员</td>
+                                        <td class="tb">2014-05-08</td>
+                                        <td class="tb">附件</td>
+                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
+                                        <td class="ta">管理员</td>
+                                        <td class="ta">2014-05-08</td>
+                                        <td class="ta">图片</td>
+                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr class="tb">
+                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
+                                        <td class="tb">管理员</td>
+                                        <td class="tb">2014-05-08</td>
+                                        <td class="tb">附件</td>
+                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
+                                        <td class="ta">管理员</td>
+                                        <td class="ta">2014-05-08</td>
+                                        <td class="ta">图片</td>
+                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr class="tb">
+                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
+                                        <td class="tb">管理员</td>
+                                        <td class="tb">2014-05-08</td>
+                                        <td class="tb">附件</td>
+                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
 
-                            </div>
-                            <div class="bout_right">
-                                <dl>
-                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic1.jpg" width="165"
-                                                                        height="105"/></a></dt>
-                                    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-
-                                </dl>
-                                <dl>
-                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic1.jpg" width="165"
-                                                                        height="105"/></a></dt>
-                                    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-
-                                </dl>
-                                <dl>
-                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic1.jpg" width="165"
-                                                                        height="105"/></a></dt>
-                                    <dd><a href="#">【热门】 </a></dd>
-
-                                </dl>
-                                <dl>
-                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic1.jpg" width="165"
-                                                                        height="105"/></a></dt>
-                                    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-
-                                </dl>
+                                </table>
 
 
                             </div>
@@ -407,63 +441,136 @@
                     </li>
                     <li class="bout_none">
                         <div class="slid">
-                            <div class="bout_left">
-                                <h2><img src="${ctx}/asset/images/pic01.jpg" width="280" height="139"/></h2>
 
-                                <h3><a href="#">资料</a><a href="#">资讯</a><a href="#">攻略</a><a href="#">视频</a><a href="#">动漫</a><a
-                                        href="#">萌妹</a><a href="#">囧图</a></h3>
+                            <div class="tables">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="thead">文档名称</td>
+                                        <td class="thead">发布者</td>
+                                        <td class="thead">发布时间</td>
+                                        <td class="thead">资源类型</td>
+                                        <td class="thead">操作</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
+                                        <td class="ta">管理员</td>
+                                        <td class="ta">2014-05-08</td>
+                                        <td class="ta">图片</td>
+                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr class="tb">
+                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
+                                        <td class="tb">管理员</td>
+                                        <td class="tb">2014-05-08</td>
+                                        <td class="tb">附件</td>
+                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
+                                        <td class="ta">管理员</td>
+                                        <td class="ta">2014-05-08</td>
+                                        <td class="ta">图片</td>
+                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr class="tb">
+                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
+                                        <td class="tb">管理员</td>
+                                        <td class="tb">2014-05-08</td>
+                                        <td class="tb">附件</td>
+                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
+                                        <td class="ta">管理员</td>
+                                        <td class="ta">2014-05-08</td>
+                                        <td class="ta">图片</td>
+                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr class="tb">
+                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
+                                        <td class="tb">管理员</td>
+                                        <td class="tb">2014-05-08</td>
+                                        <td class="tb">附件</td>
+                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
+                                        <td class="ta">管理员</td>
+                                        <td class="ta">2014-05-08</td>
+                                        <td class="ta">图片</td>
+                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr class="tb">
+                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
+                                        <td class="tb">管理员</td>
+                                        <td class="tb">2014-05-08</td>
+                                        <td class="tb">附件</td>
+                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
+                                        <td class="ta">管理员</td>
+                                        <td class="ta">2014-05-08</td>
+                                        <td class="ta">图片</td>
+                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
+                                    <tr class="tb">
+                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
+                                        <td class="tb">管理员</td>
+                                        <td class="tb">2014-05-08</td>
+                                        <td class="tb">附件</td>
+                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
+                                    </tr>
 
-                                <div style="clear:both"></div>
-                                <dl>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                </dl>
+                                </table>
+
 
                             </div>
-                            <div class="bout_right"></div>
                         </div>
                     </li>
                     <li class="bout_none">
                         <div class="slid">
-                            <div class="bout_left">
-                                <h2><img src="${ctx}/asset/images/pic01.jpg" width="280" height="139"/></h2>
 
-                                <h3><a href="#">资料</a><a href="#">资讯</a><a href="#">攻略</a><a href="#">视频</a><a href="#">动漫</a><a
-                                        href="#">萌妹</a><a href="#">囧图</a></h3>
-
-                                <div style="clear:both"></div>
-                                <dl>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                    <dd><a href="#">微课程大智慧——我校组织"微课基础理论与制作技术"</a></dd>
-                                </dl>
-
-                            </div>
-                            <div class="bout_right">
+                            <div class="bout_right" style="width:600px;">
                                 <dl>
                                     <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
-                                                                        height="105"/></a></dt>
+                                                                        height="105"/></a>
+                                    </dt>
                                     <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
                                     <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
-                                                                        height="105"/></a></dt>
+                                                                        height="105"/></a>
+                                    </dt>
                                     <dd><a href="#">【 刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
                                     <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
-                                                                        height="105"/></a></dt>
+                                                                        height="105"/></a>
+                                    </dt>
                                     <dd><a href="#">【 民拳刃加点推荐</a></dd>
 
                                 </dl>
                                 <dl>
                                     <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
-                                                                        height="105"/></a></dt>
+                                                                        height="105"/></a>
+                                    </dt>
+                                    <dd><a href="#">【热门 刃加点推荐</a></dd>
+
+                                </dl>
+                                <dl>
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
+                                                                        height="105"/></a>
+                                    </dt>
+                                    <dd><a href="#">【热门 刃加点推荐</a></dd>
+
+                                </dl>
+                                <dl>
+                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
+                                                                        height="105"/></a>
+                                    </dt>
                                     <dd><a href="#">【热门 刃加点推荐</a></dd>
 
                                 </dl>
@@ -472,11 +579,12 @@
                             </div>
                         </div>
                     </li>
-
                 </ul>
             </div>
 
         </div>
+
+        <script src="js/jquery-1.8.3.min.js"></script>
 
         <script>
             $(function () {
@@ -556,7 +664,8 @@
                         <div class="slid">
                             <div class="bout_left">
                                 <h2><a href="${ctx}/front/wss/${stworks_banner.id}?type=${stworks_banner.type}"
-                                       alt="${stworks_banner.title}"> <img src="${ctx}${stworks_banner.imgPath}" width="280"
+                                       alt="${stworks_banner.title}"> <img src="${ctx}${stworks_banner.imgPath}"
+                                                                           width="280"
                                                                            height="139"/></a></h2>
                                 <dl>
                                     <!--stworks_list-->
@@ -617,9 +726,10 @@
                         <div class="slid">
                             <div class="bout_left">
                                 <h2><a href="${ctx}/front/teachers/${teachergroup_banner.id}"
-                                       alt="${teachergroup_banner.title}"><img src="${ctx}${teachergroup_banner.imgPath}"
-                                                                               width="280" height="139"
-                                                                               alt="${skill_banner.title}"/></a></h2>
+                                       alt="${teachergroup_banner.title}"><img
+                                        src="${ctx}${teachergroup_banner.imgPath}"
+                                        width="280" height="139"
+                                        alt="${skill_banner.title}"/></a></h2>
                                 <dl>
                                     <dl>
                                         <!--teachergroup_list-->
@@ -656,17 +766,6 @@
         </div>
         <script>
             $(function () {
-                /**
-                 x chage more link url
-                 */
-                function changeMoreLink(idx) {
-                    var surl = '${ctx}/front/wss?type=skillContest';
-                    if (idx == 0) surl = '${ctx}/front/wss?type=skillContest';
-                    else if (idx == 1) surl = '${ctx}/front/wss?type=sworks';
-                    else  surl = '${ctx}/front/news?type=teacherGroup';
-                    $('#skill_more_link').attr('href', surl);
-                }
-
                 $('.zzsc1 .content1 ul').width(720 * $('.zzsc1 .content1 li').length + 'px');
                 $(".zzsc1 .tab2 li").mouseover(function () {
                     $(this).addClass('tit_show').siblings().removeClass('tit_show');
@@ -676,7 +775,6 @@
                     $('.zzsc1 .content1 ul').stop().animate({
                         left: distance
                     });
-                    changeMoreLink(index);
                 });
 
                 var auto = 1;  //等于1则自动切换，其他任意数字则不自动切换
@@ -692,8 +790,6 @@
                         $('.zzsc1 .content1 ul').stop().animate({
                             left: distance
                         });
-
-                        changeMoreLink(index);
                     }
 
                     var tabChange = setInterval(autotab, 3000);
@@ -705,248 +801,7 @@
                         tabChange = setInterval(autotab, 3000);
                     });
                 }
-
-
-                topBanner();
             });
-
-            function topBanner() {
-                var sWidth = $("#focus").width(); //获取焦点图的宽度（显示面积）
-                var len = $("#focus ul li").length; //获取焦点图个数
-                var index = 0;
-                var picTimer;
-
-                //以下代码添加数字按钮和按钮后的半透明条，还有上一页、下一页两个按钮
-                var btn = "<div class='btnBg'></div><div class='btn'>";
-                for (var i = 0; i < len; i++) {
-                    btn += "<span></span>";
-                }
-                btn += "</div><div class='preNext pre'></div><div class='preNext next'></div>";
-                $("#focus").append(btn);
-                $("#focus .btnBg").css("opacity", 0.5);
-
-                //为小按钮添加鼠标滑入事件，以显示相应的内容
-                $("#focus .btn span").css("opacity", 0.4).mouseenter(function () {
-                    index = $("#focus .btn span").index(this);
-                    showPics(index);
-                }).eq(0).trigger("mouseenter");
-
-                //上一页、下一页按钮透明度处理
-                $("#focus .preNext").css("opacity", 0.2).hover(function () {
-                    $(this).stop(true, false).animate({"opacity": "0.5"}, 300);
-                }, function () {
-                    $(this).stop(true, false).animate({"opacity": "0.2"}, 300);
-                });
-
-                //上一页按钮
-                $("#focus .pre").click(function () {
-                    index -= 1;
-                    if (index == -1) {
-                        index = len - 1;
-                    }
-                    showPics(index);
-                });
-
-                //下一页按钮
-                $("#focus .next").click(function () {
-                    index += 1;
-                    if (index == len) {
-                        index = 0;
-                    }
-                    showPics(index);
-                });
-
-                //本例为左右滚动，即所有li元素都是在同一排向左浮动，所以这里需要计算出外围ul元素的宽度
-                $("#focus ul").css("width", sWidth * (len));
-
-                //鼠标滑上焦点图时停止自动播放，滑出时开始自动播放
-                $("#focus").hover(function () {
-                    clearInterval(picTimer);
-                }, function () {
-                    picTimer = setInterval(function () {
-                        showPics(index);
-                        index++;
-                        if (index == len) {
-                            index = 0;
-                        }
-                    }, 4000); //此4000代表自动播放的间隔，单位：毫秒
-                }).trigger("mouseleave");
-
-                //显示图片函数，根据接收的index值显示相应的内容
-                function showPics(index) { //普通切换
-                    var nowLeft = -index * sWidth; //根据index值计算ul元素的left值
-                    $("#focus ul").stop(true, false).animate({"left": nowLeft}, 300); //通过animate()调整ul元素滚动到计算出的position
-                    //$("#focus .btn span").removeClass("on").eq(index).addClass("on"); //为当前的按钮切换到选中的效果
-                    $("#focus .btn span").stop(true, false).animate({"opacity": "0.4"}, 300).eq(index).stop(true, false).animate({"opacity": "1"}, 300); //为当前的按钮切换到选中的效果
-                }
-            }
-
-
-            //sync post
-            function syncPost(url, data, onSuccess) {
-                $.ajax({
-                    type: "post",
-                    url: url,
-                    data: data,
-                    async: false,
-                    success: function (data) {
-                        // data = eval("(" + data + ")");
-                        if (onSuccess != null && onSuccess != undefined) {
-                            onSuccess(data);
-                        }
-                    }
-                });
-            }
-
-            function checkLoginValid() {
-                var user = $("#user").val();
-                var pass = $("#pass").val();
-                if (user == null || user == "") {
-                    alert("用户名不能为空！");
-                    return false;
-                }
-
-                if (pass == null || pass == "") {
-                    alert("密码不能为空！");
-                    return false;
-                }
-                return true;
-            }
-            /**
-             *登录动作
-             */
-            function LoginIn() {
-                var user = $("#user").val();
-                var pass = $("#pass").val();
-                syncPost("${ctx}/login", {username: user, password: pass});
-
-            }
-
-            function checkLoginStatus(bLogAction) {
-                var userInfo = null;
-                syncPost("${ctx}/front/getUserInfo", null,
-                        function (data) {
-                            userInfo = data;
-                        }
-                );
-                showLoginPage(userInfo);
-                //未登录或者登录失败,并且点击登录按钮
-                if ((userInfo == null || userInfo == "" ) && bLogAction == true) {
-                    alert('登陆失败,用户名或密码不正确!');
-
-                }
-            }
-
-            /**
-             * 签出
-             */
-            function LoginOut() {
-                syncPost("${ctx}/logout");
-                loginLayer_init();
-            }
-
-            function loginLayer_init() {
-                $("#loginlayer").show();
-                $("#studentlayer").hide();
-                $("#teacherlayer").hide();
-            }
-
-            function loginLayer_student() {
-                $("#loginlayer").hide();
-                $("#studentlayer").show();
-                $("#teacherlayer").hide();
-            }
-
-            function loginLayer_teacher() {
-                $("#loginlayer").hide();
-                $("#studentlayer").hide();
-                $("#teacherlayer").show();
-            }
-
-            function loginLayer_showlogintip(userInfo) {
-                $("span[name=logintip]").text(userInfo.userName + " (" + userInfo.roleName + ") ");
-            }
-
-            /*
-             *主页左侧登录页面切换
-             * */
-            function showLoginPage(userInfo) {
-                //未登录，显示登录框
-                loginLayer_init();
-
-
-                //管理员或者老师
-                if (userInfo.roleId == 4) {
-                    loginLayer_teacher();
-                    loginLayer_showlogintip(userInfo);
-                }
-                //学生
-                else if (userInfo.roleId == 6) {
-                    loginLayer_student();
-                    loginLayer_showlogintip(userInfo);
-                }
-            }
-
-            function bindLoginAction() {
-                $("#btnLogin").on("click", function () {
-                    //if ($("#LoginForm").valid())
-                    if (checkLoginValid()) {
-                        LoginIn();
-                        checkLoginStatus(true);
-                    }
-                    return false;
-                });
-            }
-
-            function bindLogoutAction() {
-                $("a[name=btnLogOut]").on("click", function () {
-                    LoginOut();
-                });
-            }
-
-            function addValidator() {
-                $("#LoginForm").validate({
-                    rules: {
-                        "user": {
-                            required: true,
-                            minlength: 4,
-                            maxlength: 40
-                        },
-                        "pass": {
-                            required: true,
-                            minlength: 4,
-                            maxlength: 40
-                        }
-                    }
-                });
-            }
-            function bindResourceSearchAction() {
-                $("#resourcesearch").on("click", function () {
-                    var sval = $("#resourcesearchvalue").val();
-
-                    if (sval == "" || sval == "站内搜索" || sval == null) {
-                        alert("请输入搜索内容！");
-                        return;
-                    }
-                    var url = $("#resourcetype").val() + "?search=" + sval;
-                    window.open(url, '资源管理');
-
-                });
-            }
-
-
-                  $(document).ready(function(){
-//                    loginLayer_init();
-//                    // addValidator();
-//                    LoginIn();
-//                    checkLoginStatus(false);
-//                    bindLoginAction();
-//                    bindLogoutAction();
-
-                    bindResourceSearchAction();
-                  });
-
-
         </script>
 
 
@@ -955,6 +810,11 @@
 <div style="clear:both">
 </div>
 <div class="fooder1"></div>
-<jsp:include page="site_footer.jsp"></jsp:include>
+<div class="fooder">
+    地址：北京市石景山区鲁谷东街29号 邮编：100040<br/>
+    电话：010-68638293 传真：010-68638293 京ICP备07012769号 | 京公网安备11010702001098号
+
+
+</div>
 </body>
 </html>   
