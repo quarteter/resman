@@ -259,10 +259,7 @@
                                     href="${ctx}/front/achievements/${n.id}">${n.title}</a></li>
                         </c:forEach>
                     </c:if>
-
                 </ul>
-
-
             </div>
             <div class="data">
                 <h1>资料库</h1>
@@ -370,80 +367,21 @@
                                         <td class="thead">文档名称</td>
                                         <td class="thead">发布者</td>
                                         <td class="thead">发布时间</td>
-                                        <td class="thead">资源类型</td>
                                         <td class="thead">操作</td>
                                     </tr>
-                                    <tr>
-                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
-                                        <td class="ta">管理员</td>
-                                        <td class="ta">2014-05-08</td>
-                                        <td class="ta">图片</td>
-                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
-                                    </tr>
-                                    <tr class="tb">
-                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
-                                        <td class="tb">管理员</td>
-                                        <td class="tb">2014-05-08</td>
-                                        <td class="tb">附件</td>
-                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
-                                        <td class="ta">管理员</td>
-                                        <td class="ta">2014-05-08</td>
-                                        <td class="ta">图片</td>
-                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
-                                    </tr>
-                                    <tr class="tb">
-                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
-                                        <td class="tb">管理员</td>
-                                        <td class="tb">2014-05-08</td>
-                                        <td class="tb">附件</td>
-                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
-                                        <td class="ta">管理员</td>
-                                        <td class="ta">2014-05-08</td>
-                                        <td class="ta">图片</td>
-                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
-                                    </tr>
-                                    <tr class="tb">
-                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
-                                        <td class="tb">管理员</td>
-                                        <td class="tb">2014-05-08</td>
-                                        <td class="tb">附件</td>
-                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
-                                        <td class="ta">管理员</td>
-                                        <td class="ta">2014-05-08</td>
-                                        <td class="ta">图片</td>
-                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
-                                    </tr>
-                                    <tr class="tb">
-                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
-                                        <td class="tb">管理员</td>
-                                        <td class="tb">2014-05-08</td>
-                                        <td class="tb">附件</td>
-                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ta"><a href="#">《WordPress优化：查询百度收录,自动同步微博带图片》</a></td>
-                                        <td class="ta">管理员</td>
-                                        <td class="ta">2014-05-08</td>
-                                        <td class="ta">图片</td>
-                                        <td class="ta"><a href="#">预览</a> <a href="#">下载</a></td>
-                                    </tr>
-                                    <tr class="tb">
-                                        <td class="tb"><a href="#">《网站访问统计系统Piwik安装使用》</a></td>
-                                        <td class="tb">管理员</td>
-                                        <td class="tb">2014-05-08</td>
-                                        <td class="tb">附件</td>
-                                        <td class="tb"><a href="#">预览</a> <a href="#">下载</a></td>
-                                    </tr>
-
+                                    <c:forEach items="${docsList}" var="item">
+                                        <tr>
+                                            <td class="ta">${item.name}</td>
+                                            <td class="ta">${item.createBy}</td>
+                                            <td class="ta"><fmt:formatDate value="${item.created}"
+                                                                           pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
+                                            <td class="ta"><a href="javascript:void(0)"
+                                                              onclick="viewFile('${item.uuid}','${item.name}')">预览</a>
+                                                <a
+                                                        href="${ctx}/res/document/download?uuid=${item.uuid}">下载</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                 </table>
 
 
@@ -453,49 +391,28 @@
                     <li class="bout_none">
                         <div class="slid">
 
-                            <div class="bout_right" style="width:600px;">
-                                <dl>
-                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
-                                                                        height="105"/></a>
-                                    </dt>
-                                    <dd><a href="#">【热门】平民拳刃加点推荐</a></dd>
-
-                                </dl>
-                                <dl>
-                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
-                                                                        height="105"/></a>
-                                    </dt>
-                                    <dd><a href="#">【 刃加点推荐</a></dd>
-
-                                </dl>
-                                <dl>
-                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
-                                                                        height="105"/></a>
-                                    </dt>
-                                    <dd><a href="#">【 民拳刃加点推荐</a></dd>
-
-                                </dl>
-                                <dl>
-                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
-                                                                        height="105"/></a>
-                                    </dt>
-                                    <dd><a href="#">【热门 刃加点推荐</a></dd>
-
-                                </dl>
-                                <dl>
-                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
-                                                                        height="105"/></a>
-                                    </dt>
-                                    <dd><a href="#">【热门 刃加点推荐</a></dd>
-
-                                </dl>
-                                <dl>
-                                    <dt><a href="#" class="avatar"><img src="${ctx}/asset/images/pic3.jpg" width="165"
-                                                                        height="105"/></a>
-                                    </dt>
-                                    <dd><a href="#">【热门 刃加点推荐</a></dd>
-
-                                </dl>
+                            <div class="tables">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="thead">图片名称</td>
+                                        <td class="thead">发布者</td>
+                                        <td class="thead">发布时间</td>
+                                        <td class="thead">操作</td>
+                                    </tr>
+                                    <c:forEach items="${imgsList}" var="item">
+                                        <tr>
+                                            <td class="ta">${item.name}</td>
+                                            <td class="ta">${item.createBy}</td>
+                                            <td class="ta"><fmt:formatDate value="${item.created}"
+                                                                           pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
+                                            <td class="ta"><a href="javascript:void(0)"
+                                                              onclick="viewFile('${item.uuid}','${item.name}')">预览</a>
+                                                <a
+                                                        href="${ctx}/res/document/download?uuid=${item.uuid}">下载</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
 
 
                             </div>

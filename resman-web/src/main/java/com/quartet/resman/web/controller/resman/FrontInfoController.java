@@ -7,7 +7,6 @@ import com.quartet.resman.service.InfoService;
 import com.quartet.resman.service.QuestionService;
 import com.quartet.resman.utils.Constants;
 import com.quartet.resman.vo.QuestionVo;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,31 +43,32 @@ public class FrontInfoController {
     private CodeService codeService;
 
     @RequestMapping(value = "news")
-    public String news(@RequestParam(value="type", required=false , defaultValue = Constants.INFO_TYPE_NEWS ) String type  , @PageableDefault(size = 20, sort = "crtdate",
+    public String news(@RequestParam(value = "type", required = false, defaultValue = Constants.INFO_TYPE_NEWS) String type, @PageableDefault(size = 20, sort = "crtdate",
             direction = Sort.Direction.DESC) Pageable page, Model model) {
         Page<Info> news = null;
         String infoType = type;
         // news = infoService.getInfo(Constants.INFO_TYPE_NEWS,true, page);
-        news = infoService.getInfo(infoType,true, page);
+        news = infoService.getInfo(infoType, true, page);
         model.addAttribute("news", news.getContent());
         model.addAttribute("curPage", news.getNumber());
         model.addAttribute("totalPage", news.getTotalPages());
         model.addAttribute("totalCount", news.getTotalElements());
-        model.addAttribute("toptitle",getInfoCodeTypeName(infoType));
-       // model.addAttribute("bannerNews", infoService.getFirstBannerInfo(Constants.INFO_TYPE_NEWS));
+        model.addAttribute("toptitle", getInfoCodeTypeName(infoType));
+        // model.addAttribute("bannerNews", infoService.getFirstBannerInfo(Constants.INFO_TYPE_NEWS));
         model.addAttribute("bannerNews", infoService.getFirstBannerInfo(infoType));
 
         return "front/news";
     }
+
     @RequestMapping(value = "news/{id}")
-    public String newsDetail(@RequestParam(value="type", required=false,defaultValue = Constants.INFO_TYPE_NEWS ) String type  ,@PathVariable(value = "id") Long id, Model model) {
+    public String newsDetail(@RequestParam(value = "type", required = false, defaultValue = Constants.INFO_TYPE_NEWS) String type, @PathVariable(value = "id") Long id, Model model) {
         Info info = infoService.getInfoEager(id);
         model.addAttribute("news", info);
         String infoType = type;
-       Info pre = infoService.getPreOrNextInfo(info.getId(), "pre",infoType);
-       Info next = infoService.getPreOrNextInfo(info.getId(), "next",infoType);
-     //   Info pre = infoService.getPreOrNextInfo(info.getId(), "pre", Constants.INFO_TYPE_NEWS);
-      //  Info next = infoService.getPreOrNextInfo(info.getId(), "next", Constants.INFO_TYPE_NEWS);
+        Info pre = infoService.getPreOrNextInfo(info.getId(), "pre", infoType);
+        Info next = infoService.getPreOrNextInfo(info.getId(), "next", infoType);
+        //   Info pre = infoService.getPreOrNextInfo(info.getId(), "pre", Constants.INFO_TYPE_NEWS);
+        //  Info next = infoService.getPreOrNextInfo(info.getId(), "next", Constants.INFO_TYPE_NEWS);
         if (pre != null) {
             model.addAttribute("pre", pre);
         }
@@ -76,8 +76,8 @@ public class FrontInfoController {
             model.addAttribute("next", next);
         }
         infoService.updateInfoReadCount(id);
-        model.addAttribute("type",infoType);
-        model.addAttribute("toptitle",getInfoCodeTypeName(infoType));
+        model.addAttribute("type", infoType);
+        model.addAttribute("toptitle", getInfoCodeTypeName(infoType));
         return "front/show_news";
     }
 
@@ -137,16 +137,16 @@ public class FrontInfoController {
     }
 
     @RequestMapping(value = "knowledge/{id}")
-    public String showKnowledge(@PathVariable(value = "id") Long idl , HttpServletRequest request ) {
-        String baseUrl =  request.getContextPath();
-        return "forward:" +"/front/news/" + idl + "?type=knowledge";
+    public String showKnowledge(@PathVariable(value = "id") Long idl, HttpServletRequest request) {
+        String baseUrl = request.getContextPath();
+        return "forward:" + "/front/news/" + idl + "?type=knowledge";
     }
 
     @RequestMapping(value = "knowledge")
-    public String knowledges( HttpServletRequest request ) {
-        String baseUrl =  request.getContextPath();
+    public String knowledges(HttpServletRequest request) {
+        String baseUrl = request.getContextPath();
         return "redirect:" + baseUrl + "/front/news?type=knowledge";
-     // return "redirect:./news?type=knowledge";
+        // return "redirect:./news?type=knowledge";
     }
 
 
@@ -195,7 +195,7 @@ public class FrontInfoController {
         Info info = infoService.getInfoEager(id);
         Info pre = infoService.getPreOrNextInfo(id, "pre", type);
         Info next = infoService.getPreOrNextInfo(id, "next", type);
-        mv.addObject("type",type);
+        mv.addObject("type", type);
 
         mv.addObject("info", info);
         if (pre != null) {
@@ -204,30 +204,30 @@ public class FrontInfoController {
         if (next != null) {
             mv.addObject("next", next);
         }
+        System.out.print(info.getContent());
         infoService.updateInfoReadCount(id);
         return mv;
     }
 
 
     @RequestMapping(value = "infoDetail")
-    public String majorInfo(String type,Model model){
+    public String majorInfo(String type, Model model) {
         Page<Info> infos = infoService.getInfo(type,
-                new PageRequest(0, 1,new Sort(Sort.Direction.DESC,"crtdate")));
+                new PageRequest(0, 1, new Sort(Sort.Direction.DESC, "crtdate")));
         List<Info> data = infos.getContent();
-        Info info = data!=null && data.size()>0 ? data.get(0) : null;
+        Info info = data != null && data.size() > 0 ? data.get(0) : null;
         model.addAttribute("type", type);
-        if (info!=null){
-            model.addAttribute("info",info);
+        if (info != null) {
+            model.addAttribute("info", info);
             infoService.updateInfoReadCount(info.getId());
         }
         return "front/show_major_contact";
     }
 
-    public String getInfoCodeTypeName( String _type )
-    {
+    public String getInfoCodeTypeName(String _type) {
         String name = "";
-        Code code = codeService.getInfoCode( _type );
-        if( code != null )
+        Code code = codeService.getInfoCode(_type);
+        if (code != null)
             name = code.getName();
         return name;
     }

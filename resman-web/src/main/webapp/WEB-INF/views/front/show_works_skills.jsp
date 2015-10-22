@@ -66,10 +66,10 @@
     <div class="nav">
         <ul>
             <li><a href="${ctx}/front/index">网站首页</a></li>
-            <li><a href="${ctx}/front/news" >新闻动态</a></li>
+            <li><a href="${ctx}/front/news">新闻动态</a></li>
             <li><a href="${ctx}/front/course/list">精品课程</a></li>
-            <li><a href="${ctx}/front/resources/classic" >资源库</a></li>
-            <li><a href="${ctx}/front/achievements" >成果展示</a></li>
+            <li><a href="${ctx}/front/resources/classic">资源库</a></li>
+            <li><a href="${ctx}/front/achievements">成果展示</a></li>
             <li><a href="${ctx}/front/teachers">专家团队</a></li>
             <li><a href="${ctx}/front/wss?type=skillContest" class="nav_show">师生作品</a></li>
         </ul>
@@ -95,10 +95,14 @@
             <h1>师生作品</h1>
             <ul>
 
-                <li><a href="${ctx}/front/wss?type=sworks" <c:if test="${type=='skillContest'}">class="curr"</c:if>>技能大赛</a></li>
-                <li><a href="${ctx}/front/wss?type=sworks" <c:if test="${type=='sworks'}">class="curr"</c:if>>学生作品</a></li>
-                <li><a href="${ctx}/front/wss?type=tworks" <c:if test="${type=='tworks'}">class="curr"</c:if>>老师作品</a></li>
-                <li><a href="${ctx}/front/wss?type=contest_works" <c:if test="${type=='contest_works'}">class="curr"</c:if>>大赛作品</a></li>
+                <li><a href="${ctx}/front/wss?type=sworks"
+                       <c:if test="${type=='skillContest'}">class="curr"</c:if>>技能大赛</a></li>
+                <li><a href="${ctx}/front/wss?type=sworks" <c:if test="${type=='sworks'}">class="curr"</c:if>>学生作品</a>
+                </li>
+                <li><a href="${ctx}/front/wss?type=tworks" <c:if test="${type=='tworks'}">class="curr"</c:if>>老师作品</a>
+                </li>
+                <li><a href="${ctx}/front/wss?type=contest_works"
+                       <c:if test="${type=='contest_works'}">class="curr"</c:if>>大赛作品</a></li>
             </ul>
         </div>
     </div>
