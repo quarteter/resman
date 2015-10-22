@@ -121,7 +121,7 @@ public class IndexController {
      * @param model
      */
     private void getClassic(Model model) {
-        getResourceList(model, "classic", "classicList");
+        getResourceList(model, "classic", "classicList", "classicListCount");
     }
 
     /**
@@ -130,7 +130,7 @@ public class IndexController {
      * @param model
      */
     private void getMaterial(Model model) {
-        getResourceList(model, "material", "materialList");
+        getResourceList(model, "material", "materialList", "materialListCount");
     }
 
     /**
@@ -139,7 +139,7 @@ public class IndexController {
      * @param model
      */
     private void getDocs(Model model) {
-        getResourceList(model, "docs", "docsList");
+        getResourceList(model, "docs", "docsList", "docsListCount");
     }
 
     /**
@@ -148,7 +148,7 @@ public class IndexController {
      * @param model
      */
     private void getImgs(Model model) {
-        getResourceList(model, "imgs", "imgsList");
+        getResourceList(model, "imgs", "imgsList", "imgsListCount");
     }
 
     /**
@@ -312,7 +312,7 @@ public class IndexController {
      * @param model
      * @param restype
      */
-    private void getResourceList(Model model, String restype, String restag) {
+    private void getResourceList(Model model, String restype, String restag, String restagCount) {
         FileFuncDef def = cfController.getFuncDefByName(restype);
         String rootPath = cfController.initRoot(def.getRootDir(), def.isRootDirPersonal()) + "//";
         List<Document> nodes = fileService.queryFile(rootPath, "", "", "");
@@ -333,10 +333,10 @@ public class IndexController {
                 map.put("created", node.getCreated());
                 map.put("createBy", node.getCreateBy());
                 list.add(map);
-
             }
-
         }
         model.addAttribute(restag, list);
+        model.addAttribute(restagCount, nodes.size());
+
     }
 }

@@ -263,34 +263,53 @@
             </div>
             <div class="data">
                 <h1>资料库</h1>
-
                 <div class="search">
-                    <input id="resourcesearchvalue" type="text" class="infor_text" value="站内搜索"
-                           onblur="if (value ==''){value='站内搜索'}" onclick="if(this.value=='站内搜索')this.value=''"/><input
-                        name="resourcesearch" id="resourcesearch" type="button" value=" " class="infor_button"/>
+                    <div class="infor_text"><b>资源数量统计：</b></div>
                 </div>
-                <ul>
-                    <li>
-                        资源类型：
-                    </li>
-                    <select id="resourcetype" style="width: 140px;">
-                        <option value="resources/classic">精品课程</option>
-                        <option value="resources/material">精品素材</option>
-                        <option value="resources/docs">精品文档</option>
-                        <option value="resources/imgs">精品图库</option>
-                    </select>
-                </ul>
-                <div style="clear:both"></div>
-                <dl>
-                    <c:if test="${fn:length(strategy_list)>0}">
-                        <c:forEach items="${strategy_list}" var="n">
-                            <dt>【攻略】</dt>
-                            <dd><a href="${ctx}/front/news/${n.id}?type=strategy">${n.title}</a></dd>
-                        </c:forEach>
-                    </c:if>
+                <table>
+                    <tr>
+                        <td>精品课程:</td>
+                        <td><b>${classicListCount}</b></td>
+                    </tr>
+                    <tr>
+                        <td>精品素材:</td>
+                        <td><b>${materialListCount}</b></td>
+                    </tr>
+                    <tr>
+                        <td>精品文档:</td>
+                        <td><b>${docsListCount}</b></td>
+                    </tr>
+                    <tr>
+                        <td>精品图库:</td>
+                        <td><b>${imgsListCount}</b></td>
+                    </tr>
+                </table>
+                <%--<div class="search">--%>
+                <%--<input id="resourcesearchvalue" type="text" class="infor_text" value="站内搜索"--%>
+                <%--onblur="if (value ==''){value='站内搜索'}" onclick="if(this.value=='站内搜索')this.value=''"/><input--%>
+                <%--name="resourcesearch" id="resourcesearch" type="button" value=" " class="infor_button"/>--%>
+                <%--</div>--%>
+                <%--<ul>--%>
+                <%--<li>--%>
+                <%--资源类型：--%>
+                <%--</li>--%>
+                <%--<select id="resourcetype" style="width: 140px;">--%>
+                <%--<option value="resources/classic">精品课程</option>--%>
+                <%--<option value="resources/material">精品素材</option>--%>
+                <%--<option value="resources/docs">精品文档</option>--%>
+                <%--<option value="resources/imgs">精品图库</option>--%>
+                <%--</select>--%>
+                <%--</ul>--%>
+                <%--<div style="clear:both"></div>--%>
+                <%--<dl>--%>
+                <%--<c:if test="${fn:length(strategy_list)>0}">--%>
+                <%--<c:forEach items="${strategy_list}" var="n">--%>
+                <%--<dt>【攻略】</dt>--%>
+                <%--<dd><a href="${ctx}/front/news/${n.id}?type=strategy">${n.title}</a></dd>--%>
+                <%--</c:forEach>--%>
+                <%--</c:if>--%>
 
-                </dl>
-                <h2><img src="${ctx}/asset/images/pic03.jpg" width="218" height="90"/></h2>
+                <%--</dl>--%>
             </div>
 
 
@@ -353,8 +372,6 @@
                                         </tr>
                                     </c:forEach>
                                 </table>
-
-
                             </div>
                         </div>
                     </li>
