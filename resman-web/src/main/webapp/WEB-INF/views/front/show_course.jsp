@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>北京市黄庄职业高中：：动漫与游戏专业</title>
+    <title>黄庄职高动漫与游戏专业</title>
     <link href="${ctx}/asset/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/asset/css/css.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/asset/css/news.css" rel="stylesheet" type="text/css"/>

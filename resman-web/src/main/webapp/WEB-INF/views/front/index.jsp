@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>北京市黄庄职业高中：：动漫与游戏专业</title>
+    <title>黄庄职高动漫与游戏专业</title>
 <link href="${ctx}/asset/css/css.css" rel="stylesheet" type="text/css" />
 
 <script src="${ctx}/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
@@ -203,7 +203,7 @@ $(function () {
      <div id="focus">
          <ul>
              <c:forEach items="${bannerinfo_list}" var="n">
-                 <li><a href="news/${n.id}?type=${n.type}"  ><img src="${n.imgPath}" /></a></li>
+                 <li><a href="news/${n.id}?type=${n.type}"><img src="${ctx}/${n.imgPath}"/></a></li>
              </c:forEach>
          </ul>
      </div>
@@ -497,7 +497,9 @@ $(function(){
      <c:if test="${fn:length(sikll_hot)>0}">
          <c:forEach items="${sikll_hot}" var="n">
               <dl>
-             <dt><a href="wss/${n.id}?type=skillContest" class="avatar"><img src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
+                  <dt><a href="wss/${n.id}?type=skillContest" class="avatar"><img src="${ctx}/${n.imgPath}" width="165"
+                                                                                  height="105" alt="${n.title}"/></a>
+                  </dt>
              <dd><a href="wss/${n.id}?type=skillContest">【热门】${n.title}</a></dd>
             </dl>
          </c:forEach>
@@ -536,11 +538,13 @@ $(function(){
 
                  <c:choose>
                      <c:when test="${n.type=='sworks'}">
-                         <dt><a href="${ctx}/front/wss/${n.id}?type=sworks" class="avatar"><img src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
+                         <dt><a href="${ctx}/front/wss/${n.id}?type=sworks" class="avatar"><img
+                                 src="${ctx}/${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
                          <dd><a href="${ctx}/front/wss/${n.id}?type=sworks">【热门】${n.title}</a></dd>
                      </c:when>
                      <c:otherwise>
-                         <dt><a href="${ctx}/front/wss/${n.id}?type=tworks" class="avatar"><img src="${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
+                         <dt><a href="${ctx}/front/wss/${n.id}?type=tworks" class="avatar"><img
+                                 src="${ctx}/${n.imgPath}" width="165" height="105" alt="${n.title}"/></a></dt>
                          <dd><a href="${ctx}/front/wss/${n.id}?type=tworks">【热门】${n.title}</a></dd>
                      </c:otherwise>
                  </c:choose>
@@ -574,7 +578,8 @@ $(function(){
      <c:if test="${fn:length(teachergroup_hot)>0}">
          <c:forEach items="${teachergroup_hot}" var="n">
              <dl>
-             <dt><a href="${ctx}/front/teachers/${n.id}" class="avatar"><img src="${n.imgPath}" width="165" height="105" /></a></dt>
+                 <dt><a href="${ctx}/front/teachers/${n.id}" class="avatar"><img src="${ctx}/${n.imgPath}" width="165"
+                                                                                 height="105"/></a></dt>
              <dd><a href="${ctx}/front/teachers/${n.id}">【热门】${n.title}</a></dd>
              </dl>
          </c:forEach>

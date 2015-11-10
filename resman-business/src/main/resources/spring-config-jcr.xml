@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
@@ -12,7 +12,7 @@
 
     <bean id="repository" class="org.springframework.extensions.jcr.jackrabbit.RepositoryFactoryBean">
         <property name="configuration" value="classpath:jcr/jackrabbit-repo.xml"></property>
-        <property name="homeDir" value="file:D:\\resman\\openkm\\jackrabbit"/>
+        <property name="homeDir" value="file:D:\\resman\\jackrabbit"/>
     </bean>
 
     <bean id="jcrSessionFactory" class="org.springframework.extensions.jcr.jackrabbit.ocm.OcmJackrabbitSessionFactory">
@@ -33,9 +33,9 @@
         <!--<property name="nodeTypes2Import" value="classpath:jcr/resman.cdn"/>-->
         <property name="nodeTypes2Import" value="classpath:jcr/resman-nodeType.xml"/>
         <!--<property name="nodeDefinitions">-->
-            <!--<list>-->
-                <!--<value>classpath:jcr/resman.cdn</value>-->
-            <!--</list>-->
+        <!--<list>-->
+        <!--<value>classpath:jcr/resman.cdn</value>-->
+        <!--</list>-->
         <!--</property>-->
     </bean>
 

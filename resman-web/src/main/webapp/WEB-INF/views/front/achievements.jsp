@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>北京市黄庄职业高中：：动漫与游戏专业</title>
+    <title>黄庄职高动漫与游戏专业</title>
     <link href="${ctx}/asset/css/css.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/asset/css/news.css" rel="stylesheet" type="text/css"/>
     <script src="${ctx}/asset/js/jquery-2.1.1.min.js" type="text/javascript"></script>
@@ -141,7 +141,7 @@
                 <c:forEach items="${infos}" var="n">
                 <dl>
                     <dt>
-                    <dt><img src="${n.imgPath}" width="200" height="132"/></dt>
+                    <dt><img src="${ctx}/${n.imgPath}" width="200" height="132"/></dt>
                     <dd class="news_first_title"><a href="${ctx}/front/achievements/${n.id}">${n.title}</a></dd>
                     <dd>
                         ${n.shortContent}

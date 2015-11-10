@@ -24,11 +24,13 @@ public class VideoRelatedActions {
         if (doc == null)
             return;
         String origin = doc.getOriginStorePath();
-        deleteFile(origin);
+        if (origin != null)
+            deleteFile(origin);
 
-        Config config = SysUtils.getBean("config",Config.class);
-        String root = config.getVideoPath(),videoPath = root + doc.getStoredPath();
-        deleteFile(videoPath);
+        Config config = SysUtils.getBean("config", Config.class);
+        String root = config.getVideoPath(), videoPath = root + doc.getStoredPath();
+        if (doc.getStoredPath() != null && videoPath != null)
+            deleteFile(videoPath);
     }
 
     public static String getVideoOriginalPath(String fileName) {
@@ -109,11 +111,11 @@ public class VideoRelatedActions {
         }
     }
 
-    public static String extractImgPath(String imgPath){
-        if(StringUtils.isNotEmpty(imgPath)){
+    public static String extractImgPath(String imgPath) {
+        if (StringUtils.isNotEmpty(imgPath)) {
             int idx = imgPath.indexOf("ueditor");
-            if (idx!=-1){
-                return "/"+imgPath.substring(idx);
+            if (idx != -1) {
+                return "/" + imgPath.substring(idx);
             }
             return imgPath;
         }
