@@ -1,27 +1,19 @@
 package com.quartet.resman.web.controller.resman;
 
-import com.quartet.resman.entity.*;
-import com.quartet.resman.service.InfoService;
-import com.quartet.resman.service.QuestionService;
+import com.quartet.resman.entity.Document;
+import com.quartet.resman.entity.Folder;
+import com.quartet.resman.entity.ResCount;
 import com.quartet.resman.service.ResCountService;
 import com.quartet.resman.store.FileService;
 import com.quartet.resman.store.FolderService;
-import com.quartet.resman.utils.Constants;
-import com.quartet.resman.vo.QuestionVo;
 import com.quartet.resman.web.vo.FileFuncDef;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -64,7 +56,7 @@ public class FrontController {
     }
 
     @RequestMapping(value = "resources/{func}")
-    public String resources(@PathVariable(value = "func") String func, String search, String path, @RequestParam(defaultValue = "0") int page,  Model model) {
+    public String resources(@PathVariable(value = "func") String func, String search, String path, @RequestParam(defaultValue = "0") int page, Model model) {
         FileFuncDef def = cfController.getFuncDefByName(func);
         String rootPath = cfController.initRoot(def.getRootDir(), def.isRootDirPersonal()) + "/";
 
@@ -72,28 +64,35 @@ public class FrontController {
         if (StringUtils.isNotEmpty(path))
             queryPath += path;
 
-        Map<String,Object> data = folderService.getChildren(queryPath,search,page * 10 ,10);
+        Map<String, Object> data = folderService.getChildren(queryPath, search, page * 10, 10);
 
         //List<Document> nodes =  fileService.queryFile(rootPath, search, "", "");
-        List<Object> nodes = (List<Object>)data.get("rows");
+        List<Object> nodes = (List<Object>) data.get("rows");
         List<Map<String, Object>> list = new ArrayList();
         if (nodes != null && nodes.size() > 0) {
             Map<String, Object> map = null;
             for (Object node : nodes) {
                 map = new HashMap();
-                if(node instanceof Folder){
-                    Folder folder = (Folder)node;
+                if (node instanceof Folder) {
+                    Folder folder = (Folder) node;
                     map.put("uuid", folder.getUuid());
                     map.put("name", folder.getName());
                     map.put("path", folder.getPath());
+                    String fp = folder.getPath();
+                    fp = fp.replace(func, "");
+                    while (fp.charAt(0) == '/') {
+                        fp = fp.substring(1);
+                    }
+//                    fp.trim()
+                    map.put("realPath", fp);
+
                     map.put("modifyDate", "-");
                     map.put("author", "-");
-                    map.put("size","-");
-                    map.put("downCount","-");
+                    map.put("size", "-");
+                    map.put("downCount", "-");
                     map.put("type", "目录");
-                }
-                else if (node instanceof Document){
-                    Document doc = (Document)node;
+                } else if (node instanceof Document) {
+                    Document doc = (Document) node;
                     map.put("uuid", doc.getUuid());
                     map.put("name", doc.getName());
                     map.put("path", doc.getPath());
@@ -130,7 +129,7 @@ public class FrontController {
         model.addAttribute("path", path);
         int total = Integer.valueOf(data.get("total").toString());
         int totalPage = 0;
-        if(total > 0)
+        if (total > 0)
             totalPage = total / 10 + 1;
         model.addAttribute("totalPage", totalPage);
         return "front/resources";

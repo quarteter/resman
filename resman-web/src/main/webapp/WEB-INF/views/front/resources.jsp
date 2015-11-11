@@ -60,7 +60,8 @@
 <div class="main_content resources">
     <div class="position">
         <div class="home"><img src="${ctx}/asset/images/home.png" width="19" height="19"/></div>
-        <div class="position_nav"> 您现在的位置 : 首页 / <a href="${ctx}/front/resources/${func}">${funcName}</a> / ${path}</div>
+        <div class="position_nav"> 您现在的位置 : 首页 / <a href="${ctx}/front/resources/${func}">${funcName}</a> / ${path}
+        </div>
     </div>
     <div class="resources_search">
         <div class="resources_search_left">
@@ -98,7 +99,7 @@
                             <td class="ta">
                                 <c:choose>
                                     <c:when test="${res.type=='目录'}">
-                                        <a href="${ctx}/front/resources/${func}?path=${res.name}">${res.name}</a>
+                                        <a href="${ctx}/front/resources/${func}?path=${res.realPath}">${res.name}</a>
                                     </c:when>
                                     <c:otherwise>
                                         ${res.name}
