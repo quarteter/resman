@@ -61,8 +61,13 @@ public class FrontController {
         String rootPath = cfController.initRoot(def.getRootDir(), def.isRootDirPersonal()) + "/";
 
         String queryPath = rootPath;
-        if (StringUtils.isNotEmpty(path))
-            queryPath += path;
+        if (StringUtils.isNotEmpty(path)) {
+            if (queryPath.substring(0, 5).compareTo("/jpk/") == 0) {
+                queryPath = path;
+            } else {
+                queryPath += path;
+            }
+        }
 
         Map<String, Object> data = folderService.getChildren(queryPath, search, page * 10, 10);
 
@@ -78,14 +83,17 @@ public class FrontController {
                     map.put("uuid", folder.getUuid());
                     map.put("name", folder.getName());
                     map.put("path", folder.getPath());
-                    String fp = folder.getPath();
-                    fp = fp.replace(func, "");
-                    while (fp.charAt(0) == '/') {
-                        fp = fp.substring(1);
-                    }
+                    if (folder.getPath().substring(0, 5).compareTo("/jpk/") == 0) {
+                        map.put("realPath", folder.getPath());
+                    } else {
+                        String fp = folder.getPath();
+                        fp = fp.replace(func, "");
+                        while (fp.charAt(0) == '/') {
+                            fp = fp.substring(1);
+                        }
 //                    fp.trim()
-                    map.put("realPath", fp);
-
+                        map.put("realPath", fp);
+                    }
                     map.put("modifyDate", "-");
                     map.put("author", "-");
                     map.put("size", "-");
