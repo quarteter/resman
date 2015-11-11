@@ -128,7 +128,7 @@
                 <a href="#">共${total}条记录 </a>
                 <c:choose>
                     <c:when test="${curPage-1 >= 0}">
-                        <a href="${ctx}/front/resources/${func}?page=${curPage-1}">上一页</a>
+                        <a href="${ctx}/front/resources/${func}?path=${path}&page=${curPage-1}">上一页</a>
                     </c:when>
                     <c:otherwise>
                         <a href="#">上一页</a>
@@ -155,13 +155,13 @@
                     </c:otherwise>
                 </c:choose>
                 <c:forEach begin="${start}" end="${end}" varStatus="st">
-                    <a href="${ctx}/front/resources/${func}/?page=${st.current-1}"
+                    <a href="${ctx}/front/resources/${func}/?path=${path}&page=${st.current-1}"
                        <c:if test="${st.current-1 == curPage}">class="curr" </c:if> >${st.current}</a>
                 </c:forEach>
 
                 <c:choose>
                     <c:when test="${curPage+1 < totalPage}">
-                        <a href="${ctx}/front/resources/${func}?page=${curPage+1}">下一页</a>
+                        <a href="${ctx}/front/resources/${func}?path=${path}&page=${curPage+1}">下一页</a>
                     </c:when>
                     <c:otherwise>
                         <a href="#">下一页</a>

@@ -263,6 +263,7 @@
             </div>
             <div class="data">
                 <h1>资料库</h1>
+
                 <div class="search">
                     <div class="infor_text"><b>资源数量统计：</b></div>
                 </div>
@@ -476,7 +477,7 @@
                     <li class="tit_show" style="margin-left:25px;">技能大赛</li>
                     <li>师生作品</li>
                     <li>师资团队</li>
-                    <span class="float" style="background:none;"><a id="skill_more_link" href="./news">更多>></a></span>
+                    <%--<span class="float" style="background:none;"><a id="skill_more_link" href="./news">更多>></a></span>--%>
 
                 </ul>
                 <div style="clear:both"></div>

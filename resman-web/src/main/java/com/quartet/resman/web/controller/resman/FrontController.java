@@ -60,6 +60,7 @@ public class FrontController {
         FileFuncDef def = cfController.getFuncDefByName(func);
         String rootPath = cfController.initRoot(def.getRootDir(), def.isRootDirPersonal()) + "/";
 
+
         String queryPath = rootPath;
         if (StringUtils.isNotEmpty(path)) {
             if (queryPath.substring(0, 5).compareTo("/jpk/") == 0) {
