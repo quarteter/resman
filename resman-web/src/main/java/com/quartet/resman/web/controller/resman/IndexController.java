@@ -23,10 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 前台页面控制器
@@ -88,23 +85,31 @@ public class IndexController {
 
 
     private void init(Model model) {
+        System.out.println("start init" + new Date().toString());
         getNotice(model);
         getSkillMatch(model);
         getTeacherStudentWorks(model);
         getTeacherGroup(model);
+        System.out.println("getKnowledge" + new Date().toString());
         getKnowledge(model);
         getQuestion(model);
         getStrategy(model);
+        System.out.println("getNews" + new Date().toString());
         getNews(model);
         getAchievement(model);
 
+        System.out.println("getClassic" + new Date().toString());
         getClassic(model);
+        System.out.println("getMaterial" + new Date().toString());
         getMaterial(model);
+        System.out.println("getDocs" + new Date().toString());
         getDocs(model);
+        System.out.println("getImgs" + new Date().toString());
         getImgs(model);
 
+        System.out.println("getBanners" + new Date().toString());
         getBanners(model);
-
+        System.out.println("finish init" + new Date().toString());
     }
 
     private void getBanners(Model model) {
@@ -313,16 +318,21 @@ public class IndexController {
      * @param restype
      */
     private void getResourceList(Model model, String restype, String restag, String restagCount) {
+
         FileFuncDef def = cfController.getFuncDefByName(restype);
-        String rootPath = cfController.initRoot(def.getRootDir(), def.isRootDirPersonal()) + "//";
-        List<Document> nodes = fileService.queryFile(rootPath, "", "", "");
+        System.out.println("def " + def.getTitle());
+        String rootPath = cfController.initRoot(def.getRootDir(), def.isRootDirPersonal()) + "/";
+        System.out.println("rootPath " + rootPath);
+        Map<String, Object> retVal = fileService.queryTop10File(rootPath);
+        List<Entry> rows = (List<Entry>) retVal.get("rows");
+//        List<Entry>  nodes = fileService.queryTop10File(rootPath).get("rows");
+
         List<Map<String, Object>> list = new ArrayList();
-        int iCount = 9;
-        if (nodes != null && nodes.size() > 0) {
+
+        if (rows != null && rows.size() > 0) {
             Map<String, Object> map = null;
-            for (Entry node : nodes) {
-                if (--iCount < 0)
-                    break;
+            for (Entry node : rows) {
+               
                 if (!(node instanceof Document)) {
                     continue;
                 }
@@ -336,7 +346,7 @@ public class IndexController {
             }
         }
         model.addAttribute(restag, list);
-        model.addAttribute(restagCount, nodes.size());
-
+        model.addAttribute(restagCount, retVal.get("total"));
+        System.out.println("model.addAttribute finished");
     }
 }

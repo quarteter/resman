@@ -2,7 +2,6 @@ package com.quartet.resman.store;
 
 import com.quartet.resman.entity.Document;
 import com.quartet.resman.entity.Entry;
-import com.quartet.resman.entity.Folder;
 import com.quartet.resman.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.JcrConstants;
@@ -51,7 +50,7 @@ public class FileService {
         mappingTemplate.save();
     }
 
-    public void updateFile(Document document){
+    public void updateFile(Document document) {
         mappingTemplate.update(document);
         mappingTemplate.save();
     }
@@ -71,10 +70,10 @@ public class FileService {
                                     String status, String visibility) {
         QueryManager qm = mappingTemplate.createQueryManager();
         Filter filter = qm.createFilter(Document.class);
-        if (StringUtils.isNotEmpty(parentPath)){
+        if (StringUtils.isNotEmpty(parentPath)) {
             filter.setScope(parentPath);
         }
-        if (StringUtils.isNotEmpty(nodeNameLike)){
+        if (StringUtils.isNotEmpty(nodeNameLike)) {
             String expression = "jcr:like(fn:name(),'%" + nodeNameLike + "%')";
             filter.addJCRExpression(expression);
         }
@@ -89,31 +88,31 @@ public class FileService {
         return (List<Document>) mappingTemplate.getObjects(q);
     }
 
-    public Map<String,Object> queryFile(final String parentPath,final String nameLike,
-                                        final long from,final long size){
-        return mappingTemplate.execute(new JcrCallback<Map<String,Object>>() {
+
+    public Map<String, Object> queryTop10File(final String parentPath) {
+        return mappingTemplate.execute(new JcrCallback<Map<String, Object>>() {
             @Override
             public Map<String, Object> doInJcr(Session session) throws IOException, RepositoryException {
                 String tempPath = parentPath;
-                if(!parentPath.startsWith("/")){
-                    tempPath = "/"+parentPath;
+                if (!parentPath.startsWith("/")) {
+                    tempPath = "/" + parentPath;
                 }
 
                 javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
                 StringBuilder sqlsb = new StringBuilder();
                 sqlsb.append("SELECT * FROM [rm:file] AS f WHERE ISDESCENDANTNODE(f,'");
-                sqlsb.append(tempPath+"') ");
-                if (StringUtils.isNotEmpty(nameLike)){
-                    sqlsb.append("AND LOCALNAME(f) LIKE '%"+nameLike+"%' ");
-                }
-                javax.jcr.query.Query query = qm.createQuery(sqlsb.toString(),javax.jcr.query.Query.JCR_SQL2);
+                sqlsb.append(tempPath + "') ");
+
+                javax.jcr.query.Query query = qm.createQuery(sqlsb.toString(), javax.jcr.query.Query.JCR_SQL2);
                 long total = query.execute().getNodes().getSize();
+                System.out.println("list size : " + total);
 
-                query = qm.createQuery(sqlsb.toString(),javax.jcr.query.Query.JCR_SQL2);
-                query.setOffset(from);
-                query.setLimit(size);
+//                sqlsb.append(" order by [jcr:created] desc");
+                query = qm.createQuery(sqlsb.toString(), javax.jcr.query.Query.JCR_SQL2);
+                query.setOffset(0);
+                query.setLimit(10);
 
-                Map<String,Object> result = new HashMap<>();
+                Map<String, Object> result = new HashMap<>();
                 List<Entry> rows = new ArrayList<>();
 
                 QueryResult nodeResult = query.execute();
@@ -122,8 +121,48 @@ public class FileService {
                     Entry entry = NodeMapper.mapEntry(n);
                     rows.add(entry);
                 }
-                result.put("total",total);
-                result.put("rows",rows);
+                result.put("total", total);
+                result.put("rows", rows);
+                return result;
+            }
+        });
+    }
+
+    public Map<String, Object> queryFile(final String parentPath, final String nameLike,
+                                         final long from, final long size) {
+        return mappingTemplate.execute(new JcrCallback<Map<String, Object>>() {
+            @Override
+            public Map<String, Object> doInJcr(Session session) throws IOException, RepositoryException {
+                String tempPath = parentPath;
+                if (!parentPath.startsWith("/")) {
+                    tempPath = "/" + parentPath;
+                }
+
+                javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
+                StringBuilder sqlsb = new StringBuilder();
+                sqlsb.append("SELECT * FROM [rm:file] AS f WHERE ISDESCENDANTNODE(f,'");
+                sqlsb.append(tempPath + "') ");
+                if (StringUtils.isNotEmpty(nameLike)) {
+                    sqlsb.append("AND LOCALNAME(f) LIKE '%" + nameLike + "%' ");
+                }
+                javax.jcr.query.Query query = qm.createQuery(sqlsb.toString(), javax.jcr.query.Query.JCR_SQL2);
+                long total = query.execute().getNodes().getSize();
+
+                query = qm.createQuery(sqlsb.toString(), javax.jcr.query.Query.JCR_SQL2);
+                query.setOffset(from);
+                query.setLimit(size);
+
+                Map<String, Object> result = new HashMap<>();
+                List<Entry> rows = new ArrayList<>();
+
+                QueryResult nodeResult = query.execute();
+                for (NodeIterator it = nodeResult.getNodes(); it.hasNext(); ) {
+                    Node n = it.nextNode();
+                    Entry entry = NodeMapper.mapEntry(n);
+                    rows.add(entry);
+                }
+                result.put("total", total);
+                result.put("rows", rows);
                 return result;
             }
         });
@@ -208,15 +247,15 @@ public class FileService {
     }
 
     @Transactional(readOnly = true)
-    public Long countOfFile(final String folder){
+    public Long countOfFile(final String folder) {
         return mappingTemplate.execute(new JcrCallback<Long>() {
             @Override
             public Long doInJcr(Session session) throws IOException, RepositoryException {
                 javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
-                String sql = "" ;
-                if (StringUtils.isNotEmpty(folder)){
-                    sql = "SELECT f.[rm:size] FROM [rm:file] AS f WHERE ISCHILDNODE(f,'"+folder+"')";
-                }else{
+                String sql = "";
+                if (StringUtils.isNotEmpty(folder)) {
+                    sql = "SELECT f.[rm:size] FROM [rm:file] AS f WHERE ISCHILDNODE(f,'" + folder + "')";
+                } else {
                     sql = "SELECT f.[rm:size] FROM [rm:file] AS f";
                 }
                 javax.jcr.query.Query query = qm.createQuery(sql, javax.jcr.query.Query.JCR_SQL2);
@@ -227,30 +266,30 @@ public class FileService {
     }
 
     @Transactional(readOnly = true)
-    public Long sizeOf(final String folder){
+    public Long sizeOf(final String folder) {
         return mappingTemplate.execute(new JcrCallback<Long>() {
             @Override
             public Long doInJcr(Session session) throws IOException, RepositoryException {
                 javax.jcr.query.QueryManager qm = session.getWorkspace().getQueryManager();
-                String sql = "" ;
-                if (StringUtils.isNotEmpty(folder)){
-                    sql = "SELECT f.[rm:size] FROM [rm:file] AS f WHERE ISCHILDNODE(f,'"+folder+"')";
-                }else{
+                String sql = "";
+                if (StringUtils.isNotEmpty(folder)) {
+                    sql = "SELECT f.[rm:size] FROM [rm:file] AS f WHERE ISCHILDNODE(f,'" + folder + "')";
+                } else {
                     sql = "SELECT f.[rm:size] FROM [rm:file] AS f";
                 }
                 javax.jcr.query.Query query = qm.createQuery(sql, javax.jcr.query.Query.JCR_SQL2);
                 QueryResult nodeResult = query.execute();
                 Long allSize = 0L;
                 String[] columns = nodeResult.getColumnNames();
-                for (RowIterator it= nodeResult.getRows();it.hasNext();){
-                    allSize += ((it.nextRow().getValue(columns[0]).getLong()))/1024;
+                for (RowIterator it = nodeResult.getRows(); it.hasNext(); ) {
+                    allSize += ((it.nextRow().getValue(columns[0]).getLong())) / 1024;
                 }
                 return allSize;
             }
         });
     }
 
-    public String getParentUid(final String uid){
+    public String getParentUid(final String uid) {
         String parentUid = mappingTemplate.execute(new JcrCallback<String>() {
             @Override
             public String doInJcr(Session session) throws IOException, RepositoryException {
